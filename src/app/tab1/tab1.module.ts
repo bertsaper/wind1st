@@ -5,7 +5,12 @@ import { FormsModule } from '@angular/forms';
 import { Tab1Page } from './tab1.page';
 import { ExploreContainerComponentModule } from '../explore-container/explore-container.module';
 
+import { WeatherContainerComponentModule } from '../weather-container/weather-container.module';
+
 import { Tab1PageRoutingModule } from './tab1-routing.module';
+
+import { HttpClientModule} from '@angular/common/http';
+
 
 @NgModule({
   imports: [
@@ -13,7 +18,9 @@ import { Tab1PageRoutingModule } from './tab1-routing.module';
     CommonModule,
     FormsModule,
     ExploreContainerComponentModule,
-    Tab1PageRoutingModule
+    Tab1PageRoutingModule,
+    WeatherContainerComponentModule,
+    HttpClientModule
   ],
   declarations: [Tab1Page]
 })
