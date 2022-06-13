@@ -25,9 +25,14 @@ export class ExploreContainerComponent implements OnInit {
 
 
 
-  doughnutChart: any;
+  doughnutChart: any
 
-  weatherNow: Object;
+  weatherNow: Object
+
+  weatherNowString: string
+
+
+  weatherNowStringOutParsed: Object
 
   constructor(private _http: HttpClient,
     public router: Router,) { }
@@ -51,9 +56,8 @@ export class ExploreContainerComponent implements OnInit {
 
       this._http.get(resString).subscribe((res) => {
         this.weatherNow = res
-        console.log(res)
-
-
+        this.weatherNowString = JSON.stringify(this.weatherNow)
+        localStorage.setItem(`currentWeather`, this.weatherNowString)
       })
 
     }
@@ -63,11 +67,21 @@ export class ExploreContainerComponent implements OnInit {
 
   ngAfterViewInit() {  // the intention is to process the list after it's loaded
 
-    this.doughnutChartMethod();
+    this.doughnutChartMethod()
 
   }
 
   doughnutChartMethod() {
+
+     const weatherNowStringOut = localStorage.getItem(`currentWeather`)
+
+
+    const weatherNowStringOutParsed = JSON.parse(weatherNowStringOut)
+
+
+    console.log(`current weather`, weatherNowStringOutParsed.wind.deg)
+
+
     this.doughnutChart = new Chart(this.doughnutCanvas.nativeElement, {
       type: 'doughnut',
       data: {
