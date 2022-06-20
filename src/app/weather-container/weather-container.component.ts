@@ -79,14 +79,14 @@ export class ExploreContainerComponent implements OnInit {
 
     console.log(`current weather`, weatherNowStringOutParsed.wind.deg)
 
-    let windDriectionNow  = weatherNowStringOutParsed.wind.deg + `90, 90`
+    let windDriectionNow  = weatherNowStringOutParsed.wind.deg 
 
 
     const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
     this.renderer.setAttribute(path, 'd', 'M0 50 L100 0 L100 100 Z');
     this.renderer.setAttribute(path, 'fill', 'pink');
-    this.renderer.setAttribute(path, 'transform', 'rotate(' + windDriectionNow + '');
+    this.renderer.setAttribute(path, 'transform', 'rotate('+ windDriectionNow +',50,50)');
     this.renderer.appendChild(svg, path);
     this.renderer.appendChild(this.container.nativeElement, svg);
 
