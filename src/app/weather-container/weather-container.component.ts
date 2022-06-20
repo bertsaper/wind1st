@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, ViewChild, Renderer2 } from '@angular/core';
 
 import { environment } from 'src/environments/environment'; // src\environments
 
@@ -23,8 +23,6 @@ export class ExploreContainerComponent implements OnInit {
   @ViewChild('doughnutCanvas') private doughnutCanvas: ElementRef;
 
 
-
-
   doughnutChart: any
 
   weatherNow: Object
@@ -34,8 +32,13 @@ export class ExploreContainerComponent implements OnInit {
 
   weatherNowStringOutParsed: Object
 
-  constructor(private _http: HttpClient,
-    public router: Router,) { }
+  @ViewChild('svgContainer') container: ElementRef;
+
+  constructor(
+    private _http: HttpClient,
+    public router: Router, 
+    private renderer: Renderer2,
+    ) { }
 
 
   async ngOnInit(): Promise<void> {
@@ -58,6 +61,7 @@ export class ExploreContainerComponent implements OnInit {
         this.weatherNow = res
         this.weatherNowString = JSON.stringify(this.weatherNow)
         localStorage.setItem(`currentWeather`, this.weatherNowString)
+        this. chartMethod()
       })
 
     }
@@ -65,15 +69,9 @@ export class ExploreContainerComponent implements OnInit {
 
   }
 
-  ngAfterViewInit() {  // the intention is to process the list after it's loaded
+  chartMethod() {
 
-    this.doughnutChartMethod()
-
-  }
-
-  doughnutChartMethod() {
-
-     const weatherNowStringOut = localStorage.getItem(`currentWeather`)
+    const weatherNowStringOut = localStorage.getItem(`currentWeather`)
 
 
     const weatherNowStringOutParsed = JSON.parse(weatherNowStringOut)
@@ -81,31 +79,20 @@ export class ExploreContainerComponent implements OnInit {
 
     console.log(`current weather`, weatherNowStringOutParsed.wind.deg)
 
+    let windDriectionNow  = weatherNowStringOutParsed.wind.deg + `90, 90`
 
-    this.doughnutChart = new Chart(this.doughnutCanvas.nativeElement, {
-      type: 'doughnut',
-      data: {
-        labels: ['BJP', 'Congress', 'AAP', 'CPM', 'SP'],
-        datasets: [{
-          label: '# of Votes',
-          data: [50, 29, 15, 10, 7],
-          backgroundColor: [
-            'rgba(255, 159, 64, 0.2)',
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)'
-          ],
-          hoverBackgroundColor: [
-            '#FFCE56',
-            '#FF6384',
-            '#36A2EB',
-            '#FFCE56',
-            '#FF6384'
-          ]
-        }]
-      }
-    });
+
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    this.renderer.setAttribute(path, 'd', 'M0 50 L100 0 L100 100 Z');
+    this.renderer.setAttribute(path, 'fill', 'pink');
+    this.renderer.setAttribute(path, 'transform', 'rotate(' + windDriectionNow + '');
+    this.renderer.appendChild(svg, path);
+    this.renderer.appendChild(this.container.nativeElement, svg);
+
+
+
+
   }
 
 }

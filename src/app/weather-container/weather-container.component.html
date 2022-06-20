@@ -1,13 +1,11 @@
-<div id="container">huh?
+<div id="container">
     <strong>{{ name }}</strong>
-    <p>Explore <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-</div>
+    <div class="ion-canvas">
+    </div>
 
-<ion-card>
-    <ion-card-header>
-        Doughnut Chart
-    </ion-card-header>
-    <ion-card-content>
-        <canvas #doughnutCanvas style="position: relative; height:20vh; width:40vw"></canvas>
-    </ion-card-content>
-</ion-card>
+    <div>
+        <div #svgContainer></div>
+    </div>
+
+
+</div>
