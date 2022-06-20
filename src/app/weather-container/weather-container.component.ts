@@ -32,7 +32,7 @@ export class ExploreContainerComponent implements OnInit {
 
   weatherNowStringOutParsed: Object
 
-  @ViewChild('svgContainer') container: ElementRef;
+  @ViewChild('svgWindPointer') container: ElementRef;
 
   constructor(
     private _http: HttpClient,
