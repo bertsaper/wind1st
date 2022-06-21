@@ -18,17 +18,11 @@ Chart.register(...registerables)
 
 export class ExploreContainerComponent implements OnInit {
 
-  @Input() name: string;
-
-  @ViewChild('doughnutCanvas') private doughnutCanvas: ElementRef;
-
-
-  doughnutChart: any
+  // @Input() name: string;
 
   weatherNow: Object
 
   weatherNowString: string
-
 
   weatherNowStringOutParsed: Object
 
@@ -39,7 +33,6 @@ export class ExploreContainerComponent implements OnInit {
     public router: Router, 
     private renderer: Renderer2,
     ) { }
-
 
   async ngOnInit(): Promise<void> {
 
@@ -65,6 +58,7 @@ export class ExploreContainerComponent implements OnInit {
       })
 
     }
+
     catch (error) { }
 
   }
@@ -79,19 +73,13 @@ export class ExploreContainerComponent implements OnInit {
 
     console.log(`current weather`, weatherNowStringOutParsed.wind.deg)
 
-    let windDriectionNow  = weatherNowStringOutParsed.wind.deg 
-
-
     const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
     this.renderer.setAttribute(path, 'd', 'M0 50 L100 0 L100 100 Z');
     this.renderer.setAttribute(path, 'fill', 'pink');
-    this.renderer.setAttribute(path, 'transform', 'rotate('+ windDriectionNow +',50,50)');
+    this.renderer.setAttribute(path, 'transform', 'rotate(' + weatherNowStringOutParsed.wind.deg + ',50,50)');
     this.renderer.appendChild(svg, path);
     this.renderer.appendChild(this.container.nativeElement, svg);
-
-
-
 
   }
 
