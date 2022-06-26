@@ -65,6 +65,10 @@ export class ExploreContainerComponent implements OnInit {
 
   chartMethod() {
 
+    let WindVelocity = `rgba(0, 255, 0, 0.1)`
+
+    const CardinalN = `N`
+
     const weatherNowStringOut = localStorage.getItem(`currentWeather`)
 
 
@@ -73,29 +77,52 @@ export class ExploreContainerComponent implements OnInit {
 
     console.log(`current weather`, weatherNowStringOutParsed.wind.deg)
 
-    const svg = document.createElementNS(`http://www.w3.org/2000/svg`, `svg`);
+    const svg = document.createElementNS(`http://www.w3.org/2000/svg`, `svg`)
 
-    this.renderer.setAttribute(svg, `height`, `300`);
-    this.renderer.setAttribute(svg, `width`, `300`);   
-    this.renderer.setAttribute(svg, `id`, `windDirection`);
+    this.renderer.setAttribute(svg, `height`, `320`)
+    this.renderer.setAttribute(svg, `width`, `320`)  
+    this.renderer.setAttribute(svg, `id`, `windDirection`)
 
-    const path = document.createElementNS(`http://www.w3.org/2000/svg`, `path`);
-    this.renderer.setAttribute(path, `d`, `M 150,150 150,300 135,280 165.2,280 150,300`);
-    this.renderer.setAttribute(path, `x`, `36`);
-    this.renderer.setAttribute(path, `y`, `36`);
-    this.renderer.setAttribute(path, `id`, `windDirectionPath`);   
-    this.renderer.setAttribute(path, `transform`, `rotate(` + weatherNowStringOutParsed.wind.deg + `,150,150)`);
+    const path = document.createElementNS(`http://www.w3.org/2000/svg`, `path`)
+    this.renderer.setAttribute(path, `d`, `M 150,150 150,300 135,282 165.2,282 150,300`)
+    this.renderer.setAttribute(path, `x`, `36`)
+    this.renderer.setAttribute(path, `y`, `36`)
+    this.renderer.setAttribute(path, `id`, `windDirectionPath`)
+    this.renderer.setAttribute(path, `transform`, `rotate(` + weatherNowStringOutParsed.wind.deg + `,150,150)`)
     //  this.renderer.setAttribute(path, `transform`, `rotate(90,150,150)`);
 
-    const circle = document.createElementNS(`http://www.w3.org/2000/svg`, `circle`);
-    this.renderer.setAttribute(circle, `cx`, `150`);
-    this.renderer.setAttribute(circle, `cy`, `150`);
-    this.renderer.setAttribute(circle, `r`, `150`);
-    this.renderer.setAttribute(circle, `id`, `windDirectionHolder`); 
-    this.renderer.appendChild(svg, path);
-    this.renderer.appendChild(svg, circle);    
-    this.renderer.appendChild(this.container.nativeElement, svg);
+    const circle = document.createElementNS(`http://www.w3.org/2000/svg`, `circle`)
+    this.renderer.setAttribute(circle, `cx`, `150`)
+    this.renderer.setAttribute(circle, `cy`, `150`)
+    this.renderer.setAttribute(circle, `r`, `160`)
+    this.renderer.setAttribute(circle, `id`, `windDirectionHolder`)
+    this.renderer.setAttribute(circle, `fill`, WindVelocity )
+    
+    const textN = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
+    this.renderer.setAttribute(textN, `id`, `CardinalN`)
+    textN.textContent = `N`
 
+    const textS = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
+    this.renderer.setAttribute(textS, `id`, `CardinalS`)
+    textS.textContent = `S`
+
+    const textE = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
+    this.renderer.setAttribute(textE, `id`, `CardinalE`)
+    textE.textContent = `E` 
+    
+    const textW = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
+    this.renderer.setAttribute(textW, `id`, `CardinalW`)
+    textW.textContent = `W`      
+
+    this.renderer.appendChild(svg, path)
+    this.renderer.appendChild(svg, circle)
+    this.renderer.appendChild(svg, textN)
+    this.renderer.appendChild(svg, textS)
+    this.renderer.appendChild(svg, textE)
+    this.renderer.appendChild(svg, textW)
+
+    this.renderer.appendChild(this.container.nativeElement, svg)
+    
 
   }
 

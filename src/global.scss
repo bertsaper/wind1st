@@ -34,13 +34,32 @@
 }
 
 #windDirectionPath {
-    fill: blue;
+    fill: black;
     stroke: black;
     stroke-width: 1px;
 }
 
 #windDirectionHolder {
-    fill: rgba(0, 0, 0, 0.01);
     stroke: black;
-    stroke-width: 1px;
+    stroke-width: 2px;
+}
+
+#CardinalN {
+    transform: translate(140px, -25px);
+    font-size: 30px;
+}
+
+#CardinalS {
+    transform: translate(140px, 350px);
+    font-size: 30px;
+}
+
+#CardinalE {
+    transform: translate(325px, 160px);
+    font-size: 30px;
+}
+
+#CardinalW {
+    transform: translate(-50px, 160px);
+    font-size: 30px;
 }
