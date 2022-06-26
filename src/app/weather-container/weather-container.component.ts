@@ -75,19 +75,25 @@ export class ExploreContainerComponent implements OnInit {
 
     const svg = document.createElementNS(`http://www.w3.org/2000/svg`, `svg`);
 
-    this.renderer.setAttribute(svg, `height`, `36`);
-    this.renderer.setAttribute(svg, `width`, `36`);   
+    this.renderer.setAttribute(svg, `height`, `300`);
+    this.renderer.setAttribute(svg, `width`, `300`);   
     this.renderer.setAttribute(svg, `id`, `windDirection`);
 
     const path = document.createElementNS(`http://www.w3.org/2000/svg`, `path`);
-    this.renderer.setAttribute(path, `d`, `M 18,3 18,72 36,36 3,36 18,72`);
+    this.renderer.setAttribute(path, `d`, `M 150,150 150,300 135,281.23 165.2,281 150,300`);
     this.renderer.setAttribute(path, `x`, `36`);
     this.renderer.setAttribute(path, `y`, `36`);
     this.renderer.setAttribute(path, `id`, `windDirectionPath`);   
-    this.renderer.setAttribute(path, `transform`, `rotate(` + weatherNowStringOutParsed.wind.deg + `,18.5,18.5)`);
-    //  this.renderer.setAttribute(path, `transform`, `rotate(270,18.5,18.5)`);
+    this.renderer.setAttribute(path, `transform`, `rotate(` + weatherNowStringOutParsed.wind.deg + `,150,150)`);
+    //  this.renderer.setAttribute(path, `transform`, `rotate(90,150,150)`);
 
+    const circle = document.createElementNS(`http://www.w3.org/2000/svg`, `circle`);
+    this.renderer.setAttribute(circle, `cx`, `150`);
+    this.renderer.setAttribute(circle, `cy`, `150`);
+    this.renderer.setAttribute(circle, `r`, `150`);
+    this.renderer.setAttribute(circle, `id`, `windDirectionHolder`); 
     this.renderer.appendChild(svg, path);
+    this.renderer.appendChild(svg, circle);    
     this.renderer.appendChild(this.container.nativeElement, svg);
 
 
