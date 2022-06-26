@@ -74,12 +74,22 @@ export class ExploreContainerComponent implements OnInit {
     console.log(`current weather`, weatherNowStringOutParsed.wind.deg)
 
     const svg = document.createElementNS(`http://www.w3.org/2000/svg`, `svg`);
+
+    this.renderer.setAttribute(svg, `height`, `36`);
+    this.renderer.setAttribute(svg, `width`, `36`);   
+    this.renderer.setAttribute(svg, `id`, `windDirection`);
+
     const path = document.createElementNS(`http://www.w3.org/2000/svg`, `path`);
-    this.renderer.setAttribute(path, `d`, `M 20,2.5 16,60 30,50 2.5,50 16.33,60`);
-    this.renderer.setAttribute(path, `fill`, `gray`);
-    this.renderer.setAttribute(path, `transform`, `rotate(` + weatherNowStringOutParsed.wind.deg + `,50,50)`);
+    this.renderer.setAttribute(path, `d`, `M 18,3 18,72 36,36 3,36 18,72`);
+    this.renderer.setAttribute(path, `x`, `36`);
+    this.renderer.setAttribute(path, `y`, `36`);
+    this.renderer.setAttribute(path, `id`, `windDirectionPath`);   
+    this.renderer.setAttribute(path, `transform`, `rotate(` + weatherNowStringOutParsed.wind.deg + `,18.5,18.5)`);
+    //  this.renderer.setAttribute(path, `transform`, `rotate(270,18.5,18.5)`);
+
     this.renderer.appendChild(svg, path);
     this.renderer.appendChild(this.container.nativeElement, svg);
+
 
   }
 
