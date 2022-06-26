@@ -80,7 +80,7 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(svg, `id`, `windDirection`);
 
     const path = document.createElementNS(`http://www.w3.org/2000/svg`, `path`);
-    this.renderer.setAttribute(path, `d`, `M 150,150 150,300 135,281.23 165.2,281 150,300`);
+    this.renderer.setAttribute(path, `d`, `M 150,150 150,300 135,280 165.2,280 150,300`);
     this.renderer.setAttribute(path, `x`, `36`);
     this.renderer.setAttribute(path, `y`, `36`);
     this.renderer.setAttribute(path, `id`, `windDirectionPath`);   
