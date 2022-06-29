@@ -48,7 +48,9 @@ export class ExploreContainerComponent implements OnInit {
 
       const openWeatherKey = environment.open_weather_key
 
-      let resString = openWeatherAddress + latString + lat + lonString + lon + openWeatherKey
+      const returnImperial = "&units=imperial"
+
+      let resString = openWeatherAddress + latString + lat + lonString + lon + returnImperial + openWeatherKey
 
       this._http.get(resString).subscribe((res) => {
         this.weatherNow = res
@@ -71,11 +73,10 @@ export class ExploreContainerComponent implements OnInit {
 
     const weatherNowStringOut = localStorage.getItem(`currentWeather`)
 
-
     const weatherNowStringOutParsed = JSON.parse(weatherNowStringOut)
 
-
-    console.log(`current weather`, weatherNowStringOutParsed.wind.deg)
+    console.log(`current wind`, weatherNowStringOutParsed.wind.deg)
+    console.log(`current temp`, weatherNowStringOutParsed.main.temp)
 
     const svg = document.createElementNS(`http://www.w3.org/2000/svg`, `svg`)
 
