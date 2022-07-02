@@ -88,7 +88,7 @@ export class ExploreContainerComponent implements OnInit {
     let windDeg = weatherNowStringOutParsed.wind.deg
     let windSpeed = Math.round(weatherNowStringOutParsed.wind.speed)
 
-    let temp = 0
+    let temp = weatherNowStringOutParsed.main.temp
 
     console.log(`current wind direction`, windDeg)
     console.log(`current wind speed`, windSpeed)
@@ -186,8 +186,13 @@ export class ExploreContainerComponent implements OnInit {
 
     const textWindVelocity = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
     this.renderer.setAttribute(textWindVelocity, `id`, `WindVelocity`)
-    textWindVelocity.textContent = `Wind Speed ` + windSpeed.toString() + ` mph`
+    if (windSpeed > 0) {
+      textWindVelocity.textContent = `Wind Speed ` + windSpeed.toString() + ` mph`
+    }
 
+    if (windSpeed == 0) {
+      textWindVelocity.textContent = `No Wind`
+    }
 
 
     this.renderer.appendChild(svg, band5)
