@@ -122,7 +122,7 @@ export class ExploreContainerComponent implements OnInit {
     }
 
     if (windDeg >= 211 && windDeg <= 240 ) {
-      windDirectionRounded = CardinalSW
+      windDirectionRounded = OrddinalNW
     }
 
     if (windDeg >= 241 && windDeg <= 300 ) {
