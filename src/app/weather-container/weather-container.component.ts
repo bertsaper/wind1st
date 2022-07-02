@@ -71,6 +71,14 @@ export class ExploreContainerComponent implements OnInit {
 
     let Band5Fill = `rgba(255, 0, 0, 0.1)`
 
+    let Band4Fill = `rgba(255, 255, 0, 0.1)`
+
+    let Band3Fill = `rgba(0, 152, 255, 0.1)`
+
+    let Band2Fill = `rgba(0, 255, 152, 0.1)`
+
+    let Band1Fill = `rgba(152, 0, 152, 0.1)`
+
     const CardinalN = `N`
 
     const weatherNowStringOut = localStorage.getItem(`currentWeather`)
@@ -106,16 +114,44 @@ export class ExploreContainerComponent implements OnInit {
     const circle = document.createElementNS(`http://www.w3.org/2000/svg`, `circle`)
     this.renderer.setAttribute(circle, `cx`, `150`)
     this.renderer.setAttribute(circle, `cy`, `150`)
-    this.renderer.setAttribute(circle, `r`, `160`)
+    this.renderer.setAttribute(circle, `r`, `200`)
     this.renderer.setAttribute(circle, `id`, `windDirectionHolder`)
     this.renderer.setAttribute(circle, `fill`, WindVelocity )
 
     const band5 = document.createElementNS(`http://www.w3.org/2000/svg`, `circle`)
     this.renderer.setAttribute(band5, `cx`, `150`)
     this.renderer.setAttribute(band5, `cy`, `150`)
-    this.renderer.setAttribute(band5, `r`, `130`)
+    this.renderer.setAttribute(band5, `r`, `140`)
     this.renderer.setAttribute(band5, `id`, `circleBand5`)
     this.renderer.setAttribute(band5, `fill`, Band5Fill )
+
+    const band4 = document.createElementNS(`http://www.w3.org/2000/svg`, `circle`)
+    this.renderer.setAttribute(band4, `cx`, `150`)
+    this.renderer.setAttribute(band4, `cy`, `150`)
+    this.renderer.setAttribute(band4, `r`, `140`)
+    this.renderer.setAttribute(band4, `id`, `circleBand5`)
+    this.renderer.setAttribute(band4, `fill`, Band4Fill )
+
+    const band3 = document.createElementNS(`http://www.w3.org/2000/svg`, `circle`)
+    this.renderer.setAttribute(band3, `cx`, `150`)
+    this.renderer.setAttribute(band3, `cy`, `150`)
+    this.renderer.setAttribute(band3, `r`, `110`)
+    this.renderer.setAttribute(band3, `id`, `circleBand5`)
+    this.renderer.setAttribute(band3, `fill`, Band3Fill )
+
+    const band2 = document.createElementNS(`http://www.w3.org/2000/svg`, `circle`)
+    this.renderer.setAttribute(band2, `cx`, `150`)
+    this.renderer.setAttribute(band2, `cy`, `150`)
+    this.renderer.setAttribute(band2, `r`, `80`)
+    this.renderer.setAttribute(band2, `id`, `circleBand5`)
+    this.renderer.setAttribute(band2, `fill`, Band2Fill )
+
+    const band1 = document.createElementNS(`http://www.w3.org/2000/svg`, `circle`)
+    this.renderer.setAttribute(band1, `cx`, `150`)
+    this.renderer.setAttribute(band1, `cy`, `150`)
+    this.renderer.setAttribute(band1, `r`, `50`)
+    this.renderer.setAttribute(band1, `id`, `circleBand5`)
+    this.renderer.setAttribute(band1, `fill`, Band1Fill )
     
     const textN = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
     this.renderer.setAttribute(textN, `id`, `CardinalN`)
@@ -135,7 +171,12 @@ export class ExploreContainerComponent implements OnInit {
 
   
 
-    this.renderer.appendChild(svg, band5)    
+    this.renderer.appendChild(svg, band5)
+    this.renderer.appendChild(svg, band4)  
+    this.renderer.appendChild(svg, band3)  
+    this.renderer.appendChild(svg, band2) 
+    this.renderer.appendChild(svg, band1)    
+
     this.renderer.appendChild(svg, textN)
     this.renderer.appendChild(svg, textS)
     this.renderer.appendChild(svg, textE)
