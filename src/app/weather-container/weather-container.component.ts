@@ -67,17 +67,17 @@ export class ExploreContainerComponent implements OnInit {
 
   chartMethod() {
 
-    let WindVelocity = `rgba(0, 255, 0, 0.1)`
+    let WindVelocity = `rgba(255, 255, 255, 0.1)`
 
-    let Band5Fill = `rgba(255, 0, 0, 0.1)`
+    let Band5Fill = `rgba(200, 200, 200, 0.1)`
 
-    let Band4Fill = `rgba(255, 255, 0, 0.1)`
+    let Band4Fill = `rgba(150, 150, 150, 0.1)`
 
-    let Band3Fill = `rgba(0, 152, 255, 0.1)`
+    let Band3Fill = `rgba(100, 100, 100, 0.1)`
 
-    let Band2Fill = `rgba(0, 255, 152, 0.1)`
+    let Band2Fill = `rgba(50, 50, 50, 0.1)`
 
-    let Band1Fill = `rgba(152, 0, 152, 0.1)`
+    let Band1Fill = `rgba(0, 0, 0, 0.1)`
 
     const CardinalN = `N`
 
@@ -114,35 +114,35 @@ export class ExploreContainerComponent implements OnInit {
     const circle = document.createElementNS(`http://www.w3.org/2000/svg`, `circle`)
     this.renderer.setAttribute(circle, `cx`, `150`)
     this.renderer.setAttribute(circle, `cy`, `150`)
-    this.renderer.setAttribute(circle, `r`, `200`)
+    this.renderer.setAttribute(circle, `r`, `150`)
     this.renderer.setAttribute(circle, `id`, `windDirectionHolder`)
     this.renderer.setAttribute(circle, `fill`, WindVelocity )
 
     const band5 = document.createElementNS(`http://www.w3.org/2000/svg`, `circle`)
     this.renderer.setAttribute(band5, `cx`, `150`)
     this.renderer.setAttribute(band5, `cy`, `150`)
-    this.renderer.setAttribute(band5, `r`, `140`)
+    this.renderer.setAttribute(band5, `r`, `130`)
     this.renderer.setAttribute(band5, `id`, `circleBand5`)
     this.renderer.setAttribute(band5, `fill`, Band5Fill )
 
     const band4 = document.createElementNS(`http://www.w3.org/2000/svg`, `circle`)
     this.renderer.setAttribute(band4, `cx`, `150`)
     this.renderer.setAttribute(band4, `cy`, `150`)
-    this.renderer.setAttribute(band4, `r`, `140`)
+    this.renderer.setAttribute(band4, `r`, `110`)
     this.renderer.setAttribute(band4, `id`, `circleBand5`)
     this.renderer.setAttribute(band4, `fill`, Band4Fill )
 
     const band3 = document.createElementNS(`http://www.w3.org/2000/svg`, `circle`)
     this.renderer.setAttribute(band3, `cx`, `150`)
     this.renderer.setAttribute(band3, `cy`, `150`)
-    this.renderer.setAttribute(band3, `r`, `110`)
+    this.renderer.setAttribute(band3, `r`, `90`)
     this.renderer.setAttribute(band3, `id`, `circleBand5`)
     this.renderer.setAttribute(band3, `fill`, Band3Fill )
 
     const band2 = document.createElementNS(`http://www.w3.org/2000/svg`, `circle`)
     this.renderer.setAttribute(band2, `cx`, `150`)
     this.renderer.setAttribute(band2, `cy`, `150`)
-    this.renderer.setAttribute(band2, `r`, `80`)
+    this.renderer.setAttribute(band2, `r`, `70`)
     this.renderer.setAttribute(band2, `id`, `circleBand5`)
     this.renderer.setAttribute(band2, `fill`, Band2Fill )
 
@@ -167,7 +167,11 @@ export class ExploreContainerComponent implements OnInit {
     
     const textW = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
     this.renderer.setAttribute(textW, `id`, `CardinalW`)
-    textW.textContent = `W`      
+    textW.textContent = `W`   
+    
+    const textWindVelocity = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
+    this.renderer.setAttribute(textWindVelocity, `id`, `WindVelocity`)
+    textWindVelocity.textContent = `Wind Speed ` + windSpeed.toString() 
 
   
 
@@ -182,6 +186,7 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.appendChild(svg, textE)
     this.renderer.appendChild(svg, textW)
     this.renderer.appendChild(svg, circle)
+    this.renderer.appendChild(svg, textWindVelocity)    
     this.renderer.appendChild(this.container.nativeElement, svg)
     
 

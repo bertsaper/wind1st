@@ -45,7 +45,7 @@
 }
 
 #CardinalN {
-    transform: translate(140px, -25px);
+    transform: translate(140px, -28px);
     font-size: 30px;
 }
 
@@ -55,11 +55,16 @@
 }
 
 #CardinalE {
-    transform: translate(325px, 160px);
+    transform: translate(335px, 160px);
     font-size: 30px;
 }
 
 #CardinalW {
     transform: translate(-50px, 160px);
+    font-size: 30px;
+}
+
+#WindVelocity {
+    /* transform: translate(-50px, 160px); */
     font-size: 30px;
 }
