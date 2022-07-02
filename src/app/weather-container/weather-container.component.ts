@@ -69,28 +69,39 @@ export class ExploreContainerComponent implements OnInit {
 
     let WindVelocity = `rgba(0, 255, 0, 0.1)`
 
+    let Band5Fill = `rgba(255, 0, 0, 0.1)`
+
     const CardinalN = `N`
 
     const weatherNowStringOut = localStorage.getItem(`currentWeather`)
 
-    const weatherNowStringOutParsed = JSON.parse(weatherNowStringOut)
+    let weatherNowStringOutParsed = JSON.parse(weatherNowStringOut)
 
-    console.log(`current wind`, weatherNowStringOutParsed.wind.deg)
-    console.log(`current temp`, weatherNowStringOutParsed.main.temp)
+    let windDeg = weatherNowStringOutParsed.wind.deg
+    let windSpeed =  Math.round(weatherNowStringOutParsed.wind.speed)
+    let currentTemp = weatherNowStringOutParsed.main.temp
+
+    console.log(`current wind direction`, windDeg)
+    console.log(`current wind speed`, windSpeed)
+    console.log(`current temp`, currentTemp)
 
     const svg = document.createElementNS(`http://www.w3.org/2000/svg`, `svg`)
 
     this.renderer.setAttribute(svg, `height`, `320`)
     this.renderer.setAttribute(svg, `width`, `320`)  
     this.renderer.setAttribute(svg, `id`, `windDirection`)
-
+    if (windSpeed != 0) {
     const path = document.createElementNS(`http://www.w3.org/2000/svg`, `path`)
-    this.renderer.setAttribute(path, `d`, `M 150,150 150,300 135,282 165.2,282 150,300`)
-    this.renderer.setAttribute(path, `x`, `36`)
-    this.renderer.setAttribute(path, `y`, `36`)
-    this.renderer.setAttribute(path, `id`, `windDirectionPath`)
-    this.renderer.setAttribute(path, `transform`, `rotate(` + weatherNowStringOutParsed.wind.deg + `,150,150)`)
-    //  this.renderer.setAttribute(path, `transform`, `rotate(90,150,150)`);
+    // this.renderer.setAttribute(path, `d`, `M 150,150 150,295 135,275 165,275 150,295 `)
+     this.renderer.setAttribute(path, `d`, `M 150,150 150,275 135,255 165,255 150,275 `) // band 5 arrow
+    // this.renderer.setAttribute(path, `d`, `M 150,150 150,255 135,235 165,235 150,255 `)  
+    // this.renderer.setAttribute(path, `d`, `M 150,150 150,235 135,215 165,215 150,235 `) 
+    //   this.renderer.setAttribute(path, `d`, `M 150,150 150,215 135,195 165,195 150,215 `) 
+
+     this.renderer.setAttribute(path, `id`, `windDirectionPath`)
+      this.renderer.setAttribute(path, `transform`, `rotate(` + windDeg + `,150,150)`)
+      this.renderer.appendChild(svg, path)
+    }
 
     const circle = document.createElementNS(`http://www.w3.org/2000/svg`, `circle`)
     this.renderer.setAttribute(circle, `cx`, `150`)
@@ -98,6 +109,13 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(circle, `r`, `160`)
     this.renderer.setAttribute(circle, `id`, `windDirectionHolder`)
     this.renderer.setAttribute(circle, `fill`, WindVelocity )
+
+    const band5 = document.createElementNS(`http://www.w3.org/2000/svg`, `circle`)
+    this.renderer.setAttribute(band5, `cx`, `150`)
+    this.renderer.setAttribute(band5, `cy`, `150`)
+    this.renderer.setAttribute(band5, `r`, `130`)
+    this.renderer.setAttribute(band5, `id`, `circleBand5`)
+    this.renderer.setAttribute(band5, `fill`, Band5Fill )
     
     const textN = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
     this.renderer.setAttribute(textN, `id`, `CardinalN`)
@@ -115,13 +133,14 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(textW, `id`, `CardinalW`)
     textW.textContent = `W`      
 
-    this.renderer.appendChild(svg, path)
-    this.renderer.appendChild(svg, circle)
+  
+
+    this.renderer.appendChild(svg, band5)    
     this.renderer.appendChild(svg, textN)
     this.renderer.appendChild(svg, textS)
     this.renderer.appendChild(svg, textE)
     this.renderer.appendChild(svg, textW)
-
+    this.renderer.appendChild(svg, circle)
     this.renderer.appendChild(this.container.nativeElement, svg)
     
 
