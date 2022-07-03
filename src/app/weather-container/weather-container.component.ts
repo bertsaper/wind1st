@@ -77,7 +77,8 @@ export class ExploreContainerComponent implements OnInit {
 
     let windDeg = weatherNowStringOutParsed.wind.deg
 
-    let windSpeed =  11// Math.round(weatherNowStringOutParsed.wind.speed)
+    let windSpeed =  30
+    // Math.round(weatherNowStringOutParsed.wind.speed)
 
     let temp = weatherNowStringOutParsed.main.temp
 
@@ -151,25 +152,21 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(InfoGroup, `id`, `InfoGroup`)
 
     // 29 needs to be just unerd 100
-    let windScaler190: any = 190 + (windSpeed * 3.44)
-    let windScaler170: any = 170 + (windSpeed * 3.44)
+    let windScalerFirstLast: any = 178 + (windSpeed * 4)
+    let windScalerSecondThird: any = 158 + (windSpeed * 4)
 
     if (windSpeed != 0) {
       const path = document.createElementNS(`http://www.w3.org/2000/svg`, `path`)
       if (windSpeed >= 30) {
-        this.renderer.setAttribute(path, `d`, `M 150,150 150,290 135,270 165,270 150,290 `)
+        this.renderer.setAttribute(path, `d`, `M 150,150 150,298 135,278 165,278 150,298 `)
       }
 
-      if (windSpeed >= 15 && windSpeed <= 29) {
-        this.renderer.setAttribute(path, `d`, `M 150,150 150,` + windScaler190 + ` 135,` + windScaler170 + ` 165,` + windScaler170 + ` 150,` + windScaler190)
-      }
-
-      if (windSpeed >= 6 && windSpeed <= 14 ) {
-        this.renderer.setAttribute(path, `d`, `M 150,150 150,` + (windScaler190 -3) + ` 135,` + (windScaler170 -3) + ` 165,` + (windScaler170 -3) + ` 150,` + (windScaler190 -3))
+      if (windSpeed >= 6 && windSpeed <= 29) {
+        this.renderer.setAttribute(path, `d`, `M 150,150 150,` + windScalerFirstLast + ` 135,` + windScalerSecondThird + ` 165,` + windScalerSecondThird + ` 150,` + windScalerFirstLast)
       }
 
       if (windSpeed >= 1 && windSpeed <= 5) {
-        this.renderer.setAttribute(path, `d`, `M 150,150 150,190 135,170 165,170 150,190 `)
+        this.renderer.setAttribute(path, `d`, `M 150,150 150,198 135,178 165,178 150,198 `)
       }
 
       this.renderer.setAttribute(path, `id`, `windDirectionPath`)
