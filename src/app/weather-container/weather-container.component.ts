@@ -77,7 +77,7 @@ export class ExploreContainerComponent implements OnInit {
 
     let windDeg = weatherNowStringOutParsed.wind.deg
 
-    let windSpeed = Math.round(weatherNowStringOutParsed.wind.speed)
+    let windSpeed =   Math.round(weatherNowStringOutParsed.wind.speed)
 
     let temp = weatherNowStringOutParsed.main.temp
 
@@ -102,39 +102,39 @@ export class ExploreContainerComponent implements OnInit {
 
     let windDirectionRounded: string
 
-    if (windDeg >= 0 && windDeg <= 30 ) {
+    if (windDeg >= 0 && windDeg <= 30) {
       windDirectionRounded = CardinalN
     }
 
-    if (windDeg >= 31 && windDeg <= 65 ) {
+    if (windDeg >= 31 && windDeg <= 65) {
       windDirectionRounded = OrddinalNE
     }
 
-    if (windDeg >= 66 && windDeg <= 120 ) {
+    if (windDeg >= 66 && windDeg <= 120) {
       windDirectionRounded = CardinalE
     }
 
-    if (windDeg >= 121 && windDeg <= 150 ) {
+    if (windDeg >= 121 && windDeg <= 150) {
       windDirectionRounded = OrddinalSE
     }
 
-    if (windDeg >= 151 && windDeg <= 210 ) {
+    if (windDeg >= 151 && windDeg <= 210) {
       windDirectionRounded = CardinalS
     }
 
-    if (windDeg >= 211 && windDeg <= 240 ) {
+    if (windDeg >= 211 && windDeg <= 240) {
       windDirectionRounded = OrddinalNW
     }
 
-    if (windDeg >= 241 && windDeg <= 300 ) {
+    if (windDeg >= 241 && windDeg <= 300) {
       windDirectionRounded = CardinalW
     }
 
-    if (windDeg >= 301 && windDeg <= 330 ) {
+    if (windDeg >= 301 && windDeg <= 330) {
       windDirectionRounded = OrddinalNW
     }
 
-    if (windDeg >= 331 && windDeg <= 360 ) {
+    if (windDeg >= 331 && windDeg <= 360) {
       windDirectionRounded = CardinalN
     }
 
@@ -149,25 +149,20 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(InfoGroup, `height`, `320`)
     this.renderer.setAttribute(InfoGroup, `width`, `320`)
     this.renderer.setAttribute(InfoGroup, `id`, `InfoGroup`)
-    
+
+    // 6 needs to = 1 and 29 needs to equatl 100
+    let windScaler195: any = 195 + (windSpeed * 3.5)
+    let windScaler175: any = 175 + (windSpeed * 3.5)
 
     if (windSpeed != 0) {
       const path = document.createElementNS(`http://www.w3.org/2000/svg`, `path`)
-      if (windSpeed > 30) {
+      if (windSpeed >= 30) {
         this.renderer.setAttribute(path, `d`, `M 150,150 150,295 135,275 165,275 150,295 `)
       }
-      if (windSpeed >= 21 && windSpeed <= 30) {
-        this.renderer.setAttribute(path, `d`, `M 150,150 150,275 135,255 165,255 150,275 `)
+      if (windSpeed >= 6 && windSpeed <= 29) {
+        this.renderer.setAttribute(path, `d`, `M 150,150 150,` + windScaler195 + ` 135,` + windScaler175 + ` 165,` + windScaler175 + ` 150,` + windScaler195)
       }
-      if (windSpeed >= 16 && windSpeed <= 20) {
-        this.renderer.setAttribute(path, `d`, `M 150,150 150,255 135,235 165,235 150,255 `)
-      }
-      if (windSpeed >= 11 && windSpeed <= 15) {
-        this.renderer.setAttribute(path, `d`, `M 150,150 150,235 135,215 165,215 150,235 `)
-      }
-      if (windSpeed >= 6 && windSpeed <= 10) {
-        this.renderer.setAttribute(path, `d`, `M 150,150 150,215 135,195 165,195 150,215 `)
-      }
+
       if (windSpeed >= 1 && windSpeed <= 5) {
         this.renderer.setAttribute(path, `d`, `M 150,150 150,195 135,175 165,175 150,195 `)
       }
@@ -190,7 +185,7 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(band5, `r`, `130`)
     this.renderer.setAttribute(band5, `id`, `circleBand5`)
     this.renderer.setAttribute(band5, `fill`, BandFill)
-    this.renderer.setAttribute(band5, `stroke`, `gray`)  
+    this.renderer.setAttribute(band5, `stroke`, `gray`)
 
 
     const band4 = document.createElementNS(`http://www.w3.org/2000/svg`, `circle`)
@@ -199,7 +194,7 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(band4, `r`, `110`)
     this.renderer.setAttribute(band4, `id`, `circleBand4`)
     this.renderer.setAttribute(band4, `fill`, BandFill)
-    this.renderer.setAttribute(band4, `stroke`, `gray`)  
+    this.renderer.setAttribute(band4, `stroke`, `gray`)
 
 
     const band3 = document.createElementNS(`http://www.w3.org/2000/svg`, `circle`)
@@ -208,7 +203,7 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(band3, `r`, `90`)
     this.renderer.setAttribute(band3, `id`, `circleBand3`)
     this.renderer.setAttribute(band3, `fill`, BandFill)
-    this.renderer.setAttribute(band3, `stroke`, `gray`)  
+    this.renderer.setAttribute(band3, `stroke`, `gray`)
 
 
     const band2 = document.createElementNS(`http://www.w3.org/2000/svg`, `circle`)
@@ -217,7 +212,7 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(band2, `r`, `70`)
     this.renderer.setAttribute(band2, `id`, `circleBand25`)
     this.renderer.setAttribute(band2, `fill`, BandFill)
-    this.renderer.setAttribute(band2, `stroke`, `gray`)  
+    this.renderer.setAttribute(band2, `stroke`, `gray`)
 
     const band1 = document.createElementNS(`http://www.w3.org/2000/svg`, `circle`)
     this.renderer.setAttribute(band1, `cx`, `150`)
@@ -225,42 +220,42 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(band1, `r`, `50`)
     this.renderer.setAttribute(band1, `id`, `circleBand1`)
     this.renderer.setAttribute(band1, `fill`, BandFill)
-    this.renderer.setAttribute(band1, `stroke`, `gray`)  
+    this.renderer.setAttribute(band1, `stroke`, `gray`)
 
     const textN = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
     this.renderer.setAttribute(textN, `id`, `CardinalN`)
-    this.renderer.setAttribute(textN, `dominant-baseline`,`auto`)
+    this.renderer.setAttribute(textN, `dominant-baseline`, `auto`)
     this.renderer.setAttribute(textN, `x`, `145`)
-    this.renderer.setAttribute(textN, `y`, `-10`) 
+    this.renderer.setAttribute(textN, `y`, `-10`)
     textN.textContent = CardinalN
 
     const textS = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
     this.renderer.setAttribute(textS, `id`, `CardinalS`)
-    this.renderer.setAttribute(textS, `dominant-baseline`,`hanging`)
+    this.renderer.setAttribute(textS, `dominant-baseline`, `hanging`)
     this.renderer.setAttribute(textS, `x`, `145`)
-    this.renderer.setAttribute(textS, `y`, `310`) 
+    this.renderer.setAttribute(textS, `y`, `310`)
     textS.textContent = CardinalS
 
     const textE = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
     this.renderer.setAttribute(textE, `id`, `CardinalE`)
-    this.renderer.setAttribute(textE, `dominant-baseline`,`middle`)
+    this.renderer.setAttribute(textE, `dominant-baseline`, `middle`)
     this.renderer.setAttribute(textE, `x`, `310`)
-    this.renderer.setAttribute(textE, `y`, `150`) 
+    this.renderer.setAttribute(textE, `y`, `150`)
     textE.textContent = CardinalE
 
     const textW = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
     this.renderer.setAttribute(textW, `id`, `CardinalW`)
-    this.renderer.setAttribute(textW, `dominant-baseline`,`middle`)
+    this.renderer.setAttribute(textW, `dominant-baseline`, `middle`)
     this.renderer.setAttribute(textW, `x`, `-23`)
-    this.renderer.setAttribute(textW, `y`, `150`) 
+    this.renderer.setAttribute(textW, `y`, `150`)
     textW.textContent = CardinalW
 
     const Legend5mph = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
     this.renderer.setAttribute(Legend5mph, `id`, `CardinalW`)
-    this.renderer.setAttribute(Legend5mph, `dominant-baseline`,`middle`)
+    this.renderer.setAttribute(Legend5mph, `dominant-baseline`, `middle`)
     this.renderer.setAttribute(Legend5mph, `x`, `165`)
-    this.renderer.setAttribute(Legend5mph, `y`, `150`) 
-    this.renderer.setAttribute(Legend5mph, `font-size`, `0.75rem`)   
+    this.renderer.setAttribute(Legend5mph, `y`, `150`)
+    this.renderer.setAttribute(Legend5mph, `font-size`, `0.75rem`)
     Legend5mph.textContent = l05mph
 
     const textWindVelocity = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
@@ -272,7 +267,7 @@ export class ExploreContainerComponent implements OnInit {
     if (windSpeed == 0) {
       textWindVelocity.textContent = `No Wind`
     }
-    this.renderer.setAttribute(textWindVelocity, `dominant-baseline`,`auto`)
+    this.renderer.setAttribute(textWindVelocity, `dominant-baseline`, `auto`)
     this.renderer.setAttribute(textWindVelocity, `x`, `-55`)
     this.renderer.setAttribute(textWindVelocity, `y`, `-10`)
 
@@ -290,7 +285,7 @@ export class ExploreContainerComponent implements OnInit {
 
     this.renderer.appendChild(legentGroup, Legend5mph)
 
-   
+
     this.renderer.appendChild(bandGroup, band5)
     this.renderer.appendChild(bandGroup, band4)
     this.renderer.appendChild(bandGroup, band3)
@@ -303,10 +298,10 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.appendChild(InfoGroup, textW)
     this.renderer.appendChild(InfoGroup, circle)
 
-    
-    this.renderer.appendChild(svg, bandGroup)   
+
+    this.renderer.appendChild(svg, bandGroup)
     this.renderer.appendChild(svg, InfoGroup)
-    this.renderer.appendChild(svg, legentGroup)    
+    this.renderer.appendChild(svg, legentGroup)
 
     this.renderer.appendChild(this.container.nativeElement, svg)
 
@@ -314,4 +309,3 @@ export class ExploreContainerComponent implements OnInit {
   }
 
 }
-
