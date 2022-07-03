@@ -220,18 +220,30 @@ export class ExploreContainerComponent implements OnInit {
 
     const textN = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
     this.renderer.setAttribute(textN, `id`, `CardinalN`)
+    this.renderer.setAttribute(textN, `dominant-baseline`,`auto`)
+    this.renderer.setAttribute(textN, `x`, `145`)
+    this.renderer.setAttribute(textN, `y`, `-10`) 
     textN.textContent = CardinalN
 
     const textS = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
     this.renderer.setAttribute(textS, `id`, `CardinalS`)
+    this.renderer.setAttribute(textS, `dominant-baseline`,`hanging`)
+    this.renderer.setAttribute(textS, `x`, `145`)
+    this.renderer.setAttribute(textS, `y`, `310`) 
     textS.textContent = CardinalS
 
     const textE = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
     this.renderer.setAttribute(textE, `id`, `CardinalE`)
+    this.renderer.setAttribute(textE, `dominant-baseline`,`middle`)
+    this.renderer.setAttribute(textE, `x`, `310`)
+    this.renderer.setAttribute(textE, `y`, `150`) 
     textE.textContent = CardinalE
 
     const textW = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
     this.renderer.setAttribute(textW, `id`, `CardinalW`)
+    this.renderer.setAttribute(textW, `dominant-baseline`,`middle`)
+    this.renderer.setAttribute(textW, `x`, `-23`)
+    this.renderer.setAttribute(textW, `y`, `150`) 
     textW.textContent = CardinalW
 
 
@@ -244,6 +256,9 @@ export class ExploreContainerComponent implements OnInit {
     if (windSpeed == 0) {
       textWindVelocity.textContent = `No Wind`
     }
+    this.renderer.setAttribute(textWindVelocity, `dominant-baseline`,`auto`)
+    this.renderer.setAttribute(textWindVelocity, `x`, `-55`)
+    this.renderer.setAttribute(textWindVelocity, `y`, `-10`)
 
     this.renderer.appendChild(InfoGroup, textWindVelocity)
 
