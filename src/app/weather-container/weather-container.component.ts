@@ -77,8 +77,7 @@ export class ExploreContainerComponent implements OnInit {
 
     let windDeg = weatherNowStringOutParsed.wind.deg
 
-    let windSpeed =  30
-    // Math.round(weatherNowStringOutParsed.wind.speed)
+    let windSpeed = Math.round(weatherNowStringOutParsed.wind.speed)
 
     let temp = weatherNowStringOutParsed.main.temp
 
@@ -93,11 +92,11 @@ export class ExploreContainerComponent implements OnInit {
     const OrdinalSW: string = `SW`
 
     const label05mph: string = `5 mph`
-    const label10mph: string = `10`
-    const label15mph: string = `15`
-    const label20mph: string = `20`
-    const label25mph: string = `25`
-    const label30mph: string = `30+`
+    const label10mph: string = `10 mph`
+    const label15mph: string = `15 mph`
+    const label20mph: string = `20 mph`
+    const label25mph: string = `25 mph`
+    const label30mph: string = `30+ mph`
 
 
 
@@ -181,48 +180,48 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(circle, `id`, `windDirectionHolder`)
     this.renderer.setAttribute(circle, `fill`, WindVelocity)
 
-    const band5 = document.createElementNS(`http://www.w3.org/2000/svg`, `circle`)
-    this.renderer.setAttribute(band5, `cx`, `150`)
-    this.renderer.setAttribute(band5, `cy`, `150`)
-    this.renderer.setAttribute(band5, `r`, `130`)
-    this.renderer.setAttribute(band5, `id`, `circleBand5`)
-    this.renderer.setAttribute(band5, `fill`, BandFill)
-    this.renderer.setAttribute(band5, `stroke`, `gray`)
+    const band25mph = document.createElementNS(`http://www.w3.org/2000/svg`, `circle`)
+    this.renderer.setAttribute(band25mph, `cx`, `150`)
+    this.renderer.setAttribute(band25mph, `cy`, `150`)
+    this.renderer.setAttribute(band25mph, `r`, `130`)
+    this.renderer.setAttribute(band25mph, `id`, `band25mph`)
+    this.renderer.setAttribute(band25mph, `fill`, BandFill)
+    this.renderer.setAttribute(band25mph, `stroke`, `gray`)
 
 
-    const band4 = document.createElementNS(`http://www.w3.org/2000/svg`, `circle`)
-    this.renderer.setAttribute(band4, `cx`, `150`)
-    this.renderer.setAttribute(band4, `cy`, `150`)
-    this.renderer.setAttribute(band4, `r`, `110`)
-    this.renderer.setAttribute(band4, `id`, `circleBand4`)
-    this.renderer.setAttribute(band4, `fill`, BandFill)
-    this.renderer.setAttribute(band4, `stroke`, `gray`)
+    const band20mph = document.createElementNS(`http://www.w3.org/2000/svg`, `circle`)
+    this.renderer.setAttribute(band20mph, `cx`, `150`)
+    this.renderer.setAttribute(band20mph, `cy`, `150`)
+    this.renderer.setAttribute(band20mph, `r`, `110`)
+    this.renderer.setAttribute(band20mph, `id`, `band20mph`)
+    this.renderer.setAttribute(band20mph, `fill`, BandFill)
+    this.renderer.setAttribute(band20mph, `stroke`, `gray`)
 
 
-    const band3 = document.createElementNS(`http://www.w3.org/2000/svg`, `circle`)
-    this.renderer.setAttribute(band3, `cx`, `150`)
-    this.renderer.setAttribute(band3, `cy`, `150`)
-    this.renderer.setAttribute(band3, `r`, `90`)
-    this.renderer.setAttribute(band3, `id`, `circleBand3`)
-    this.renderer.setAttribute(band3, `fill`, BandFill)
-    this.renderer.setAttribute(band3, `stroke`, `gray`)
+    const band15mph = document.createElementNS(`http://www.w3.org/2000/svg`, `circle`)
+    this.renderer.setAttribute(band15mph, `cx`, `150`)
+    this.renderer.setAttribute(band15mph, `cy`, `150`)
+    this.renderer.setAttribute(band15mph, `r`, `90`)
+    this.renderer.setAttribute(band15mph, `id`, `band15mph`)
+    this.renderer.setAttribute(band15mph, `fill`, BandFill)
+    this.renderer.setAttribute(band15mph, `stroke`, `gray`)
 
 
-    const band2 = document.createElementNS(`http://www.w3.org/2000/svg`, `circle`)
-    this.renderer.setAttribute(band2, `cx`, `150`)
-    this.renderer.setAttribute(band2, `cy`, `150`)
-    this.renderer.setAttribute(band2, `r`, `70`)
-    this.renderer.setAttribute(band2, `id`, `circleBand25`)
-    this.renderer.setAttribute(band2, `fill`, BandFill)
-    this.renderer.setAttribute(band2, `stroke`, `gray`)
+    const band10mph = document.createElementNS(`http://www.w3.org/2000/svg`, `circle`)
+    this.renderer.setAttribute(band10mph, `cx`, `150`)
+    this.renderer.setAttribute(band10mph, `cy`, `150`)
+    this.renderer.setAttribute(band10mph, `r`, `70`)
+    this.renderer.setAttribute(band10mph, `id`, `band10mph`)
+    this.renderer.setAttribute(band10mph, `fill`, BandFill)
+    this.renderer.setAttribute(band10mph, `stroke`, `gray`)
 
-    const band1 = document.createElementNS(`http://www.w3.org/2000/svg`, `circle`)
-    this.renderer.setAttribute(band1, `cx`, `150`)
-    this.renderer.setAttribute(band1, `cy`, `150`)
-    this.renderer.setAttribute(band1, `r`, `50`)
-    this.renderer.setAttribute(band1, `id`, `circleBand1`)
-    this.renderer.setAttribute(band1, `fill`, BandFill)
-    this.renderer.setAttribute(band1, `stroke`, `gray`)
+    const band5mph = document.createElementNS(`http://www.w3.org/2000/svg`, `circle`)
+    this.renderer.setAttribute(band5mph, `cx`, `150`)
+    this.renderer.setAttribute(band5mph, `cy`, `150`)
+    this.renderer.setAttribute(band5mph, `r`, `50`)
+    this.renderer.setAttribute(band5mph, `id`, `band5mph`)
+    this.renderer.setAttribute(band5mph, `fill`, BandFill)
+    this.renderer.setAttribute(band5mph, `stroke`, `gray`)
 
     const textN = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
     this.renderer.setAttribute(textN, `id`, `CardinalN`)
@@ -260,6 +259,48 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(Legend5mph, `font-size`, `0.75rem`)
     Legend5mph.textContent = label05mph
 
+    const Legend10mph = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
+    this.renderer.setAttribute(Legend10mph, `id`, `CardinalW`)
+    this.renderer.setAttribute(Legend10mph, `dominant-baseline`, `middle`)
+    this.renderer.setAttribute(Legend10mph, `x`, `165`)
+    this.renderer.setAttribute(Legend10mph, `y`, `150`)
+    this.renderer.setAttribute(Legend10mph, `font-size`, `0.75rem`)
+    Legend10mph.textContent = label10mph
+
+    const Legend15mph = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
+    this.renderer.setAttribute(Legend15mph, `id`, `CardinalW`)
+    this.renderer.setAttribute(Legend15mph, `dominant-baseline`, `middle`)
+    this.renderer.setAttribute(Legend15mph, `x`, `195`)
+    this.renderer.setAttribute(Legend15mph, `y`, `150`)
+    this.renderer.setAttribute(Legend15mph, `font-size`, `0.75rem`)
+    Legend15mph.textContent = label15mph
+
+    const Legend20mph = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
+    this.renderer.setAttribute(Legend20mph, `id`, `CardinalW`)
+    this.renderer.setAttribute(Legend20mph, `dominant-baseline`, `middle`)
+    this.renderer.setAttribute(Legend20mph, `x`, `165`)
+    this.renderer.setAttribute(Legend20mph, `y`, `150`)
+    this.renderer.setAttribute(Legend20mph, `font-size`, `0.75rem`)
+    Legend20mph.textContent = label20mph
+
+    const Legend25mph = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
+    this.renderer.setAttribute(Legend25mph, `id`, `CardinalW`)
+    this.renderer.setAttribute(Legend25mph, `dominant-baseline`, `middle`)
+    this.renderer.setAttribute(Legend25mph, `x`, `165`)
+    this.renderer.setAttribute(Legend25mph, `y`, `150`)
+    this.renderer.setAttribute(Legend25mph, `font-size`, `0.75rem`)
+    Legend25mph.textContent = label25mph
+
+    const Legend30mph = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
+    this.renderer.setAttribute(Legend30mph, `id`, `CardinalW`)
+    this.renderer.setAttribute(Legend30mph, `dominant-baseline`, `middle`)
+    this.renderer.setAttribute(Legend30mph, `x`, `165`)
+    this.renderer.setAttribute(Legend30mph, `y`, `150`)
+    this.renderer.setAttribute(Legend30mph, `font-size`, `0.75rem`)
+    Legend30mph.textContent = label30mph    
+
+
+
     const textWindVelocity = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
     this.renderer.setAttribute(textWindVelocity, `id`, `WindVelocity`)
     if (windSpeed > 0) {
@@ -285,15 +326,35 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(legentGroup, `width`, `320`)
     this.renderer.setAttribute(legentGroup, `id`, `LegendGroup`)
 
-    this.renderer.appendChild(legentGroup, Legend5mph)
 
+    if (windSpeed >= 30) {
+      this.renderer.appendChild(legentGroup, Legend30mph)
+      this.renderer.appendChild(bandGroup, band25mph)
+    }
+    if (windSpeed >= 25 && windSpeed <= 29) {
+      this.renderer.appendChild(legentGroup, Legend25mph)
+      this.renderer.appendChild(bandGroup, band25mph)
+    }
 
-    this.renderer.appendChild(bandGroup, band5)
-    this.renderer.appendChild(bandGroup, band4)
-    this.renderer.appendChild(bandGroup, band3)
-    this.renderer.appendChild(bandGroup, band2)
-    this.renderer.appendChild(bandGroup, band1)
+    if (windSpeed >= 16 && windSpeed <= 20) {
+      this.renderer.appendChild(legentGroup, Legend20mph)
+      this.renderer.appendChild(bandGroup, band20mph)
+    }
 
+    if (windSpeed >= 11 && windSpeed <= 15) {
+      this.renderer.appendChild(legentGroup, Legend15mph)
+      this.renderer.appendChild(bandGroup, band15mph)
+    }
+
+    if (windSpeed >= 6 && windSpeed <= 10) {
+      this.renderer.appendChild(legentGroup, Legend10mph)
+      this.renderer.appendChild(bandGroup, band10mph)
+    }
+
+    if (windSpeed >= 1 && windSpeed <= 5) {
+      this.renderer.appendChild(legentGroup, Legend5mph)
+      this.renderer.appendChild(bandGroup, band5mph)
+    }
     this.renderer.appendChild(InfoGroup, textN)
     this.renderer.appendChild(InfoGroup, textS)
     this.renderer.appendChild(InfoGroup, textE)
