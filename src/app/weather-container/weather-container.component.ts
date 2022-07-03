@@ -150,7 +150,6 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(InfoGroup, `width`, `320`)
     this.renderer.setAttribute(InfoGroup, `id`, `InfoGroup`)
 
-    // 6 needs to = 1 and 29 needs to equatl 100
     let windScaler195: any = 195 + (windSpeed * 3.5)
     let windScaler175: any = 175 + (windSpeed * 3.5)
 
