@@ -77,7 +77,7 @@ export class ExploreContainerComponent implements OnInit {
 
     let windDeg = weatherNowStringOutParsed.wind.deg
 
-    let windSpeed =   Math.round(weatherNowStringOutParsed.wind.speed)
+    let windSpeed =  11// Math.round(weatherNowStringOutParsed.wind.speed)
 
     let temp = weatherNowStringOutParsed.main.temp
 
@@ -86,17 +86,17 @@ export class ExploreContainerComponent implements OnInit {
     const CardinalE: string = `E`
     const CardinalW: string = `W`
 
-    const OrddinalNE: string = `NE`
-    const OrddinalSE: string = `SE`
-    const OrddinalNW: string = `NW`
-    const CardinalSW: string = `SW`
+    const OrdinalNE: string = `NE`
+    const OrdinalSE: string = `SE`
+    const OrdinalNW: string = `NW`
+    const OrdinalSW: string = `SW`
 
-    const l05mph: string = `5 mph`
-    const l10mph: string = `10`
-    const l15mph: string = `15`
-    const l20mph: string = `20`
-    const l25mph: string = `25`
-    const l30mph: string = `30+`
+    const label05mph: string = `5 mph`
+    const label10mph: string = `10`
+    const label15mph: string = `15`
+    const label20mph: string = `20`
+    const label25mph: string = `25`
+    const label30mph: string = `30+`
 
 
 
@@ -107,7 +107,7 @@ export class ExploreContainerComponent implements OnInit {
     }
 
     if (windDeg >= 31 && windDeg <= 65) {
-      windDirectionRounded = OrddinalNE
+      windDirectionRounded = OrdinalNE
     }
 
     if (windDeg >= 66 && windDeg <= 120) {
@@ -115,7 +115,7 @@ export class ExploreContainerComponent implements OnInit {
     }
 
     if (windDeg >= 121 && windDeg <= 150) {
-      windDirectionRounded = OrddinalSE
+      windDirectionRounded = OrdinalSE
     }
 
     if (windDeg >= 151 && windDeg <= 210) {
@@ -123,7 +123,7 @@ export class ExploreContainerComponent implements OnInit {
     }
 
     if (windDeg >= 211 && windDeg <= 240) {
-      windDirectionRounded = OrddinalNW
+      windDirectionRounded = OrdinalSW
     }
 
     if (windDeg >= 241 && windDeg <= 300) {
@@ -131,7 +131,7 @@ export class ExploreContainerComponent implements OnInit {
     }
 
     if (windDeg >= 301 && windDeg <= 330) {
-      windDirectionRounded = OrddinalNW
+      windDirectionRounded = OrdinalNW
     }
 
     if (windDeg >= 331 && windDeg <= 360) {
@@ -150,20 +150,26 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(InfoGroup, `width`, `320`)
     this.renderer.setAttribute(InfoGroup, `id`, `InfoGroup`)
 
-    let windScaler195: any = 195 + (windSpeed * 3.5)
-    let windScaler175: any = 175 + (windSpeed * 3.5)
+    // 29 needs to be just unerd 100
+    let windScaler190: any = 190 + (windSpeed * 3.44)
+    let windScaler170: any = 170 + (windSpeed * 3.44)
 
     if (windSpeed != 0) {
       const path = document.createElementNS(`http://www.w3.org/2000/svg`, `path`)
       if (windSpeed >= 30) {
-        this.renderer.setAttribute(path, `d`, `M 150,150 150,295 135,275 165,275 150,295 `)
+        this.renderer.setAttribute(path, `d`, `M 150,150 150,290 135,270 165,270 150,290 `)
       }
-      if (windSpeed >= 6 && windSpeed <= 29) {
-        this.renderer.setAttribute(path, `d`, `M 150,150 150,` + windScaler195 + ` 135,` + windScaler175 + ` 165,` + windScaler175 + ` 150,` + windScaler195)
+
+      if (windSpeed >= 15 && windSpeed <= 29) {
+        this.renderer.setAttribute(path, `d`, `M 150,150 150,` + windScaler190 + ` 135,` + windScaler170 + ` 165,` + windScaler170 + ` 150,` + windScaler190)
+      }
+
+      if (windSpeed >= 6 && windSpeed <= 14 ) {
+        this.renderer.setAttribute(path, `d`, `M 150,150 150,` + (windScaler190 -3) + ` 135,` + (windScaler170 -3) + ` 165,` + (windScaler170 -3) + ` 150,` + (windScaler190 -3))
       }
 
       if (windSpeed >= 1 && windSpeed <= 5) {
-        this.renderer.setAttribute(path, `d`, `M 150,150 150,195 135,175 165,175 150,195 `)
+        this.renderer.setAttribute(path, `d`, `M 150,150 150,190 135,170 165,170 150,190 `)
       }
 
       this.renderer.setAttribute(path, `id`, `windDirectionPath`)
@@ -255,7 +261,7 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(Legend5mph, `x`, `165`)
     this.renderer.setAttribute(Legend5mph, `y`, `150`)
     this.renderer.setAttribute(Legend5mph, `font-size`, `0.75rem`)
-    Legend5mph.textContent = l05mph
+    Legend5mph.textContent = label05mph
 
     const textWindVelocity = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
     this.renderer.setAttribute(textWindVelocity, `id`, `WindVelocity`)
