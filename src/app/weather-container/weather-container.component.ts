@@ -100,43 +100,43 @@ export class ExploreContainerComponent implements OnInit {
 
 
 
-    let windDirectionRounded: string
+    // let windDirectionRounded: string
 
-    if (windDeg >= 0 && windDeg <= 30) {
-      windDirectionRounded = CardinalN
-    }
+    // if (windDeg >= 0 && windDeg <= 30) {
+    //   windDirectionRounded = CardinalN
+    // }
 
-    if (windDeg >= 31 && windDeg <= 65) {
-      windDirectionRounded = OrdinalNE
-    }
+    // if (windDeg >= 31 && windDeg <= 60) {
+    //   windDirectionRounded = OrdinalNE
+    // }
 
-    if (windDeg >= 66 && windDeg <= 120) {
-      windDirectionRounded = CardinalE
-    }
+    // if (windDeg >= 61 && windDeg <= 120) {
+    //   windDirectionRounded = CardinalE
+    // }
 
-    if (windDeg >= 121 && windDeg <= 150) {
-      windDirectionRounded = OrdinalSE
-    }
+    // if (windDeg >= 121 && windDeg <= 150) {
+    //   windDirectionRounded = OrdinalSE
+    // }
 
-    if (windDeg >= 151 && windDeg <= 210) {
-      windDirectionRounded = CardinalS
-    }
+    // if (windDeg >= 151 && windDeg <= 210) {
+    //   windDirectionRounded = CardinalS
+    // }
 
-    if (windDeg >= 211 && windDeg <= 240) {
-      windDirectionRounded = OrdinalSW
-    }
+    // if (windDeg >= 211 && windDeg <= 240) {
+    //   windDirectionRounded = OrdinalSW
+    // }
 
-    if (windDeg >= 241 && windDeg <= 300) {
-      windDirectionRounded = CardinalW
-    }
+    // if (windDeg >= 241 && windDeg <= 300) {
+    //   windDirectionRounded = CardinalW
+    // }
 
-    if (windDeg >= 301 && windDeg <= 330) {
-      windDirectionRounded = OrdinalNW
-    }
+    // if (windDeg >= 301 && windDeg <= 330) {
+    //   windDirectionRounded = OrdinalNW
+    // }
 
-    if (windDeg >= 331 && windDeg <= 360) {
-      windDirectionRounded = CardinalN
-    }
+    // if (windDeg >= 331 && windDeg <= 360) {
+    //   windDirectionRounded = CardinalN
+    // }
 
 
     const svg = document.createElementNS(`http://www.w3.org/2000/svg`, `svg`)
@@ -157,15 +157,15 @@ export class ExploreContainerComponent implements OnInit {
     if (windSpeed != 0) {
       const path = document.createElementNS(`http://www.w3.org/2000/svg`, `path`)
       if (windSpeed >= 30) {
-        this.renderer.setAttribute(path, `d`, `M 150,150 150,298 135,278 165,278 150,298 `)
+        this.renderer.setAttribute(path, `d`, `M 150,150 150,298 145,278 155,278 150,298 `)
       }
 
       if (windSpeed >= 6 && windSpeed <= 29) {
-        this.renderer.setAttribute(path, `d`, `M 150,150 150,` + windScalerFirstLast + ` 135,` + windScalerSecondThird + ` 165,` + windScalerSecondThird + ` 150,` + windScalerFirstLast)
+        this.renderer.setAttribute(path, `d`, `M 150,150 150,` + windScalerFirstLast + ` 155,` + windScalerSecondThird + ` 145,` + windScalerSecondThird + ` 150,` + windScalerFirstLast)
       }
 
       if (windSpeed >= 1 && windSpeed <= 5) {
-        this.renderer.setAttribute(path, `d`, `M 150,150 150,198 135,178 165,178 150,198 `)
+        this.renderer.setAttribute(path, `d`, `M 150,150 150,198 145,178 155,178 150,198 `)
       }
 
       this.renderer.setAttribute(path, `id`, `windDirectionPath`)
@@ -276,10 +276,52 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(textSE, `id`, `OrdinalSE`)
     this.renderer.setAttribute(textSE, `dominant-baseline`, `hanging`)
     this.renderer.setAttribute(textSE, `x`, `260`)
-    this.renderer.setAttribute(textSE, `y`, `265`)    
+    this.renderer.setAttribute(textSE, `y`, `265`) 
+  
     textSE.textContent = OrdinalSE  
     
     
+    // let windDirectionRounded: string
+
+    if (windDeg >= 0 && windDeg <= 30) {
+      this.renderer.setAttribute(textN, `fill`, `red`)
+    }
+
+    if (windDeg >= 31 && windDeg <= 60) {
+      this.renderer.setAttribute(textNE, `fill`, `red`)
+    }
+
+    if (windDeg >= 61 && windDeg <= 120) {
+      this.renderer.setAttribute(textE, `fill`, `red`)
+    }
+
+    if (windDeg >= 121 && windDeg <= 150) {
+      this.renderer.setAttribute(textSE, `fill`, `red`)
+    }
+
+    if (windDeg >= 151 && windDeg <= 210) {
+      this.renderer.setAttribute(textS, `fill`, `red`)
+    }
+
+    if (windDeg >= 211 && windDeg <= 240) {
+      this.renderer.setAttribute(textSW, `fill`, `red`)
+    }
+
+    if (windDeg >= 241 && windDeg <= 300) {
+      this.renderer.setAttribute(textW, `fill`, `red`)
+    }
+
+    if (windDeg >= 301 && windDeg <= 330) {
+      this.renderer.setAttribute(textNW, `fill`, `red`)
+    }
+
+    if (windDeg >= 331 && windDeg <= 360) {
+      this.renderer.setAttribute(textW, `fill`, `red`)
+    }
+
+
+
+
     /*
         const Legend5mph = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
         this.renderer.setAttribute(Legend5mph, `id`, `CardinalW`)
@@ -331,7 +373,7 @@ export class ExploreContainerComponent implements OnInit {
     */
 
 
-    const textWindVelocity = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
+    let textWindVelocity = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
     this.renderer.setAttribute(textWindVelocity, `id`, `WindVelocity`)
     if (windSpeed > 0) {
     //  textWindVelocity.textContent = windDirectionRounded + ` ` + windSpeed.toString() + ` mph`
