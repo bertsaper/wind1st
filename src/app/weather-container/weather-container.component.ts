@@ -247,9 +247,39 @@ export class ExploreContainerComponent implements OnInit {
     const textW = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
     this.renderer.setAttribute(textW, `id`, `CardinalW`)
     this.renderer.setAttribute(textW, `dominant-baseline`, `middle`)
-    this.renderer.setAttribute(textW, `x`, `-23`)
+    this.renderer.setAttribute(textW, `x`, `-25`)
     this.renderer.setAttribute(textW, `y`, `150`)
     textW.textContent = CardinalW
+
+    const textNW = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
+    this.renderer.setAttribute(textNW, `id`, `OrdinalNW`)
+    this.renderer.setAttribute(textNW, `dominant-baseline`, `baseline`)
+    this.renderer.setAttribute(textNW, `x`, `15`)
+    this.renderer.setAttribute(textNW, `y`, `35`)    
+    textNW.textContent = OrdinalNW
+
+    const textSW = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
+    this.renderer.setAttribute(textSW, `id`, `OrdinalSW`)
+    this.renderer.setAttribute(textSW, `dominant-baseline`, `hanging`)
+    this.renderer.setAttribute(textSW, `x`, `15`)
+    this.renderer.setAttribute(textSW, `y`, `265`)    
+    textSW.textContent = OrdinalSW  
+
+    const textNE = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
+    this.renderer.setAttribute(textNE, `id`, `OrdinalNE`)
+    this.renderer.setAttribute(textNE, `dominant-baseline`, `baseline`)
+    this.renderer.setAttribute(textNE, `x`, `260`)
+    this.renderer.setAttribute(textNE, `y`, `35`)    
+    textNE.textContent = OrdinalNE
+
+    const textSE = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
+    this.renderer.setAttribute(textSE, `id`, `OrdinalSE`)
+    this.renderer.setAttribute(textSE, `dominant-baseline`, `hanging`)
+    this.renderer.setAttribute(textSE, `x`, `260`)
+    this.renderer.setAttribute(textSE, `y`, `265`)    
+    textSE.textContent = OrdinalSE  
+    
+    
     /*
         const Legend5mph = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
         this.renderer.setAttribute(Legend5mph, `id`, `CardinalW`)
@@ -304,32 +334,21 @@ export class ExploreContainerComponent implements OnInit {
     const textWindVelocity = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
     this.renderer.setAttribute(textWindVelocity, `id`, `WindVelocity`)
     if (windSpeed > 0) {
-      textWindVelocity.textContent = windDirectionRounded + ` ` + windSpeed.toString() + ` mph`
+    //  textWindVelocity.textContent = windDirectionRounded + ` ` + windSpeed.toString() + ` mph`
+    textWindVelocity.textContent = windSpeed.toString() + ` mph`
     }
 
     if (windSpeed == 0) {
       textWindVelocity.textContent = `No Wind`
     }
-    this.renderer.setAttribute(textWindVelocity, `dominant-baseline`, `middle`)
+    this.renderer.setAttribute(textWindVelocity, `dominant-baseline`, `baseline`)
 
-    if (windDeg <= 210) {
+    if (windDeg <= 170) {
       this.renderer.setAttribute(textWindVelocity, `x`, `155`)
     }
 
-    if (windDeg >= 211 && windDeg <= 240) {
-      this.renderer.setAttribute(textWindVelocity, `x`, `70`)
-    }
-
-    if (windDeg >= 241 && windDeg <= 300) {
-      this.renderer.setAttribute(textWindVelocity, `x`, `82`)
-    }
-
-    if (windDeg >= 301 && windDeg <= 330) {
-      this.renderer.setAttribute(textWindVelocity, `x`, `70`)
-    }
-
-    if (windDeg >= 331) {
-      this.renderer.setAttribute(textWindVelocity, `x`, `82`)
+    if (windDeg >= 169) {
+      this.renderer.setAttribute(textWindVelocity, `x`, `90`)
     }
 
     this.renderer.setAttribute(textWindVelocity, `y`, `150`)
@@ -379,6 +398,11 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.appendChild(InfoGroup, textS)
     this.renderer.appendChild(InfoGroup, textE)
     this.renderer.appendChild(InfoGroup, textW)
+    this.renderer.appendChild(InfoGroup, textNW) 
+    this.renderer.appendChild(InfoGroup, textSW)  
+    this.renderer.appendChild(InfoGroup, textNE) 
+    this.renderer.appendChild(InfoGroup, textSE)   
+    
     this.renderer.appendChild(InfoGroup, circle)
 
 
