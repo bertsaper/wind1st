@@ -83,7 +83,7 @@ export class ExploreContainerComponent implements OnInit {
 
     let windSpeed = Math.round(weatherNowStringOutParsed.wind.speed)
 
-    let temp = weatherNowStringOutParsed.main.temp
+    let temp = Math.round(weatherNowStringOutParsed.main.temp)
 
     const CardinalN: string = `N`
     const CardinalS: string = `S`
@@ -134,6 +134,7 @@ export class ExploreContainerComponent implements OnInit {
       this.renderer.setAttribute(path, `id`, `windDirectionPath`)
       this.renderer.setAttribute(path, `transform`, `rotate(` + windDeg + `,150,150)`)
       this.renderer.appendChild(InfoGroup, path)
+    
     }
 
     const circle = document.createElementNS(`http://www.w3.org/2000/svg`, `circle`)
@@ -240,14 +241,19 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(textSE, `dominant-baseline`, `hanging`)
     this.renderer.setAttribute(textSE, `x`, `260`)
     this.renderer.setAttribute(textSE, `y`, `265`) 
-  
     textSE.textContent = OrdinalSE  
     
-    
-    // let windDirectionRounded: string
+    const textTemp = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
+    this.renderer.setAttribute(textTemp, `id`, `textTemp`)
+    this.renderer.setAttribute(textTemp, `dominant-baseline`, `baseline`)
+    this.renderer.setAttribute(textTemp, `x`, `-30`)
+    this.renderer.setAttribute(textTemp, `y`, `-30`) 
+    textTemp.textContent = temp + `F`  
+
 
     if (windDeg >= 0 && windDeg <= 30) 
       this.renderer.setAttribute(textN, `fill`, `red`)
+
     if (windDeg >= 31 && windDeg <= 60) 
       this.renderer.setAttribute(textNE, `fill`, `red`)
 
@@ -257,22 +263,17 @@ export class ExploreContainerComponent implements OnInit {
     if (windDeg >= 121 && windDeg <= 150) 
       this.renderer.setAttribute(textSE, `fill`, `red`)
     
-
     if (windDeg >= 151 && windDeg <= 210) 
       this.renderer.setAttribute(textS, `fill`, `red`)
-    
 
     if (windDeg >= 211 && windDeg <= 240) 
       this.renderer.setAttribute(textSW, `fill`, `red`)
-    
 
     if (windDeg >= 241 && windDeg <= 300) 
       this.renderer.setAttribute(textW, `fill`, `red`)
-    
 
     if (windDeg >= 301 && windDeg <= 330) 
       this.renderer.setAttribute(textNW, `fill`, `red`)
-    
 
     if (windDeg >= 331 && windDeg <= 360) 
       this.renderer.setAttribute(textW, `fill`, `red`)
@@ -329,25 +330,28 @@ export class ExploreContainerComponent implements OnInit {
 
     let textWindVelocity = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
     this.renderer.setAttribute(textWindVelocity, `id`, `WindVelocity`)
-    if (windSpeed > 0) {
+    
+    if (windSpeed > 0) 
     //  textWindVelocity.textContent = windDirectionRounded + ` ` + windSpeed.toString() + ` mph`
     textWindVelocity.textContent = windSpeed.toString() + ` mph`
-    }
 
-    if (windSpeed == 0) {
+    if (windSpeed == 0) 
       textWindVelocity.textContent = `No Wind`
-    }
+    
     this.renderer.setAttribute(textWindVelocity, `dominant-baseline`, `baseline`)
 
-    if (windDeg <= 170) {
+    if (windDeg <= 170) 
       this.renderer.setAttribute(textWindVelocity, `x`, `155`)
-    }
+    
 
     if (windDeg >= 169) {
+
       if (windSpeed < 10)
       this.renderer.setAttribute(textWindVelocity, `x`, `95`)
+      
       if (windSpeed > 10)
       this.renderer.setAttribute(textWindVelocity, `x`, `92`)
+
     }
     this.renderer.setAttribute(textWindVelocity, `y`, `150`)
 
@@ -399,7 +403,8 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.appendChild(InfoGroup, textNW) 
     this.renderer.appendChild(InfoGroup, textSW)  
     this.renderer.appendChild(InfoGroup, textNE) 
-    this.renderer.appendChild(InfoGroup, textSE)   
+    this.renderer.appendChild(InfoGroup, textSE)
+    this.renderer.appendChild(InfoGroup, textTemp)       
     
     this.renderer.appendChild(InfoGroup, circle)
 
@@ -409,7 +414,6 @@ export class ExploreContainerComponent implements OnInit {
    // this.renderer.appendChild(svg, legendGroup)
 
     this.renderer.appendChild(this.container.nativeElement, svg)
-
 
   }
 
