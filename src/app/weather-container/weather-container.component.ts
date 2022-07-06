@@ -48,9 +48,14 @@ export class ExploreContainerComponent implements OnInit {
 
       const openWeatherKey: string = environment.open_weather_key
 
+      let unitSlecton: string
       const returnImperial: string = "&units=imperial"
+      const returnMetric: string = "&units=metric"
 
-      let resString: string = openWeatherAddress + latString + lat + lonString + lon + returnImperial + openWeatherKey
+      if (!unitSlecton)
+      unitSlecton = returnImperial
+
+      let resString: string = openWeatherAddress + latString + lat + lonString + lon + unitSlecton + openWeatherKey
 
       this._http.get(resString).subscribe((res) => {
         this.weatherNow = res
@@ -276,7 +281,7 @@ export class ExploreContainerComponent implements OnInit {
       this.renderer.setAttribute(textNW, `fill`, `red`)
 
     if (windDeg >= 331 && windDeg <= 360) 
-      this.renderer.setAttribute(textW, `fill`, `red`)
+      this.renderer.setAttribute(textN, `fill`, `red`)
 
         const Legend5mph = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
         this.renderer.setAttribute(Legend5mph, `id`, `CardinalW`)
