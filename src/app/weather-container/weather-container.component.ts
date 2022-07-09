@@ -6,9 +6,6 @@ import { Router } from '@angular/router';
 
 import { HttpClient } from "@angular/common/http";
 
-import { Chart, registerables } from 'chart.js';
-Chart.register(...registerables)
-
 @Component({
   selector: 'app-weather-container',
   templateUrl: './weather-container.component.html',
