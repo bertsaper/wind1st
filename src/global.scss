@@ -28,3 +28,41 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+#WindInfo {
+    // background-color: red;
+    overflow: visible!important;
+}
+
+#windDirectionPath {
+    fill: black;
+    stroke: black;
+    stroke-width: 1px;
+}
+
+#windDirectionHolder {
+    stroke: black;
+    stroke-width: 2px;
+    // -webkit-filter: drop-shadow( 0px 0px 5px rgba(0, 0, 0, .7));
+    // filter: drop-shadow( 0px 0px 5px rgba(0, 0, 0, .7));
+}
+
+// #CardinalN {
+//     transform: translate(140px, -28px);
+//     font-size: 30px;
+// }
+// #CardinalS {
+//     transform: translate(140px, 350px);
+//     font-size: 30px;
+// }
+// #CardinalE {
+//     transform: translate(335px, 160px);
+//     font-size: 30px;
+// }
+// #CardinalW {
+//     transform: translate(-50px, 160px);
+//     font-size: 30px;
+// }
+// #WindVelocity {
+//     transform: translate(-150px, -28px);
+//     font-size: 30px;
+// }
