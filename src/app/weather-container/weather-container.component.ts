@@ -252,7 +252,8 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(textTemp, `y`, `-30`) 
     textTemp.textContent = temp + `F`  
 
-
+    if (windSpeed != 0) {
+      
     if (windDeg >= 0 && windDeg <= 30) 
       this.renderer.setAttribute(textN, `fill`, `red`)
 
@@ -279,6 +280,8 @@ export class ExploreContainerComponent implements OnInit {
 
     if (windDeg >= 331 && windDeg <= 360) 
       this.renderer.setAttribute(textN, `fill`, `red`)
+
+    }
 
         const Legend5mph = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
         this.renderer.setAttribute(Legend5mph, `id`, `CardinalW`)
