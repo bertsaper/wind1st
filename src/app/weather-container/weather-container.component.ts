@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ElementRef, ViewChild, Renderer2 } from '@angular/core';
 
-import { environment } from 'src/environments/environment'; // src\environments
+import { environment } from 'src/environments/environment';
 
 import { Router } from '@angular/router';
 

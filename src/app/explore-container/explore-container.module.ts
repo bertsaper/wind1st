@@ -9,6 +9,8 @@ import { ExploreContainerComponent } from './explore-container.component';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
 
+import { MatAutocompleteModule } from "@angular/material/autocomplete";
+
 
 @NgModule({
   imports: [ CommonModule, 
@@ -16,7 +18,8 @@ import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
     IonicModule,
     GoogleMapsModule,
     HttpClientModule,
-    HttpClientJsonpModule,],
+    HttpClientJsonpModule,
+    MatAutocompleteModule,],
   declarations: [ExploreContainerComponent],
   exports: [ExploreContainerComponent]
 })
