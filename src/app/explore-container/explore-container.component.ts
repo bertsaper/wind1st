@@ -67,6 +67,10 @@ export class ExploreContainerComponent implements OnInit {
       
       console.log(place.geometry.location.lat())
       console.log(place.geometry.location.lng())
+      console.log(place.name)
+
+      localStorage.setItem(`weatherLocation`, `{` + place.geometry.location.lat() +  `, ` + place.geometry.location.lng() + `, ` + place.name + `}`)
+
       if (!place) {
         // User entered the name of a Place that was not suggested and
         // pressed the Enter key, or the Place Details request failed.
