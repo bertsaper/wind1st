@@ -23,6 +23,15 @@ export class ExploreContainerComponent implements OnInit {
 
   weatherNowStringOutParsed: Object
 
+  weatherLocation: Object
+
+  lat: number
+
+  lng: number
+
+  location: string
+
+
   @ViewChild('svgWindPointer') container: ElementRef;
 
   constructor(
@@ -35,13 +44,17 @@ export class ExploreContainerComponent implements OnInit {
 
     try {
 
+      let weatherLocation = localStorage.getItem(`weatherLocation`)
+
+      let weatherLocationParsed = JSON.parse(weatherLocation)
+
       const openWeatherAddress = environment.open_weather_address
 
       const latString = "lat="
-      let lat: any = environment.lat_default
+      let lati: any = weatherLocationParsed.location.lat
 
       const lonString = "&lon="
-      let lon: any = environment.lon_default
+      let long: any = weatherLocationParsed.location.lng
 
       const openWeatherKey: string = environment.open_weather_key
 
@@ -52,9 +65,9 @@ export class ExploreContainerComponent implements OnInit {
       if (!unitSlecton)
       unitSlecton = returnImperial
 
-      let resString: string = openWeatherAddress + latString + lat + lonString + lon + unitSlecton + openWeatherKey
+      let resString: string = openWeatherAddress + latString + lati + lonString + long + unitSlecton + openWeatherKey
 
-      this._http.get(resString).subscribe((res) => {
+        this._http.get(resString).subscribe((res) => {
         this.weatherNow = res
         this.weatherNowString = JSON.stringify(this.weatherNow)
         localStorage.setItem(`currentWeather`, this.weatherNowString)
@@ -77,7 +90,7 @@ export class ExploreContainerComponent implements OnInit {
 
     
 
-    const weatherNowStringOut = localStorage.getItem(`currentWeather`)
+    let weatherNowStringOut = localStorage.getItem(`currentWeather`)
 
     let weatherNowStringOutParsed = JSON.parse(weatherNowStringOut)
 
