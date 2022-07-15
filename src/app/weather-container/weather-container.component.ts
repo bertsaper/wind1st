@@ -29,9 +29,6 @@ export class ExploreContainerComponent implements OnInit {
 
   lng: number
 
-  location: string
-
-
   @ViewChild('svgWindPointer') container: ElementRef;
 
   constructor(
@@ -92,6 +89,8 @@ export class ExploreContainerComponent implements OnInit {
 
     let weatherNowStringOut = localStorage.getItem(`currentWeather`)
 
+    let weatherLocaleOut = localStorage.getItem(`locale`)
+
     let weatherNowStringOutParsed = JSON.parse(weatherNowStringOut)
 
     let windDeg = weatherNowStringOutParsed.wind.deg
@@ -99,6 +98,9 @@ export class ExploreContainerComponent implements OnInit {
     let windSpeed = Math.round(weatherNowStringOutParsed.wind.speed)
 
     let temp = Math.round(weatherNowStringOutParsed.main.temp)
+
+    let place = weatherNowStringOutParsed.name
+
 
     const CardinalN: string = `N`
     const CardinalS: string = `S`
@@ -137,7 +139,6 @@ export class ExploreContainerComponent implements OnInit {
 
       if (windSpeed >= 30) 
         this.renderer.setAttribute(path, `d`, `M 150,150 150,298 145,278 155,278 150,298 `)
-      
 
       if (windSpeed >= 6 && windSpeed <= 29) 
         this.renderer.setAttribute(path, `d`, `M 150,150 150,` + windScalerFirstLast + ` 155,` + windScalerSecondThird + ` 145,` + windScalerSecondThird + ` 150,` + windScalerFirstLast)
@@ -264,6 +265,14 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(textTemp, `x`, `-30`)
     this.renderer.setAttribute(textTemp, `y`, `-30`) 
     textTemp.textContent = temp + `F`  
+
+
+    const textLocale = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
+    this.renderer.setAttribute(textLocale, `id`, `textLocale`)
+    this.renderer.setAttribute(textLocale, `dominant-baseline`, `baseline`)
+    this.renderer.setAttribute(textLocale, `x`, `-50`)
+    this.renderer.setAttribute(textLocale, `y`, `350`) 
+    textLocale.textContent = place  
 
     if (windSpeed != 0) {
       
@@ -422,7 +431,8 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.appendChild(InfoGroup, textSW)  
     this.renderer.appendChild(InfoGroup, textNE) 
     this.renderer.appendChild(InfoGroup, textSE)
-    this.renderer.appendChild(InfoGroup, textTemp)       
+    this.renderer.appendChild(InfoGroup, textTemp)
+    this.renderer.appendChild(InfoGroup, textLocale)     
     
     this.renderer.appendChild(InfoGroup, circle)
 

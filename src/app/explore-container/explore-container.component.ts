@@ -69,7 +69,7 @@ export class ExploreContainerComponent implements OnInit {
       console.log(place.geometry.location.lng())
       console.log(place.name)
 
-      localStorage.setItem(`weatherLocation`, `{"location":{"lat": "` + place.geometry.location.lat() +  `", "lng": "` + place.geometry.location.lng() + `", "name": "` + place.name + `"}}`)
+      localStorage.setItem(`weatherLocation`, `{"location":{"lat": "` + place.geometry.location.lat() +  `", "lng": "` + place.geometry.location.lng() + `"}}`)
 
       if (!place) {
         // User entered the name of a Place that was not suggested and
