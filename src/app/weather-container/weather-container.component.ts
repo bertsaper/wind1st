@@ -28,19 +28,19 @@ export class ExploreContainerComponent {
 
   currentWeatherStorage: string = `currentWeather`
 
-  ifNoLocationNavTo: string = `tabs/tab2`
-
-  fromHome: string = `/`
-
   weatherNowStringOutParsed: Object
 
   lat: number
 
   lng: number
 
+  fromHome: string = `/`
+
+  ifNoLocationNavTo: string = `tabs/tab2`
+
   displayLocation: string = `/tabs/tab1`
 
-  elemToRemove: string = `WindInfo`
+  weatherDisplay: string = `WindInfo`
 
   displayLocationFlag: Boolean = false
 
@@ -75,7 +75,7 @@ export class ExploreContainerComponent {
   }
 
   removeElement() {
-    this.element = document.getElementById(this.elemToRemove)
+    this.element = document.getElementById(this.weatherDisplay)
     if (this.element)
       this.element.remove()
   }
@@ -172,7 +172,7 @@ export class ExploreContainerComponent {
 
     this.renderer.setAttribute(svg, `height`, `320`)
     this.renderer.setAttribute(svg, `width`, `320`)
-    this.renderer.setAttribute(svg, `id`, `WindInfo`)
+    this.renderer.setAttribute(svg, `id`, this.weatherDisplay)
 
     const InfoGroup = document.createElementNS(`http://www.w3.org/2000/svg`, `g`)
     this.renderer.setAttribute(InfoGroup, `height`, `320`)
