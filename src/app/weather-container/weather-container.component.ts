@@ -2,11 +2,9 @@ import { Component, OnInit, Input, ElementRef, ViewChild, Renderer2 } from '@ang
 
 import { environment } from 'src/environments/environment'
 
-import { ActivatedRouteSnapshot, NavigationEnd, NavigationStart, Router } from '@angular/router'
+import { NavigationEnd, Router } from '@angular/router'
 
 import { HttpClient } from "@angular/common/http"
-
-import { RouteReuseStrategy } from '@angular/router'
 
 @Component({
   selector: 'app-weather-container',
@@ -26,19 +24,25 @@ export class ExploreContainerComponent {
 
   weatherNowString: string
 
-  weatherNowStringOutParsed: Object
+  weatherLocation: string = `weatherLocation`
 
-  weatherLocation: Object
+  currentWeather: string = `currentWeather`
+
+  ifNoLocationNavTo: string = `tabs/tab2`
+
+  fromHome: string = `/`
+
+  weatherNowStringOutParsed: Object
 
   lat: number
 
   lng: number
 
-  settingsLocation: string = `/tabs/tab2`
+  displayLocation: string = `/tabs/tab1`
 
   elemToRemove: string = `WindInfo`
 
-  settingsLocationFlag: Boolean = false
+  displayLocationFlag: Boolean = false
 
   @ViewChild('svgWindPointer') container: ElementRef;
 
@@ -50,28 +54,22 @@ export class ExploreContainerComponent {
 
 
   ngOnInit() {
-    this.fromSettings()
-    if (this.settingsLocationFlag === true)
-      console.log(`ngOnInit`)
+    this.onDisplay()
   }
 
-  ngAfterViewInit() {
-    console.log(`ngAfterViewInit`)
-  }
-
-  fromSettings() {
+  onDisplay() {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        if (event.url !== this.settingsLocation) {
+        if (event.url === this.displayLocation) {
           this.removeElement()
-          console.log(`fromSettings`)
-          console.log(this.settingsLocationFlag)
+          console.log(`Display true`)
           this.getWeather()
-        } else{
-          this.settingsLocationFlag = false
-          console.log(this.settingsLocationFlag)
+        } 
+        if (event.url === this.fromHome) {
+        //  this.removeElement()
+          console.log(`from home`)
           this.getWeather()
-        }
+        }         
       }
     })
   }
@@ -86,15 +84,13 @@ export class ExploreContainerComponent {
     this.removeElement()
     console.log(`getWeather`)
 
-    if (localStorage.getItem("weatherLocation") === null)
+    if (localStorage.getItem(this.weatherLocation) === null)
 
-      this.router.navigate(['tabs/tab2']);
+      this.router.navigate([this.ifNoLocationNavTo]);
 
     try {
 
-
-
-      let weatherLocation = localStorage.getItem(`weatherLocation`)
+      let weatherLocation = localStorage.getItem(this.weatherLocation)
 
       let weatherLocationParsed = JSON.parse(weatherLocation)
 
@@ -121,27 +117,19 @@ export class ExploreContainerComponent {
 
         this.weatherNow = res
         this.weatherNowString = JSON.stringify(this.weatherNow)
-        localStorage.setItem(`currentWeather`, this.weatherNowString)
+        localStorage.setItem(this.currentWeather, this.weatherNowString)
 
-        console.log(`async getWeather()`)
         this.chartMethod()
 
-
       })
-
-
-
 
     }
 
     catch (error) { }
 
-
   }
 
-
   chartMethod() {
-
 
     const WindVelocity: string = `rgba(255, 2555, 255, .125)`
 
@@ -149,9 +137,7 @@ export class ExploreContainerComponent {
 
     const BandStroke: string = `rgba(0, 0, 0, 0.125)`
 
-
-
-    let weatherNowStringOut = localStorage.getItem(`currentWeather`)
+    let weatherNowStringOut = localStorage.getItem(this.currentWeather)
 
     let weatherLocaleOut = localStorage.getItem(`locale`)
 
@@ -164,7 +150,6 @@ export class ExploreContainerComponent {
     let temp = Math.round(weatherNowStringOutParsed.main.temp)
 
     let place = weatherNowStringOutParsed.name
-
 
     const CardinalN: string = `N`
     const CardinalS: string = `S`
@@ -183,8 +168,6 @@ export class ExploreContainerComponent {
     // const label25mph: string = `25 mph`
     // const label30mph: string = `30+ mph`
 
-
-
     const svg = document.createElementNS(`http://www.w3.org/2000/svg`, `svg`)
 
     this.renderer.setAttribute(svg, `height`, `320`)
@@ -196,7 +179,7 @@ export class ExploreContainerComponent {
     this.renderer.setAttribute(InfoGroup, `width`, `320`)
     this.renderer.setAttribute(InfoGroup, `id`, `InfoGroup`)
 
-    // 29 needs to be just unerd 100
+    // 29 needs to be just under 100
     let windScalerFirstLast: any = 178 + (windSpeed * 4)
     let windScalerSecondThird: any = 158 + (windSpeed * 4)
 
@@ -208,7 +191,6 @@ export class ExploreContainerComponent {
 
       if (windSpeed >= 6 && windSpeed <= 29)
         this.renderer.setAttribute(path, `d`, `M 150,150 150,` + windScalerFirstLast + ` 155,` + windScalerSecondThird + ` 145,` + windScalerSecondThird + ` 150,` + windScalerFirstLast)
-
 
       if (windSpeed >= 1 && windSpeed <= 5)
         this.renderer.setAttribute(path, `d`, `M 150,150 150,198 145,178 155,178 150,198 `)
@@ -234,7 +216,6 @@ export class ExploreContainerComponent {
     this.renderer.setAttribute(band25mph, `fill`, BandFill)
     this.renderer.setAttribute(band25mph, `stroke`, BandStroke)
 
-
     const band20mph = document.createElementNS(`http://www.w3.org/2000/svg`, `circle`)
     this.renderer.setAttribute(band20mph, `cx`, `150`)
     this.renderer.setAttribute(band20mph, `cy`, `150`)
@@ -243,7 +224,6 @@ export class ExploreContainerComponent {
     this.renderer.setAttribute(band20mph, `fill`, BandFill)
     this.renderer.setAttribute(band20mph, `stroke`, BandStroke)
 
-
     const band15mph = document.createElementNS(`http://www.w3.org/2000/svg`, `circle`)
     this.renderer.setAttribute(band15mph, `cx`, `150`)
     this.renderer.setAttribute(band15mph, `cy`, `150`)
@@ -251,7 +231,6 @@ export class ExploreContainerComponent {
     this.renderer.setAttribute(band15mph, `id`, `band15mph`)
     this.renderer.setAttribute(band15mph, `fill`, BandFill)
     this.renderer.setAttribute(band15mph, `stroke`, BandStroke)
-
 
     const band10mph = document.createElementNS(`http://www.w3.org/2000/svg`, `circle`)
     this.renderer.setAttribute(band10mph, `cx`, `150`)
@@ -331,7 +310,6 @@ export class ExploreContainerComponent {
     this.renderer.setAttribute(textTemp, `x`, `-30`)
     this.renderer.setAttribute(textTemp, `y`, `-30`)
     textTemp.textContent = temp + `F`
-
 
     const textLocale = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
     this.renderer.setAttribute(textLocale, `id`, `textLocale`)
@@ -419,8 +397,6 @@ export class ExploreContainerComponent {
     this.renderer.setAttribute(Legend30mph, `font-size`, `0.75rem`)
     // Legend30mph.textContent = label30mph    
 
-
-
     let textWindVelocity = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
     this.renderer.setAttribute(textWindVelocity, `id`, `WindVelocity`)
 
@@ -435,7 +411,6 @@ export class ExploreContainerComponent {
 
     if (windDeg <= 170)
       this.renderer.setAttribute(textWindVelocity, `x`, `155`)
-
 
     if (windDeg >= 169) {
 
@@ -459,7 +434,6 @@ export class ExploreContainerComponent {
     this.renderer.setAttribute(legendGroup, `height`, `320`)
     this.renderer.setAttribute(legendGroup, `width`, `320`)
     this.renderer.setAttribute(legendGroup, `id`, `LegendGroup`)
-
 
     //   if (windSpeed >= 30) {
     this.renderer.appendChild(legendGroup, Legend30mph)
@@ -502,13 +476,11 @@ export class ExploreContainerComponent {
 
     this.renderer.appendChild(InfoGroup, circle)
 
-
     this.renderer.appendChild(svg, bandGroup)
     this.renderer.appendChild(svg, InfoGroup)
     // this.renderer.appendChild(svg, legendGroup)
 
     this.renderer.appendChild(this.container.nativeElement, svg)
-
   }
 
 }
