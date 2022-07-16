@@ -34,6 +34,12 @@ export class ExploreContainerComponent {
 
   lng: number
 
+  settingsLocation: string = `/tabs/tab2`
+
+  elemToRemove: string = `WindInfo`
+
+  settingsLocationFlag: Boolean = false
+
   @ViewChild('svgWindPointer') container: ElementRef;
 
   constructor(
@@ -44,37 +50,40 @@ export class ExploreContainerComponent {
 
 
   ngOnInit() {
-
-
-    console.log(`ngOnInit`)
-    this.router.events.subscribe(event => {
-
-      if (event instanceof NavigationEnd) {
-        this.element = document.getElementById('WindInfo')
-        if (event.url === "/tabs/tab1") {
-          if (this.element) {
-            this.element.remove()
-          }
-          this.getWeather()
-          console.log(`if 1`)
-        }
-      }
-      console.log(location.origin);
-      if (event instanceof NavigationStart) {
-        if (event.url === "/") {
-          console.log(`if start`)
-        }
-      }
-
-    })
-
+    this.fromSettings()
+    if (this.settingsLocationFlag === true)
+      console.log(`ngOnInit`)
   }
 
   ngAfterViewInit() {
     console.log(`ngAfterViewInit`)
   }
 
+  fromSettings() {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        if (event.url !== this.settingsLocation) {
+          this.removeElement()
+          console.log(`fromSettings`)
+          console.log(this.settingsLocationFlag)
+          this.getWeather()
+        } else{
+          this.settingsLocationFlag = false
+          console.log(this.settingsLocationFlag)
+          this.getWeather()
+        }
+      }
+    })
+  }
+
+  removeElement() {
+    this.element = document.getElementById(this.elemToRemove)
+    if (this.element)
+      this.element.remove()
+  }
+
   async getWeather(): Promise<void> {
+    this.removeElement()
     console.log(`getWeather`)
 
     if (localStorage.getItem("weatherLocation") === null)
