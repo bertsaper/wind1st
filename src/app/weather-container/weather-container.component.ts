@@ -24,9 +24,9 @@ export class ExploreContainerComponent {
 
   weatherNowString: string
 
-  weatherLocation: string = `weatherLocation`
+  weatherLocationStorage: string = `weatherLocation`
 
-  currentWeather: string = `currentWeather`
+  currentWeatherStorage: string = `currentWeather`
 
   ifNoLocationNavTo: string = `tabs/tab2`
 
@@ -84,23 +84,23 @@ export class ExploreContainerComponent {
     this.removeElement()
     console.log(`getWeather`)
 
-    if (localStorage.getItem(this.weatherLocation) === null)
+    if (localStorage.getItem(this.weatherLocationStorage) === null)
 
       this.router.navigate([this.ifNoLocationNavTo]);
 
     try {
 
-      let weatherLocation = localStorage.getItem(this.weatherLocation)
+      let weatherLocationStorage = localStorage.getItem(this.weatherLocationStorage)
 
-      let weatherLocationParsed = JSON.parse(weatherLocation)
+      let weatherLocationStorageParsed = JSON.parse(weatherLocationStorage)
 
       const openWeatherAddress = environment.open_weather_address
 
       const latString = "lat="
-      let lati: any = weatherLocationParsed.location.lat
+      let lati: any = weatherLocationStorageParsed.location.lat
 
       const lonString = "&lon="
-      let long: any = weatherLocationParsed.location.lng
+      let long: any = weatherLocationStorageParsed.location.lng
 
       const openWeatherKey: string = environment.open_weather_key
 
@@ -117,7 +117,7 @@ export class ExploreContainerComponent {
 
         this.weatherNow = res
         this.weatherNowString = JSON.stringify(this.weatherNow)
-        localStorage.setItem(this.currentWeather, this.weatherNowString)
+        localStorage.setItem(this.currentWeatherStorage, this.weatherNowString)
 
         this.chartMethod()
 
@@ -137,7 +137,7 @@ export class ExploreContainerComponent {
 
     const BandStroke: string = `rgba(0, 0, 0, 0.125)`
 
-    let weatherNowStringOut = localStorage.getItem(this.currentWeather)
+    let weatherNowStringOut = localStorage.getItem(this.currentWeatherStorage)
 
     let weatherLocaleOut = localStorage.getItem(`locale`)
 
