@@ -81,7 +81,7 @@ export class ExploreContainerComponent {
   }
 
   async getWeather(): Promise<void> {
-    this.removeElement()
+
     console.log(`getWeather`)
 
     if (localStorage.getItem(this.weatherLocationStorage) === null)
