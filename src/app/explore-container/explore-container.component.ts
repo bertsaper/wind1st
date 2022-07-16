@@ -57,8 +57,7 @@ export class ExploreContainerComponent implements OnInit {
     const input = document.getElementById("txtSearchPlaces") as HTMLInputElement;
     const autocomplete = new google.maps.places.Autocomplete(input);
     autocomplete.setFields([
-      "geometry",
-      "name",
+      "geometry"
     ]);
 
     
@@ -67,10 +66,8 @@ export class ExploreContainerComponent implements OnInit {
       
       // console.log(place.geometry.location.lat())
       // console.log(place.geometry.location.lng())
-      // console.log(place.name)
 
       localStorage.setItem(`weatherLocation`, `{"location":{"lat": "` + place.geometry.location.lat() +  `", "lng": "` + place.geometry.location.lng() + `"}}`)
-     //  window.location.href = `/tabs/tab1`
       if (!place) {
         // User entered the name of a Place that was not suggested and
         // pressed the Enter key, or the Place Details request failed.
