@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
@@ -11,8 +11,7 @@ import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
 
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
-
-
+import { MatRadioModule } from '@angular/material/radio';
 
 
 @NgModule({
@@ -24,7 +23,10 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     HttpClientModule,
     HttpClientJsonpModule,
     MatAutocompleteModule,
+    MatRadioModule,
+    ReactiveFormsModule
   ],
+  providers: [],
   declarations: [ExploreContainerComponent],
   exports: [ExploreContainerComponent]
 })

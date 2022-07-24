@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/member-ordering */
 /* eslint-disable @typescript-eslint/semi */
 import { Component, Inject, OnInit, Renderer2 } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { NgForm, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DOCUMENT } from '@angular/common';
 
 import { environment } from 'src/environments/environment';
@@ -22,17 +22,30 @@ const googleMapsKey = environment.google_maps_api_key
   styleUrls: ['./explore-container.component.scss'],
 })
 export default class ExploreContainerComponent implements OnInit {
-  searchPlacesForm: NgForm;
-  public shippingAddress: string;
 
-  isSubmitted = false;
+  showData = false
+  selectedItem = 'false'
+
+
+  // selections: string[] = [`Imperial`, `Metric`]
+  // form: FormGroup = new FormGroup({});
+
+  searchPlacesForm: NgForm;
+  public address: string;
+
+  // isSubmitted = false;
 
   apiLoaded: Observable<boolean>
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
-    private renderer2: Renderer2
-  ) { }
+    private renderer2: Renderer2,
+    private fb: FormBuilder
+  ) {
+    // this.form = fb.group({
+    //   measurementSelectionField: ['', [Validators.required]],
+    // })
+  }
 
   ngOnInit() {
     this.loadAutoComplete()
@@ -83,18 +96,35 @@ export default class ExploreContainerComponent implements OnInit {
     ])
   }
 
-  submitForm(form: NgForm) {
-    this.isSubmitted = true;
-    if (!form.valid) {
-      return false;
-    } else {
-      alert(JSON.stringify(form.value))
-    }
-  }
+  // submitForm(form: NgForm) {
+  //   this.isSubmitted = true;
+  //   if (!form.valid) {
+  //     return false;
+  //   } else {
+  //     alert(JSON.stringify(form.value))
+  //   }
+  // }
 
-  templateForm(value: any) {
-    alert(JSON.stringify(value));
+  // templateForm(value: any) {
+  //   alert(JSON.stringify(value));
+  // }
+
+
+  // get f() {
+  //   return this.form.controls;
+  // }
+
+  // submit() {
+  //   console.log(this.form.value);
+  // }
+
+  public rbYesNoSelection = [
+    { name: 'Yes', value: 'true' },
+    { name: 'No', value: 'false' }
+  ];
+
+  show(value) {
+    if (value === `true`) { this.showData = true; }
+    else { this.showData = false; }
   }
 }
-
-

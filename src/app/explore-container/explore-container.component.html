@@ -4,9 +4,36 @@
 
         <div class="row">
             <div class="col-md-12">
-                <form #myForm="ngForm" (submit)="templateForm(myForm.value)" novalidate>
+
+                <mat-radio-group aria-labelledby="radio-group-label" class="radio-group" class="example-radio-group"
+                    [(ngModel)]="selectedItem">
+                    <mat-radio-button class="radio-button" class="example-radio-button"
+                        *ngFor="let data of rbYesNoSelection" (click)="show(data.value)" [value]="data.value">
+                        {{data.name}}
+                    </mat-radio-button>
+                </mat-radio-group>
+                <div class="example-selected-value" *ngIf="showData">Show this data when clicked yes.</div>
+
+                <!-- <form [formGroup]="form" (ngSubmit)="submit()">
+
+                    <mat-radio-group aria-labelledby="radio-group-label" class="radio-group"
+                        formControlName="measurementSelectionField">
+                        <mat-radio-button class="radio-button" *ngFor="let selection of selections" [value]="selection">
+                            {{selection}}
+                        </mat-radio-button>
+                    </mat-radio-group>
+                    <div *ngIf="form.get('measurementSelectionField').hasError('required')" class="error">
+                        Food is required
+                    </div>
+
+                    <button mat-raised-button color="accent">Submit</button>
+                </form> -->
+
+
+
+                <!-- <form #myForm="ngForm" (submit)="templateForm(myForm.value)" novalidate>
                     <div class="custom-control custom-radio">
-                       <input id="imperial" type="radio" class="custom-control-input" value="imperial" name="output" ngModel>
+                       <input [checked] id="imperial" type="radio" class="custom-control-input" value="imperial" name="output" ngModel>
                        <label class="custom-control-label" for="imperial">Imperial</label>
                     </div>
                     <div class="custom-control custom-radio">
@@ -14,7 +41,7 @@
                        <label class="custom-control-label" for="metric">Metric</label>
                     </div>
                     <button type="submit" class="btn btn-danger btn-lg btn-block">Find Measurement</button>
-                 </form>
+                 </form> -->
             </div>
         </div>
         <form MatAutocompleteModule class="form-horizontal" #SearchPlacesForm="ngForm">
@@ -22,7 +49,8 @@
             <div class="form-group">
                 <label class="control-label col-sm-6" for="txtSearchPlaces">search places:</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" id="txtSearchPlaces" name="txtSearchPlaces" #txtSearchPlaces="ngModel" [(ngModel)]="shippingAddress" placeholder="Enter places">
+                    <input type="text" class="form-control" id="txtSearchPlaces" name="txtSearchPlaces"
+                        #txtSearchPlaces="ngModel" [(ngModel)]="address" placeholder="Enter places">
                 </div>
             </div>
         </form>
