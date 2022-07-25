@@ -5,14 +5,14 @@
         <div class="row">
             <div class="col-md-12">
 
-                <mat-radio-group aria-labelledby="radio-group-label" class="radio-group" class="example-radio-group"
+                <mat-radio-group aria-labelledby="radio-group-label" class="radio-group" class="radio-group"
                     [(ngModel)]="selectedItem">
-                    <mat-radio-button class="radio-button" class="example-radio-button"
-                        *ngFor="let data of rbYesNoSelection" (click)="show(data.value)" [value]="data.value">
+                    <mat-radio-button class="radio-button" class="radio-button"
+                        *ngFor="let data of rbImperialMetricSelection" (click)="show(data.value)" [value]="data.value">
                         {{data.name}}
                     </mat-radio-button>
                 </mat-radio-group>
-                <div class="example-selected-value" *ngIf="showData">Show this data when clicked yes.</div>
+                <div class="selected-value" *ngIf="showData">Show this data when clicked yes.</div>
 
                 <!-- <form [formGroup]="form" (ngSubmit)="submit()">
 

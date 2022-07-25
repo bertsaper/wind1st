@@ -118,13 +118,14 @@ export default class ExploreContainerComponent implements OnInit {
   //   console.log(this.form.value);
   // }
 
-  public rbYesNoSelection = [
-    { name: 'Yes', value: 'true' },
-    { name: 'No', value: 'false' }
+  public rbImperialMetricSelection = [
+    { name: `Imperial`, value: `false` },
+    { name: `Metric`, value: `true` }
   ];
 
   show(value) {
-    if (value === `true`) { this.showData = true; }
-    else { this.showData = false; }
+    if (value !== `true`) {
+      this.showData = true
+    }
   }
 }
