@@ -23,8 +23,8 @@ const googleMapsKey = environment.google_maps_api_key
 })
 export default class ExploreContainerComponent implements OnInit {
 
-  showData = false
-  selectedItem = 'false'
+  recordData = false
+  selectedItem = `imperial`
 
 
   // selections: string[] = [`Imperial`, `Metric`]
@@ -119,13 +119,15 @@ export default class ExploreContainerComponent implements OnInit {
   // }
 
   public rbImperialMetricSelection = [
-    { name: `Imperial`, value: `false` },
-    { name: `Metric`, value: `true` }
+    { name: `Imperial`, value: `imperial` },
+    { name: `Metric`, value: `metric` }
   ];
 
   show(value) {
-    if (value !== `true`) {
-      this.showData = true
+    if (value === `imperial`) {
+      this.recordData = true
+
     }
+    console.log(value)
   }
 }
