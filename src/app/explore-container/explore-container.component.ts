@@ -23,7 +23,7 @@ const googleMapsKey = environment.google_maps_api_key
 })
 export default class ExploreContainerComponent implements OnInit {
 
-  recordData = false
+  recordData = `imperial`
   selectedItem = `imperial`
 
 
@@ -124,10 +124,11 @@ export default class ExploreContainerComponent implements OnInit {
   ];
 
   show(value) {
-    if (value === `imperial`) {
-      this.recordData = true
+    // console.log(this.value)
+    console.log(this.recordData)
+  }
 
-    }
-    console.log(value)
+  onItemChange(value) {
+    console.log(` Value is : `, value);
   }
 }
