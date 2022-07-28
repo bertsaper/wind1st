@@ -6,9 +6,6 @@ import { IonicModule } from '@ionic/angular';
 
 import ExploreContainerComponent from './explore-container.component';
 
-import { GoogleMapsModule } from '@angular/google-maps';
-import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
-
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 import { MatRadioModule } from '@angular/material/radio';
@@ -19,9 +16,6 @@ import { MatRadioModule } from '@angular/material/radio';
     CommonModule,
     FormsModule,
     IonicModule,
-    GoogleMapsModule,
-    HttpClientModule,
-    HttpClientJsonpModule,
     MatAutocompleteModule,
     MatRadioModule,
     ReactiveFormsModule

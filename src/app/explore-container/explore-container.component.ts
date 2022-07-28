@@ -23,13 +23,6 @@ const googleMapsKey = environment.google_maps_api_key
 })
 export default class ExploreContainerComponent implements OnInit {
 
-  recordData = `imperial`
-  selectedItem = `imperial`
-
-
-  // selections: string[] = [`Imperial`, `Metric`]
-  // form: FormGroup = new FormGroup({});
-
   searchPlacesForm: NgForm;
   public address: string;
 
@@ -118,17 +111,5 @@ export default class ExploreContainerComponent implements OnInit {
   //   console.log(this.form.value);
   // }
 
-  public rbImperialMetricSelection = [
-    { name: `Imperial`, value: `imperial` },
-    { name: `Metric`, value: `metric` }
-  ];
 
-  show(value) {
-    // console.log(this.value)
-    console.log(this.recordData)
-  }
-
-  onItemChange(value) {
-    console.log(` Value is : `, value);
-  }
 }
