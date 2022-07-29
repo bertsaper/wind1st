@@ -1,10 +1,13 @@
+/* eslint-disable @typescript-eslint/member-ordering */
+/* eslint-disable @typescript-eslint/semi */
+
 import { Component, OnInit, Input, ElementRef, ViewChild, Renderer2 } from '@angular/core'
 
 import { environment } from 'src/environments/environment'
 
 import { NavigationEnd, Router } from '@angular/router'
 
-import { HttpClient } from "@angular/common/http"
+import { HttpClient } from '@angular/common/http'
 
 @Component({
   selector: 'app-weather-container',
@@ -12,37 +15,35 @@ import { HttpClient } from "@angular/common/http"
   styleUrls: ['./weather-container.component.scss'],
 })
 
-
-export class ExploreContainerComponent {
+export class ExploreContainerComponent implements OnInit {
 
   // @Input() name: string;
 
-
   element: any
 
-  weatherNow: Object
+  weatherNow: object
 
   weatherNowString: string
 
-  weatherLocationStorage: string = `weatherLocation`
+  weatherLocationStorage = `weatherLocation`
 
-  currentWeatherStorage: string = `currentWeather`
+  currentWeatherStorage = `currentWeather`
 
-  weatherNowStringOutParsed: Object
+  weatherNowStringOutParsed: object
 
   lat: number
 
   lng: number
 
-  fromHome: string = `/`
+  fromHome = `/`
 
-  ifNoLocationNavTo: string = `tabs/tab2`
+  ifNoLocationNavTo = `tabs/tab2`
 
-  displayLocation: string = `/tabs/tab1`
+  displayLocation = `/tabs/tab1`
 
-  weatherDisplay: string = `WindInfo`
+  weatherDisplay = `WindInfo`
 
-  displayLocationFlag: Boolean = false
+  displayLocationFlag = false
 
   @ViewChild('svgWindPointer') container: ElementRef;
 
@@ -64,12 +65,12 @@ export class ExploreContainerComponent {
           this.removeElement()
           console.log(`Display true`)
           this.getWeather()
-        } 
+        }
         if (event.url === this.fromHome) {
-        //  this.removeElement()
+          //  this.removeElement()
           console.log(`from home`)
           this.getWeather()
-        }         
+        }
       }
     })
   }
@@ -96,10 +97,10 @@ export class ExploreContainerComponent {
 
       const openWeatherAddress = environment.open_weather_address
 
-      const latString = "lat="
+      const latString = `lat=`
       let lati: any = weatherLocationStorageParsed.location.lat
 
-      const lonString = "&lon="
+      const lonString = `&lon=`
       let long: any = weatherLocationStorageParsed.location.lng
 
       const openWeatherKey: string = environment.open_weather_key
@@ -174,16 +175,16 @@ export class ExploreContainerComponent {
     this.renderer.setAttribute(svg, `width`, `320`)
     this.renderer.setAttribute(svg, `id`, this.weatherDisplay)
 
-    const InfoGroup = document.createElementNS(`http://www.w3.org/2000/svg`, `g`)
-    this.renderer.setAttribute(InfoGroup, `height`, `320`)
-    this.renderer.setAttribute(InfoGroup, `width`, `320`)
-    this.renderer.setAttribute(InfoGroup, `id`, `InfoGroup`)
+    const infoGroup = document.createElementNS(`http://www.w3.org/2000/svg`, `g`)
+    this.renderer.setAttribute(infoGroup, `height`, `320`)
+    this.renderer.setAttribute(infoGroup, `width`, `320`)
+    this.renderer.setAttribute(infoGroup, `id`, `infoGroup`)
 
     // 29 needs to be just under 100
-    let windScalerFirstLast: any = 178 + (windSpeed * 4)
-    let windScalerSecondThird: any = 158 + (windSpeed * 4)
+    const windScalerFirstLast: any = 178 + (windSpeed * 4)
+    const windScalerSecondThird: any = 158 + (windSpeed * 4)
 
-    if (windSpeed != 0) {
+    if (windSpeed !== 0) {
       const path = document.createElementNS(`http://www.w3.org/2000/svg`, `path`)
 
       if (windSpeed >= 30)
@@ -197,7 +198,7 @@ export class ExploreContainerComponent {
 
       this.renderer.setAttribute(path, `id`, `windDirectionPath`)
       this.renderer.setAttribute(path, `transform`, `rotate(` + windDeg + `,150,150)`)
-      this.renderer.appendChild(InfoGroup, path)
+      this.renderer.appendChild(infoGroup, path)
 
     }
 
@@ -349,45 +350,45 @@ export class ExploreContainerComponent {
 
     }
 
-    const Legend5mph = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
-    this.renderer.setAttribute(Legend5mph, `id`, `CardinalW`)
-    this.renderer.setAttribute(Legend5mph, `dominant-baseline`, `middle`)
-    this.renderer.setAttribute(Legend5mph, `x`, `165`)
-    this.renderer.setAttribute(Legend5mph, `y`, `150`)
-    this.renderer.setAttribute(Legend5mph, `font-size`, `0.75rem`)
-    // Legend5mph.textContent = label05mph
+    const legend5mph = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
+    this.renderer.setAttribute(legend5mph, `id`, `CardinalW`)
+    this.renderer.setAttribute(legend5mph, `dominant-baseline`, `middle`)
+    this.renderer.setAttribute(legend5mph, `x`, `165`)
+    this.renderer.setAttribute(legend5mph, `y`, `150`)
+    this.renderer.setAttribute(legend5mph, `font-size`, `0.75rem`)
+    // legend5mph.textContent = label05mph
 
-    const Legend10mph = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
-    this.renderer.setAttribute(Legend10mph, `id`, `CardinalW`)
-    this.renderer.setAttribute(Legend10mph, `dominant-baseline`, `middle`)
-    this.renderer.setAttribute(Legend10mph, `x`, `165`)
-    this.renderer.setAttribute(Legend10mph, `y`, `150`)
-    this.renderer.setAttribute(Legend10mph, `font-size`, `0.75rem`)
-    // Legend10mph.textContent = label10mph
+    const legend10mph = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
+    this.renderer.setAttribute(legend10mph, `id`, `CardinalW`)
+    this.renderer.setAttribute(legend10mph, `dominant-baseline`, `middle`)
+    this.renderer.setAttribute(legend10mph, `x`, `165`)
+    this.renderer.setAttribute(legend10mph, `y`, `150`)
+    this.renderer.setAttribute(legend10mph, `font-size`, `0.75rem`)
+    // legend10mph.textContent = label10mph
 
-    const Legend15mph = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
-    this.renderer.setAttribute(Legend15mph, `id`, `CardinalW`)
-    this.renderer.setAttribute(Legend15mph, `dominant-baseline`, `middle`)
-    this.renderer.setAttribute(Legend15mph, `x`, `195`)
-    this.renderer.setAttribute(Legend15mph, `y`, `150`)
-    this.renderer.setAttribute(Legend15mph, `font-size`, `0.75rem`)
-    // Legend15mph.textContent = label15mph
+    const legend15mph = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
+    this.renderer.setAttribute(legend15mph, `id`, `CardinalW`)
+    this.renderer.setAttribute(legend15mph, `dominant-baseline`, `middle`)
+    this.renderer.setAttribute(legend15mph, `x`, `195`)
+    this.renderer.setAttribute(legend15mph, `y`, `150`)
+    this.renderer.setAttribute(legend15mph, `font-size`, `0.75rem`)
+    // legend15mph.textContent = label15mph
 
-    const Legend20mph = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
-    this.renderer.setAttribute(Legend20mph, `id`, `CardinalW`)
-    this.renderer.setAttribute(Legend20mph, `dominant-baseline`, `middle`)
-    this.renderer.setAttribute(Legend20mph, `x`, `165`)
-    this.renderer.setAttribute(Legend20mph, `y`, `150`)
-    this.renderer.setAttribute(Legend20mph, `font-size`, `0.75rem`)
-    // Legend20mph.textContent = label20mph
+    const legend20mph = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
+    this.renderer.setAttribute(legend20mph, `id`, `CardinalW`)
+    this.renderer.setAttribute(legend20mph, `dominant-baseline`, `middle`)
+    this.renderer.setAttribute(legend20mph, `x`, `165`)
+    this.renderer.setAttribute(legend20mph, `y`, `150`)
+    this.renderer.setAttribute(legend20mph, `font-size`, `0.75rem`)
+    // legend20mph.textContent = label20mph
 
-    const Legend25mph = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
-    this.renderer.setAttribute(Legend25mph, `id`, `CardinalW`)
-    this.renderer.setAttribute(Legend25mph, `dominant-baseline`, `middle`)
-    this.renderer.setAttribute(Legend25mph, `x`, `165`)
-    this.renderer.setAttribute(Legend25mph, `y`, `150`)
-    this.renderer.setAttribute(Legend25mph, `font-size`, `0.75rem`)
-    // Legend25mph.textContent = label25mph
+    const legend25mph = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
+    this.renderer.setAttribute(legend25mph, `id`, `CardinalW`)
+    this.renderer.setAttribute(legend25mph, `dominant-baseline`, `middle`)
+    this.renderer.setAttribute(legend25mph, `x`, `165`)
+    this.renderer.setAttribute(legend25mph, `y`, `150`)
+    this.renderer.setAttribute(legend25mph, `font-size`, `0.75rem`)
+    // legend25mph.textContent = label25mph
 
     const Legend30mph = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
     this.renderer.setAttribute(Legend30mph, `id`, `CardinalW`)
@@ -395,9 +396,9 @@ export class ExploreContainerComponent {
     this.renderer.setAttribute(Legend30mph, `x`, `165`)
     this.renderer.setAttribute(Legend30mph, `y`, `150`)
     this.renderer.setAttribute(Legend30mph, `font-size`, `0.75rem`)
-    // Legend30mph.textContent = label30mph    
+    // Legend30mph.textContent = label30mph
 
-    let textWindVelocity = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
+    const textWindVelocity = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
     this.renderer.setAttribute(textWindVelocity, `id`, `WindVelocity`)
 
     if (windSpeed > 0)
@@ -423,7 +424,7 @@ export class ExploreContainerComponent {
     }
     this.renderer.setAttribute(textWindVelocity, `y`, `150`)
 
-    this.renderer.appendChild(InfoGroup, textWindVelocity)
+    this.renderer.appendChild(infoGroup, textWindVelocity)
 
     const bandGroup = document.createElementNS(`http://www.w3.org/2000/svg`, `g`)
     this.renderer.setAttribute(bandGroup, `height`, `320`)
@@ -440,44 +441,44 @@ export class ExploreContainerComponent {
     this.renderer.appendChild(bandGroup, band25mph)
     //   }
     //   if (windSpeed >= 25 && windSpeed <= 29) {
-    this.renderer.appendChild(legendGroup, Legend25mph)
+    this.renderer.appendChild(legendGroup, legend25mph)
     this.renderer.appendChild(bandGroup, band25mph)
     //   }
 
     //   if (windSpeed >= 16 && windSpeed <= 20) {
-    this.renderer.appendChild(legendGroup, Legend20mph)
+    this.renderer.appendChild(legendGroup, legend20mph)
     this.renderer.appendChild(bandGroup, band20mph)
     //    }
 
     //    if (windSpeed >= 11 && windSpeed <= 15) {
-    this.renderer.appendChild(legendGroup, Legend15mph)
+    this.renderer.appendChild(legendGroup, legend15mph)
     this.renderer.appendChild(bandGroup, band15mph)
     //    }
 
     //    if (windSpeed >= 6 && windSpeed <= 10) {
-    this.renderer.appendChild(legendGroup, Legend10mph)
+    this.renderer.appendChild(legendGroup, legend10mph)
     this.renderer.appendChild(bandGroup, band10mph)
     //    }
 
     //    if (windSpeed >= 1 && windSpeed <= 5) {
-    this.renderer.appendChild(legendGroup, Legend5mph)
+    this.renderer.appendChild(legendGroup, legend5mph)
     this.renderer.appendChild(bandGroup, band5mph)
-    //    } 
-    this.renderer.appendChild(InfoGroup, textN)
-    this.renderer.appendChild(InfoGroup, textS)
-    this.renderer.appendChild(InfoGroup, textE)
-    this.renderer.appendChild(InfoGroup, textW)
-    this.renderer.appendChild(InfoGroup, textNW)
-    this.renderer.appendChild(InfoGroup, textSW)
-    this.renderer.appendChild(InfoGroup, textNE)
-    this.renderer.appendChild(InfoGroup, textSE)
-    this.renderer.appendChild(InfoGroup, textTemp)
-    this.renderer.appendChild(InfoGroup, textLocale)
+    //    }
+    this.renderer.appendChild(infoGroup, textN)
+    this.renderer.appendChild(infoGroup, textS)
+    this.renderer.appendChild(infoGroup, textE)
+    this.renderer.appendChild(infoGroup, textW)
+    this.renderer.appendChild(infoGroup, textNW)
+    this.renderer.appendChild(infoGroup, textSW)
+    this.renderer.appendChild(infoGroup, textNE)
+    this.renderer.appendChild(infoGroup, textSE)
+    this.renderer.appendChild(infoGroup, textTemp)
+    this.renderer.appendChild(infoGroup, textLocale)
 
-    this.renderer.appendChild(InfoGroup, circle)
+    this.renderer.appendChild(infoGroup, circle)
 
     this.renderer.appendChild(svg, bandGroup)
-    this.renderer.appendChild(svg, InfoGroup)
+    this.renderer.appendChild(svg, infoGroup)
     // this.renderer.appendChild(svg, legendGroup)
 
     this.renderer.appendChild(this.container.nativeElement, svg)
