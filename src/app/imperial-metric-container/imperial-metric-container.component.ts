@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/member-ordering */
 /* eslint-disable @typescript-eslint/semi */
 import { Component, Inject, OnInit, Renderer2 } from '@angular/core';
-import { NgForm, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { DOCUMENT } from '@angular/common';
 
 
 
@@ -12,14 +10,24 @@ import { DOCUMENT } from '@angular/common';
   styleUrls: ['./imperial-metric-container.component.scss'],
 })
 export default class ImperialMetricContainerComponent implements OnInit {
-
+  imperialMetricChoice = localStorage.getItem('imperialMetricChoice');
   recordData = `imperial`
-  selectedItem = `imperial`
+  selectedItem 
 
   constructor() { }
 
   ngOnInit() {
+    if (this.imperialMetricChoice === null) {
+      localStorage.setItem(`imperialMetricChoice`, `{"imperialMetric":{"choice": "imperial"}}`)
+    }
+
+    let imperialMetricChoiceStorageParsed = JSON.parse(this.imperialMetricChoice)
+
+    let measurementChoice: any = imperialMetricChoiceStorageParsed.imperialMetric.choice
+    this.selectedItem = measurementChoice
   }
+
+
 
   public rbImperialMetricSelection = [
     { name: `Imperial`, value: `imperial` },
@@ -32,6 +40,7 @@ export default class ImperialMetricContainerComponent implements OnInit {
   }
 
   onItemChange(value) {
+    localStorage.setItem(`imperialMetricChoice`, `{"imperialMetric":{"choice": "` + value + `"}}`)
     console.log(` Value is : `, value);
   }
 }
