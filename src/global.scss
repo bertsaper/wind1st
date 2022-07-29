@@ -28,9 +28,10 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
 #WindInfo {
     // background-color: red;
-    overflow: visible!important;
+    overflow: visible !important;
 }
 
 #windDirectionPath {
@@ -44,6 +45,16 @@
     stroke-width: 2px;
     // -webkit-filter: drop-shadow( 0px 0px 5px rgba(0, 0, 0, .7));
     // filter: drop-shadow( 0px 0px 5px rgba(0, 0, 0, .7));
+}
+
+
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle,
+.mat-radio-outer-circle {
+    border-color: blue !important;
+}
+
+.mat-radio-button.mat-accent .mat-radio-inner-circle {
+    background-color: blue !important;
 }
 
 // #CardinalN {
