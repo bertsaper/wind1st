@@ -164,7 +164,7 @@ export class ExploreContainerComponent implements OnInit {
     }
 
     if (imperialMetricChoice == `metric`) {
-      this.selectedWindSpeed = ` MPS`
+      this.selectedWindSpeed = ` KPH`
       this.selectedTemperature = ` C`
     }
 
@@ -180,7 +180,15 @@ export class ExploreContainerComponent implements OnInit {
 
     const windDeg = weatherNowStringOutParsed.wind.deg
 
-    const windSpeed = Math.round(weatherNowStringOutParsed.wind.speed)
+   let windSpeed = Math.round(weatherNowStringOutParsed.wind.speed)
+
+  //  if (imperialMetricChoice == `imperial`) {
+  //   windSpeed = Math.round(weatherNowStringOutParsed.wind.speed)
+  // }
+
+  if (imperialMetricChoice == `metric`) {
+    windSpeed = Math.round((weatherNowStringOutParsed.wind.speed * 3600) / 1000)
+  }
 
     const temp = Math.round(weatherNowStringOutParsed.main.temp)
 
@@ -217,8 +225,13 @@ export class ExploreContainerComponent implements OnInit {
     /*
     * Scalers for the length of the wind direction arrow 29 needs to be just under 100
     */
-    const windScalerFirstLast: any = 178 + (windSpeed * 4)
-    const windScalerSecondThird: any = 158 + (windSpeed * 4)
+    let windScalerFirstLast: any = 178 + (windSpeed * 4)
+    let windScalerSecondThird: any = 158 + (windSpeed * 4)
+
+    if (imperialMetricChoice == `metric`) {
+      windScalerFirstLast = 178 + (windSpeed * 2.4)
+      windScalerSecondThird = 158 + (windSpeed * 2.4)
+    }
 
     if (windSpeed !== 0) {
       const path = document.createElementNS(`http://www.w3.org/2000/svg`, `path`)
