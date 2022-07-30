@@ -12,7 +12,7 @@ import { Component, Inject, OnInit, Renderer2 } from '@angular/core';
 export default class ImperialMetricContainerComponent implements OnInit {
   imperialMetricChoice = localStorage.getItem('imperialMetricChoice');
   recordData = `imperial`
-  selectedItem 
+  selectedItem = `imperial`
 
   constructor() { }
 
@@ -21,9 +21,9 @@ export default class ImperialMetricContainerComponent implements OnInit {
       localStorage.setItem(`imperialMetricChoice`, `{"imperialMetric":{"choice": "imperial"}}`)
     }
 
-    let imperialMetricChoiceStorageParsed = JSON.parse(this.imperialMetricChoice)
+    const imperialMetricChoiceStorageParsed = JSON.parse(this.imperialMetricChoice)
 
-    let measurementChoice: any = imperialMetricChoiceStorageParsed.imperialMetric.choice
+    const measurementChoice: any = imperialMetricChoiceStorageParsed.imperialMetric.choice
     this.selectedItem = measurementChoice
   }
 
