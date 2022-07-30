@@ -17,10 +17,6 @@ import { HttpClient } from '@angular/common/http'
 
 export class ExploreContainerComponent implements OnInit {
 
-
-
-  // @Input() name: string;
-
   element: any
 
   weatherNow: object
@@ -33,17 +29,33 @@ export class ExploreContainerComponent implements OnInit {
 
   weatherNowStringOutParsed: object
 
+  /*
+  * Needed for Imperial / Metric Selection
+  */
+
+  imperialMetricChoice: string
+
+  selectedWindSpeed: string
+
+  selectedTemperature: string
+
+
   lat: number
 
   lng: number
 
   fromHome = `/`
 
+  /*
+  * If no location found in localstorage, ifNoLocationNavTo
+  * and displayLocation are needed for routing.
+  */
+
   ifNoLocationNavTo = `tabs/tab2`
 
   displayLocation = `/tabs/tab1`
 
-  weatherDisplay = `WindInfo`
+  weatherDisplay = `Wind Info`
 
   displayLocationFlag = false
 
@@ -66,14 +78,19 @@ export class ExploreContainerComponent implements OnInit {
   onDisplay() {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
+
+          /*
+          * this.removeElement() prevents multiple results from displaying
+          */
+
         if (event.url === this.displayLocation) {
           this.removeElement()
-          console.log(`Display true`)
+          // console.log(`Display true`)
           this.getWeather()
         }
         if (event.url === this.fromHome) {
           //  this.removeElement()
-          console.log(`from home`)
+          // console.log(`from home`)
           this.getWeather()
         }
       }
@@ -89,7 +106,9 @@ export class ExploreContainerComponent implements OnInit {
 
   async getWeather(): Promise<void> {
 
-    console.log(`getWeather`)
+    /*
+    * If no location found, send to location selector
+    */
 
     if (localStorage.getItem(this.weatherLocationStorage) === null) {
       this.router.navigate([this.ifNoLocationNavTo])
@@ -97,11 +116,7 @@ export class ExploreContainerComponent implements OnInit {
 
     try {
 
-      const imperialMetricChoice = localStorage.getItem('imperialMetricChoice')
-
-      const imperialMetricChoiceStorageParsed = JSON.parse(imperialMetricChoice)
-
-      const measurementChoice: any = imperialMetricChoiceStorageParsed.imperialMetric.choice
+      const measurementChoice = this.getMeasurementChoiceMethod()
 
       const weatherLocationStorage = localStorage.getItem(this.weatherLocationStorage)
 
@@ -119,7 +134,8 @@ export class ExploreContainerComponent implements OnInit {
 
       const unitSelecton: string = `&units=` + measurementChoice
 
-      const resString: string = openWeatherAddress + latString + lati + lonString + long + unitSelecton + openWeatherKey
+      const resString: string = openWeatherAddress + latString + lati + lonString + long +
+       unitSelecton + openWeatherKey
 
       await this.http.get(resString).subscribe((res) => {
 
@@ -139,6 +155,19 @@ export class ExploreContainerComponent implements OnInit {
 
   chartMethod() {
 
+    const imperialMetricChoice = this.getMeasurementChoiceMethod()
+
+
+    if (imperialMetricChoice == `imperial`) {
+      this.selectedWindSpeed = ` MPH`
+      this.selectedTemperature = ` F`
+    }
+
+    if (imperialMetricChoice == `metric`) {
+      this.selectedWindSpeed = ` MPS`
+      this.selectedTemperature = ` C`
+    }
+
     const windVelocity = `rgba(255, 2555, 255, .125)`
 
     const bandFill = `rgba(255, 255, 255, 0.1)`
@@ -146,8 +175,6 @@ export class ExploreContainerComponent implements OnInit {
     const bandStroke = `rgba(0, 0, 0, 0.125)`
 
     const weatherNowStringOut = localStorage.getItem(this.currentWeatherStorage)
-
-    // const weatherLocaleOut = localStorage.getItem(`locale`)
 
     const weatherNowStringOutParsed = JSON.parse(weatherNowStringOut)
 
@@ -187,7 +214,9 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(infoGroup, `width`, `320`)
     this.renderer.setAttribute(infoGroup, `id`, `infoGroup`)
 
-    // 29 needs to be just under 100
+    /*
+    * Scalers for the length of the wind direction arrow 29 needs to be just under 100
+    */
     const windScalerFirstLast: any = 178 + (windSpeed * 4)
     const windScalerSecondThird: any = 158 + (windSpeed * 4)
 
@@ -258,6 +287,10 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(band5mph, `fill`, bandFill)
     this.renderer.setAttribute(band5mph, `stroke`, bandStroke)
 
+    /*
+    * Eight legends n the compass
+    */
+  
     const textN = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
     this.renderer.setAttribute(textN, `id`, `cardinalN`)
     this.renderer.setAttribute(textN, `dominant-baseline`, `auto`)
@@ -319,7 +352,7 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(textTemp, `dominant-baseline`, `baseline`)
     this.renderer.setAttribute(textTemp, `x`, `-30`)
     this.renderer.setAttribute(textTemp, `y`, `-30`)
-    textTemp.textContent = temp + `F`
+    textTemp.textContent = temp + this.selectedTemperature
 
     const textLocale = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
     this.renderer.setAttribute(textLocale, `id`, `textLocale`)
@@ -365,7 +398,6 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(legend5mph, `x`, `165`)
     this.renderer.setAttribute(legend5mph, `y`, `150`)
     this.renderer.setAttribute(legend5mph, `font-size`, `0.75rem`)
-    // legend5mph.textContent = label05mph
 
     const legend10mph = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
     this.renderer.setAttribute(legend10mph, `id`, `cardinalW`)
@@ -373,7 +405,6 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(legend10mph, `x`, `165`)
     this.renderer.setAttribute(legend10mph, `y`, `150`)
     this.renderer.setAttribute(legend10mph, `font-size`, `0.75rem`)
-    // legend10mph.textContent = label10mph
 
     const legend15mph = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
     this.renderer.setAttribute(legend15mph, `id`, `cardinalW`)
@@ -381,7 +412,6 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(legend15mph, `x`, `195`)
     this.renderer.setAttribute(legend15mph, `y`, `150`)
     this.renderer.setAttribute(legend15mph, `font-size`, `0.75rem`)
-    // legend15mph.textContent = label15mph
 
     const legend20mph = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
     this.renderer.setAttribute(legend20mph, `id`, `cardinalW`)
@@ -389,7 +419,6 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(legend20mph, `x`, `165`)
     this.renderer.setAttribute(legend20mph, `y`, `150`)
     this.renderer.setAttribute(legend20mph, `font-size`, `0.75rem`)
-    // legend20mph.textContent = label20mph
 
     const legend25mph = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
     this.renderer.setAttribute(legend25mph, `id`, `cardinalW`)
@@ -397,7 +426,6 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(legend25mph, `x`, `165`)
     this.renderer.setAttribute(legend25mph, `y`, `150`)
     this.renderer.setAttribute(legend25mph, `font-size`, `0.75rem`)
-    // legend25mph.textContent = label25mph
 
     const legend30mph = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
     this.renderer.setAttribute(legend30mph, `id`, `cardinalW`)
@@ -405,14 +433,12 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(legend30mph, `x`, `165`)
     this.renderer.setAttribute(legend30mph, `y`, `150`)
     this.renderer.setAttribute(legend30mph, `font-size`, `0.75rem`)
-    // legend30mph.textContent = label30mph
 
     const textWindVelocity = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
     this.renderer.setAttribute(textWindVelocity, `id`, `windVelocity`)
 
     if (windSpeed > 0) {
-      //  textWindVelocity.textContent = windDirectionRounded + ` ` + windSpeed.toString() + ` mph`
-      textWindVelocity.textContent = windSpeed.toString() + ` mph`
+      textWindVelocity.textContent = windSpeed.toString() + this.selectedWindSpeed
     }
     if (windSpeed === 0) {
       textWindVelocity.textContent = `No Wind`
@@ -445,34 +471,24 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(legendGroup, `width`, `320`)
     this.renderer.setAttribute(legendGroup, `id`, `legendGroup`)
 
-    //   if (windSpeed >= 30) {
     this.renderer.appendChild(legendGroup, legend30mph)
     this.renderer.appendChild(bandGroup, band25mph)
-    //   }
-    //   if (windSpeed >= 25 && windSpeed <= 29) {
+
     this.renderer.appendChild(legendGroup, legend25mph)
     this.renderer.appendChild(bandGroup, band25mph)
-    //   }
 
-    //   if (windSpeed >= 16 && windSpeed <= 20) {
     this.renderer.appendChild(legendGroup, legend20mph)
     this.renderer.appendChild(bandGroup, band20mph)
-    //    }
 
-    //    if (windSpeed >= 11 && windSpeed <= 15) {
     this.renderer.appendChild(legendGroup, legend15mph)
     this.renderer.appendChild(bandGroup, band15mph)
-    //    }
 
-    //    if (windSpeed >= 6 && windSpeed <= 10) {
     this.renderer.appendChild(legendGroup, legend10mph)
     this.renderer.appendChild(bandGroup, band10mph)
-    //    }
 
-    //    if (windSpeed >= 1 && windSpeed <= 5) {
     this.renderer.appendChild(legendGroup, legend5mph)
     this.renderer.appendChild(bandGroup, band5mph)
-    //    }
+
     this.renderer.appendChild(infoGroup, textN)
     this.renderer.appendChild(infoGroup, textS)
     this.renderer.appendChild(infoGroup, textE)
@@ -488,9 +504,20 @@ export class ExploreContainerComponent implements OnInit {
 
     this.renderer.appendChild(svg, bandGroup)
     this.renderer.appendChild(svg, infoGroup)
-    // this.renderer.appendChild(svg, legendGroup)
 
     this.renderer.appendChild(this.container.nativeElement, svg)
+  }
+
+  getMeasurementChoiceMethod() {
+
+    const imperialMetricChoice = localStorage.getItem('imperialMetricChoice')
+
+    const imperialMetricChoiceStorageParsed = JSON.parse(imperialMetricChoice)
+
+    const measurementChoice: any = imperialMetricChoiceStorageParsed.imperialMetric.choice
+
+    return measurementChoice
+
   }
 
 }
