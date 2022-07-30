@@ -17,6 +17,8 @@ import { HttpClient } from '@angular/common/http'
 
 export class ExploreContainerComponent implements OnInit {
 
+
+
   // @Input() name: string;
 
   element: any
@@ -45,16 +47,19 @@ export class ExploreContainerComponent implements OnInit {
 
   displayLocationFlag = false
 
+
+
   @ViewChild('svgWindPointer') container: ElementRef;
 
   constructor(
-    private _http: HttpClient,
+    private http: HttpClient,
     public router: Router,
     private renderer: Renderer2,
   ) { }
 
 
   ngOnInit() {
+
     this.onDisplay()
   }
 
@@ -77,44 +82,46 @@ export class ExploreContainerComponent implements OnInit {
 
   removeElement() {
     this.element = document.getElementById(this.weatherDisplay)
-    if (this.element)
+    if (this.element) {
       this.element.remove()
+    }
   }
 
   async getWeather(): Promise<void> {
 
     console.log(`getWeather`)
 
-    if (localStorage.getItem(this.weatherLocationStorage) === null)
-
-      this.router.navigate([this.ifNoLocationNavTo]);
+    if (localStorage.getItem(this.weatherLocationStorage) === null) {
+      this.router.navigate([this.ifNoLocationNavTo])
+    }
 
     try {
 
-      let weatherLocationStorage = localStorage.getItem(this.weatherLocationStorage)
+      const imperialMetricChoice = localStorage.getItem('imperialMetricChoice')
 
-      let weatherLocationStorageParsed = JSON.parse(weatherLocationStorage)
+      const imperialMetricChoiceStorageParsed = JSON.parse(imperialMetricChoice)
+
+      const measurementChoice: any = imperialMetricChoiceStorageParsed.imperialMetric.choice
+
+      const weatherLocationStorage = localStorage.getItem(this.weatherLocationStorage)
+
+      const weatherLocationStorageParsed = JSON.parse(weatherLocationStorage)
 
       const openWeatherAddress = environment.open_weather_address
 
       const latString = `lat=`
-      let lati: any = weatherLocationStorageParsed.location.lat
+      const lati: any = weatherLocationStorageParsed.location.lat
 
       const lonString = `&lon=`
-      let long: any = weatherLocationStorageParsed.location.lng
+      const long: any = weatherLocationStorageParsed.location.lng
 
       const openWeatherKey: string = environment.open_weather_key
 
-      let unitSlecton: string
-      const returnImperial: string = "&units=imperial"
-      const returnMetric: string = "&units=metric"
+      const unitSelecton: string = `&units=` + measurementChoice
 
-      if (!unitSlecton)
-        unitSlecton = returnImperial
+      const resString: string = openWeatherAddress + latString + lati + lonString + long + unitSelecton + openWeatherKey
 
-      let resString: string = openWeatherAddress + latString + lati + lonString + long + unitSlecton + openWeatherKey
-
-      await this._http.get(resString).subscribe((res) => {
+      await this.http.get(resString).subscribe((res) => {
 
         this.weatherNow = res
         this.weatherNowString = JSON.stringify(this.weatherNow)
@@ -132,35 +139,35 @@ export class ExploreContainerComponent implements OnInit {
 
   chartMethod() {
 
-    const WindVelocity: string = `rgba(255, 2555, 255, .125)`
+    const windVelocity = `rgba(255, 2555, 255, .125)`
 
-    const BandFill: string = `rgba(255, 255, 255, 0.1)`
+    const bandFill = `rgba(255, 255, 255, 0.1)`
 
-    const BandStroke: string = `rgba(0, 0, 0, 0.125)`
+    const bandStroke = `rgba(0, 0, 0, 0.125)`
 
-    let weatherNowStringOut = localStorage.getItem(this.currentWeatherStorage)
+    const weatherNowStringOut = localStorage.getItem(this.currentWeatherStorage)
 
-    let weatherLocaleOut = localStorage.getItem(`locale`)
+    // const weatherLocaleOut = localStorage.getItem(`locale`)
 
-    let weatherNowStringOutParsed = JSON.parse(weatherNowStringOut)
+    const weatherNowStringOutParsed = JSON.parse(weatherNowStringOut)
 
-    let windDeg = weatherNowStringOutParsed.wind.deg
+    const windDeg = weatherNowStringOutParsed.wind.deg
 
-    let windSpeed = Math.round(weatherNowStringOutParsed.wind.speed)
+    const windSpeed = Math.round(weatherNowStringOutParsed.wind.speed)
 
-    let temp = Math.round(weatherNowStringOutParsed.main.temp)
+    const temp = Math.round(weatherNowStringOutParsed.main.temp)
 
-    let place = weatherNowStringOutParsed.name
+    const place = weatherNowStringOutParsed.name
 
-    const CardinalN: string = `N`
-    const CardinalS: string = `S`
-    const CardinalE: string = `E`
-    const CardinalW: string = `W`
+    const cardinalN = `N`
+    const cardinalS = `S`
+    const cardinalE = `E`
+    const cardinalW = `W`
 
-    const OrdinalNE: string = `NE`
-    const OrdinalSE: string = `SE`
-    const OrdinalNW: string = `NW`
-    const OrdinalSW: string = `SW`
+    const ordinalNE = `NE`
+    const ordinalSE = `SE`
+    const ordinalNW = `NW`
+    const ordinalSW = `SW`
 
     // const label05mph: string = `5 mph`
     // const label10mph: string = `10 mph`
@@ -187,14 +194,16 @@ export class ExploreContainerComponent implements OnInit {
     if (windSpeed !== 0) {
       const path = document.createElementNS(`http://www.w3.org/2000/svg`, `path`)
 
-      if (windSpeed >= 30)
+      if (windSpeed >= 30) {
         this.renderer.setAttribute(path, `d`, `M 150,150 150,298 145,278 155,278 150,298 `)
-
-      if (windSpeed >= 6 && windSpeed <= 29)
-        this.renderer.setAttribute(path, `d`, `M 150,150 150,` + windScalerFirstLast + ` 155,` + windScalerSecondThird + ` 145,` + windScalerSecondThird + ` 150,` + windScalerFirstLast)
-
-      if (windSpeed >= 1 && windSpeed <= 5)
+      }
+      if (windSpeed >= 6 && windSpeed <= 29) {
+        this.renderer.setAttribute(path, `d`, `M 150,150 150,` + windScalerFirstLast + ` 155,` + windScalerSecondThird +
+          ` 145,` + windScalerSecondThird + ` 150,` + windScalerFirstLast)
+      }
+      if (windSpeed >= 1 && windSpeed <= 5) {
         this.renderer.setAttribute(path, `d`, `M 150,150 150,198 145,178 155,178 150,198 `)
+      }
 
       this.renderer.setAttribute(path, `id`, `windDirectionPath`)
       this.renderer.setAttribute(path, `transform`, `rotate(` + windDeg + `,150,150)`)
@@ -207,103 +216,103 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(circle, `cy`, `150`)
     this.renderer.setAttribute(circle, `r`, `150`)
     this.renderer.setAttribute(circle, `id`, `windDirectionHolder`)
-    this.renderer.setAttribute(circle, `fill`, WindVelocity)
+    this.renderer.setAttribute(circle, `fill`, windVelocity)
 
     const band25mph = document.createElementNS(`http://www.w3.org/2000/svg`, `circle`)
     this.renderer.setAttribute(band25mph, `cx`, `150`)
     this.renderer.setAttribute(band25mph, `cy`, `150`)
     this.renderer.setAttribute(band25mph, `r`, `130`)
     this.renderer.setAttribute(band25mph, `id`, `band25mph`)
-    this.renderer.setAttribute(band25mph, `fill`, BandFill)
-    this.renderer.setAttribute(band25mph, `stroke`, BandStroke)
+    this.renderer.setAttribute(band25mph, `fill`, bandFill)
+    this.renderer.setAttribute(band25mph, `stroke`, bandStroke)
 
     const band20mph = document.createElementNS(`http://www.w3.org/2000/svg`, `circle`)
     this.renderer.setAttribute(band20mph, `cx`, `150`)
     this.renderer.setAttribute(band20mph, `cy`, `150`)
     this.renderer.setAttribute(band20mph, `r`, `110`)
     this.renderer.setAttribute(band20mph, `id`, `band20mph`)
-    this.renderer.setAttribute(band20mph, `fill`, BandFill)
-    this.renderer.setAttribute(band20mph, `stroke`, BandStroke)
+    this.renderer.setAttribute(band20mph, `fill`, bandFill)
+    this.renderer.setAttribute(band20mph, `stroke`, bandStroke)
 
     const band15mph = document.createElementNS(`http://www.w3.org/2000/svg`, `circle`)
     this.renderer.setAttribute(band15mph, `cx`, `150`)
     this.renderer.setAttribute(band15mph, `cy`, `150`)
     this.renderer.setAttribute(band15mph, `r`, `90`)
     this.renderer.setAttribute(band15mph, `id`, `band15mph`)
-    this.renderer.setAttribute(band15mph, `fill`, BandFill)
-    this.renderer.setAttribute(band15mph, `stroke`, BandStroke)
+    this.renderer.setAttribute(band15mph, `fill`, bandFill)
+    this.renderer.setAttribute(band15mph, `stroke`, bandStroke)
 
     const band10mph = document.createElementNS(`http://www.w3.org/2000/svg`, `circle`)
     this.renderer.setAttribute(band10mph, `cx`, `150`)
     this.renderer.setAttribute(band10mph, `cy`, `150`)
     this.renderer.setAttribute(band10mph, `r`, `70`)
     this.renderer.setAttribute(band10mph, `id`, `band10mph`)
-    this.renderer.setAttribute(band10mph, `fill`, BandFill)
-    this.renderer.setAttribute(band10mph, `stroke`, BandStroke)
+    this.renderer.setAttribute(band10mph, `fill`, bandFill)
+    this.renderer.setAttribute(band10mph, `stroke`, bandStroke)
 
     const band5mph = document.createElementNS(`http://www.w3.org/2000/svg`, `circle`)
     this.renderer.setAttribute(band5mph, `cx`, `150`)
     this.renderer.setAttribute(band5mph, `cy`, `150`)
     this.renderer.setAttribute(band5mph, `r`, `50`)
     this.renderer.setAttribute(band5mph, `id`, `band5mph`)
-    this.renderer.setAttribute(band5mph, `fill`, BandFill)
-    this.renderer.setAttribute(band5mph, `stroke`, BandStroke)
+    this.renderer.setAttribute(band5mph, `fill`, bandFill)
+    this.renderer.setAttribute(band5mph, `stroke`, bandStroke)
 
     const textN = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
-    this.renderer.setAttribute(textN, `id`, `CardinalN`)
+    this.renderer.setAttribute(textN, `id`, `cardinalN`)
     this.renderer.setAttribute(textN, `dominant-baseline`, `auto`)
     this.renderer.setAttribute(textN, `x`, `145`)
     this.renderer.setAttribute(textN, `y`, `-10`)
-    textN.textContent = CardinalN
+    textN.textContent = cardinalN
 
     const textS = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
-    this.renderer.setAttribute(textS, `id`, `CardinalS`)
+    this.renderer.setAttribute(textS, `id`, `cardinalS`)
     this.renderer.setAttribute(textS, `dominant-baseline`, `hanging`)
     this.renderer.setAttribute(textS, `x`, `145`)
     this.renderer.setAttribute(textS, `y`, `310`)
-    textS.textContent = CardinalS
+    textS.textContent = cardinalS
 
     const textE = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
-    this.renderer.setAttribute(textE, `id`, `CardinalE`)
+    this.renderer.setAttribute(textE, `id`, `cardinalE`)
     this.renderer.setAttribute(textE, `dominant-baseline`, `middle`)
     this.renderer.setAttribute(textE, `x`, `310`)
     this.renderer.setAttribute(textE, `y`, `150`)
-    textE.textContent = CardinalE
+    textE.textContent = cardinalE
 
     const textW = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
-    this.renderer.setAttribute(textW, `id`, `CardinalW`)
+    this.renderer.setAttribute(textW, `id`, `cardinalW`)
     this.renderer.setAttribute(textW, `dominant-baseline`, `middle`)
     this.renderer.setAttribute(textW, `x`, `-25`)
     this.renderer.setAttribute(textW, `y`, `150`)
-    textW.textContent = CardinalW
+    textW.textContent = cardinalW
 
     const textNW = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
-    this.renderer.setAttribute(textNW, `id`, `OrdinalNW`)
+    this.renderer.setAttribute(textNW, `id`, `ordinalNW`)
     this.renderer.setAttribute(textNW, `dominant-baseline`, `baseline`)
     this.renderer.setAttribute(textNW, `x`, `15`)
     this.renderer.setAttribute(textNW, `y`, `35`)
-    textNW.textContent = OrdinalNW
+    textNW.textContent = ordinalNW
 
     const textSW = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
-    this.renderer.setAttribute(textSW, `id`, `OrdinalSW`)
+    this.renderer.setAttribute(textSW, `id`, `ordinalSW`)
     this.renderer.setAttribute(textSW, `dominant-baseline`, `hanging`)
     this.renderer.setAttribute(textSW, `x`, `15`)
     this.renderer.setAttribute(textSW, `y`, `265`)
-    textSW.textContent = OrdinalSW
+    textSW.textContent = ordinalSW
 
     const textNE = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
-    this.renderer.setAttribute(textNE, `id`, `OrdinalNE`)
+    this.renderer.setAttribute(textNE, `id`, `ordinalNE`)
     this.renderer.setAttribute(textNE, `dominant-baseline`, `baseline`)
     this.renderer.setAttribute(textNE, `x`, `260`)
     this.renderer.setAttribute(textNE, `y`, `35`)
-    textNE.textContent = OrdinalNE
+    textNE.textContent = ordinalNE
 
     const textSE = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
-    this.renderer.setAttribute(textSE, `id`, `OrdinalSE`)
+    this.renderer.setAttribute(textSE, `id`, `ordinalSE`)
     this.renderer.setAttribute(textSE, `dominant-baseline`, `hanging`)
     this.renderer.setAttribute(textSE, `x`, `260`)
     this.renderer.setAttribute(textSE, `y`, `265`)
-    textSE.textContent = OrdinalSE
+    textSE.textContent = ordinalSE
 
     const textTemp = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
     this.renderer.setAttribute(textTemp, `id`, `textTemp`)
@@ -319,39 +328,39 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(textLocale, `y`, `350`)
     textLocale.textContent = place
 
-    if (windSpeed != 0) {
+    if (windSpeed !== 0) {
 
-      if (windDeg >= 0 && windDeg <= 30)
+      if (windDeg >= 0 && windDeg <= 30) {
         this.renderer.setAttribute(textN, `fill`, `red`)
-
-      if (windDeg >= 31 && windDeg <= 60)
+      }
+      if (windDeg >= 31 && windDeg <= 60) {
         this.renderer.setAttribute(textNE, `fill`, `red`)
-
-      if (windDeg >= 61 && windDeg <= 120)
+      }
+      if (windDeg >= 61 && windDeg <= 120) {
         this.renderer.setAttribute(textE, `fill`, `red`)
-
-      if (windDeg >= 121 && windDeg <= 150)
+      }
+      if (windDeg >= 121 && windDeg <= 150) {
         this.renderer.setAttribute(textSE, `fill`, `red`)
-
-      if (windDeg >= 151 && windDeg <= 210)
+      }
+      if (windDeg >= 151 && windDeg <= 210) {
         this.renderer.setAttribute(textS, `fill`, `red`)
-
-      if (windDeg >= 211 && windDeg <= 240)
+      }
+      if (windDeg >= 211 && windDeg <= 240) {
         this.renderer.setAttribute(textSW, `fill`, `red`)
-
-      if (windDeg >= 241 && windDeg <= 300)
+      }
+      if (windDeg >= 241 && windDeg <= 300) {
         this.renderer.setAttribute(textW, `fill`, `red`)
-
-      if (windDeg >= 301 && windDeg <= 330)
+      }
+      if (windDeg >= 301 && windDeg <= 330) {
         this.renderer.setAttribute(textNW, `fill`, `red`)
-
-      if (windDeg >= 331 && windDeg <= 360)
+      }
+      if (windDeg >= 331 && windDeg <= 360) {
         this.renderer.setAttribute(textN, `fill`, `red`)
-
+      }
     }
 
     const legend5mph = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
-    this.renderer.setAttribute(legend5mph, `id`, `CardinalW`)
+    this.renderer.setAttribute(legend5mph, `id`, `cardinalW`)
     this.renderer.setAttribute(legend5mph, `dominant-baseline`, `middle`)
     this.renderer.setAttribute(legend5mph, `x`, `165`)
     this.renderer.setAttribute(legend5mph, `y`, `150`)
@@ -359,7 +368,7 @@ export class ExploreContainerComponent implements OnInit {
     // legend5mph.textContent = label05mph
 
     const legend10mph = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
-    this.renderer.setAttribute(legend10mph, `id`, `CardinalW`)
+    this.renderer.setAttribute(legend10mph, `id`, `cardinalW`)
     this.renderer.setAttribute(legend10mph, `dominant-baseline`, `middle`)
     this.renderer.setAttribute(legend10mph, `x`, `165`)
     this.renderer.setAttribute(legend10mph, `y`, `150`)
@@ -367,7 +376,7 @@ export class ExploreContainerComponent implements OnInit {
     // legend10mph.textContent = label10mph
 
     const legend15mph = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
-    this.renderer.setAttribute(legend15mph, `id`, `CardinalW`)
+    this.renderer.setAttribute(legend15mph, `id`, `cardinalW`)
     this.renderer.setAttribute(legend15mph, `dominant-baseline`, `middle`)
     this.renderer.setAttribute(legend15mph, `x`, `195`)
     this.renderer.setAttribute(legend15mph, `y`, `150`)
@@ -375,7 +384,7 @@ export class ExploreContainerComponent implements OnInit {
     // legend15mph.textContent = label15mph
 
     const legend20mph = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
-    this.renderer.setAttribute(legend20mph, `id`, `CardinalW`)
+    this.renderer.setAttribute(legend20mph, `id`, `cardinalW`)
     this.renderer.setAttribute(legend20mph, `dominant-baseline`, `middle`)
     this.renderer.setAttribute(legend20mph, `x`, `165`)
     this.renderer.setAttribute(legend20mph, `y`, `150`)
@@ -383,44 +392,44 @@ export class ExploreContainerComponent implements OnInit {
     // legend20mph.textContent = label20mph
 
     const legend25mph = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
-    this.renderer.setAttribute(legend25mph, `id`, `CardinalW`)
+    this.renderer.setAttribute(legend25mph, `id`, `cardinalW`)
     this.renderer.setAttribute(legend25mph, `dominant-baseline`, `middle`)
     this.renderer.setAttribute(legend25mph, `x`, `165`)
     this.renderer.setAttribute(legend25mph, `y`, `150`)
     this.renderer.setAttribute(legend25mph, `font-size`, `0.75rem`)
     // legend25mph.textContent = label25mph
 
-    const Legend30mph = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
-    this.renderer.setAttribute(Legend30mph, `id`, `CardinalW`)
-    this.renderer.setAttribute(Legend30mph, `dominant-baseline`, `middle`)
-    this.renderer.setAttribute(Legend30mph, `x`, `165`)
-    this.renderer.setAttribute(Legend30mph, `y`, `150`)
-    this.renderer.setAttribute(Legend30mph, `font-size`, `0.75rem`)
-    // Legend30mph.textContent = label30mph
+    const legend30mph = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
+    this.renderer.setAttribute(legend30mph, `id`, `cardinalW`)
+    this.renderer.setAttribute(legend30mph, `dominant-baseline`, `middle`)
+    this.renderer.setAttribute(legend30mph, `x`, `165`)
+    this.renderer.setAttribute(legend30mph, `y`, `150`)
+    this.renderer.setAttribute(legend30mph, `font-size`, `0.75rem`)
+    // legend30mph.textContent = label30mph
 
     const textWindVelocity = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
-    this.renderer.setAttribute(textWindVelocity, `id`, `WindVelocity`)
+    this.renderer.setAttribute(textWindVelocity, `id`, `windVelocity`)
 
-    if (windSpeed > 0)
+    if (windSpeed > 0) {
       //  textWindVelocity.textContent = windDirectionRounded + ` ` + windSpeed.toString() + ` mph`
       textWindVelocity.textContent = windSpeed.toString() + ` mph`
-
-    if (windSpeed == 0)
+    }
+    if (windSpeed === 0) {
       textWindVelocity.textContent = `No Wind`
-
+    }
     this.renderer.setAttribute(textWindVelocity, `dominant-baseline`, `baseline`)
 
-    if (windDeg <= 170)
+    if (windDeg <= 170) {
       this.renderer.setAttribute(textWindVelocity, `x`, `155`)
-
+    }
     if (windDeg >= 169) {
 
-      if (windSpeed < 10)
+      if (windSpeed < 10) {
         this.renderer.setAttribute(textWindVelocity, `x`, `95`)
-
-      if (windSpeed > 10)
+      }
+      if (windSpeed > 10) {
         this.renderer.setAttribute(textWindVelocity, `x`, `92`)
-
+      }
     }
     this.renderer.setAttribute(textWindVelocity, `y`, `150`)
 
@@ -434,10 +443,10 @@ export class ExploreContainerComponent implements OnInit {
     const legendGroup = document.createElementNS(`http://www.w3.org/2000/svg`, `g`)
     this.renderer.setAttribute(legendGroup, `height`, `320`)
     this.renderer.setAttribute(legendGroup, `width`, `320`)
-    this.renderer.setAttribute(legendGroup, `id`, `LegendGroup`)
+    this.renderer.setAttribute(legendGroup, `id`, `legendGroup`)
 
     //   if (windSpeed >= 30) {
-    this.renderer.appendChild(legendGroup, Legend30mph)
+    this.renderer.appendChild(legendGroup, legend30mph)
     this.renderer.appendChild(bandGroup, band25mph)
     //   }
     //   if (windSpeed >= 25 && windSpeed <= 29) {
