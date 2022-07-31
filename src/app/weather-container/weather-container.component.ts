@@ -79,9 +79,9 @@ export class ExploreContainerComponent implements OnInit {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
 
-          /*
-          * this.removeElement() prevents multiple results from displaying
-          */
+        /*
+        * this.removeElement() prevents multiple results from displaying
+        */
 
         if (event.url === this.displayLocation) {
           this.removeElement()
@@ -135,7 +135,7 @@ export class ExploreContainerComponent implements OnInit {
       const unitSelecton: string = `&units=` + measurementChoice
 
       const resString: string = openWeatherAddress + latString + lati + lonString + long +
-       unitSelecton + openWeatherKey
+        unitSelecton + openWeatherKey
 
       await this.http.get(resString).subscribe((res) => {
 
@@ -158,13 +158,13 @@ export class ExploreContainerComponent implements OnInit {
     const imperialMetricChoice = this.getMeasurementChoiceMethod()
 
 
-    if (imperialMetricChoice == `imperial`) {
-      this.selectedWindSpeed = ` MPH`
+    if (imperialMetricChoice === `imperial`) {
+      this.selectedWindSpeed = ` MpH`
       this.selectedTemperature = ` F`
     }
 
-    if (imperialMetricChoice == `metric`) {
-      this.selectedWindSpeed = ` KPH`
+    if (imperialMetricChoice === `metric`) {
+      this.selectedWindSpeed = ` KpH`
       this.selectedTemperature = ` C`
     }
 
@@ -180,15 +180,16 @@ export class ExploreContainerComponent implements OnInit {
 
     const windDeg = weatherNowStringOutParsed.wind.deg
 
-   let windSpeed = Math.round(weatherNowStringOutParsed.wind.speed)
+    let windSpeed = Math.round(weatherNowStringOutParsed.wind.speed)
 
-  //  if (imperialMetricChoice == `imperial`) {
-  //   windSpeed = Math.round(weatherNowStringOutParsed.wind.speed)
-  // }
+    if (imperialMetricChoice === `metric`) {
 
-  if (imperialMetricChoice == `metric`) {
-    windSpeed = Math.round((weatherNowStringOutParsed.wind.speed * 3600) / 1000)
-  }
+      /*
+      * Converting meters per second to Kilometers per hour.
+      */
+
+      windSpeed = Math.round(((weatherNowStringOutParsed.wind.speed * 3600) / 1000))
+    }
 
     const temp = Math.round(weatherNowStringOutParsed.main.temp)
 
@@ -225,6 +226,7 @@ export class ExploreContainerComponent implements OnInit {
     /*
     * Scalers for the length of the wind direction arrow 29 needs to be just under 100
     */
+
     let windScalerFirstLast: any = 178 + (windSpeed * 4)
     let windScalerSecondThird: any = 158 + (windSpeed * 4)
 
@@ -303,7 +305,7 @@ export class ExploreContainerComponent implements OnInit {
     /*
     * Eight legends n the compass
     */
-  
+
     const textN = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
     this.renderer.setAttribute(textN, `id`, `cardinalN`)
     this.renderer.setAttribute(textN, `dominant-baseline`, `auto`)
