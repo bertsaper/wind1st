@@ -55,7 +55,7 @@ export class ExploreContainerComponent implements OnInit {
 
   displayLocation = `/tabs/tab1`
 
-  weatherDisplay = `Wind Info`
+  weatherDisplay = `windInfo`
 
   displayLocationFlag = false
 
@@ -193,6 +193,20 @@ export class ExploreContainerComponent implements OnInit {
 
     const temp = Math.round(weatherNowStringOutParsed.main.temp)
 
+    /*
+    * Weatehr description comes out in a sub array and the brackets need to be striped.
+    */
+
+    const getWeatherDescription = weatherNowStringOutParsed.weather
+
+    const weatherDescString = JSON.stringify(getWeatherDescription)
+
+    const weatherDescriptionPreParsed = weatherDescString.slice(1, -1)
+
+    const weatherDescriptionParsed = JSON.parse(weatherDescriptionPreParsed)
+
+    const description = weatherDescriptionParsed.description
+
     const place = weatherNowStringOutParsed.name
 
     const cardinalN = `N`
@@ -214,13 +228,15 @@ export class ExploreContainerComponent implements OnInit {
 
     const svg = document.createElementNS(`http://www.w3.org/2000/svg`, `svg`)
 
-    this.renderer.setAttribute(svg, `height`, `320`)
-    this.renderer.setAttribute(svg, `width`, `320`)
+    this.renderer.setAttribute(svg, `height`, `400`)
+    this.renderer.setAttribute(svg, `width`, `400`)
     this.renderer.setAttribute(svg, `id`, this.weatherDisplay)
 
     const infoGroup = document.createElementNS(`http://www.w3.org/2000/svg`, `g`)
-    this.renderer.setAttribute(infoGroup, `height`, `320`)
-    this.renderer.setAttribute(infoGroup, `width`, `320`)
+    this.renderer.setAttribute(infoGroup, `height`, `360`)
+    this.renderer.setAttribute(infoGroup, `width`, `360`)
+    this.renderer.setAttribute(infoGroup, `x`, `40`)
+    this.renderer.setAttribute(infoGroup, `y`, `40`)
     this.renderer.setAttribute(infoGroup, `id`, `infoGroup`)
 
     /*
@@ -230,28 +246,50 @@ export class ExploreContainerComponent implements OnInit {
     let windScalerFirstLast: any = 178 + (windSpeed * 4)
     let windScalerSecondThird: any = 158 + (windSpeed * 4)
 
-    if (imperialMetricChoice == `metric`) {
+    if (imperialMetricChoice === `metric`) {
       windScalerFirstLast = 178 + (windSpeed * 2.4)
       windScalerSecondThird = 158 + (windSpeed * 2.4)
     }
 
     if (windSpeed !== 0) {
-      const path = document.createElementNS(`http://www.w3.org/2000/svg`, `path`)
+      if (imperialMetricChoice === `imperial`) {
+        const path = document.createElementNS(`http://www.w3.org/2000/svg`, `path`)
 
-      if (windSpeed >= 30) {
-        this.renderer.setAttribute(path, `d`, `M 150,150 150,298 145,278 155,278 150,298 `)
+        if (windSpeed >= 30) {
+          this.renderer.setAttribute(path, `d`, `M 150,150 150,298 145,278 155,278 150,298 `)
+        }
+        if (windSpeed >= 6 && windSpeed <= 29) {
+          this.renderer.setAttribute(path, `d`, `M 150,150 150,` + windScalerFirstLast + ` 155,` + windScalerSecondThird +
+            ` 145,` + windScalerSecondThird + ` 150,` + windScalerFirstLast)
+        }
+        if (windSpeed >= 1 && windSpeed <= 5) {
+          this.renderer.setAttribute(path, `d`, `M 150,150 150,198 145,178 155,178 150,198 `)
+        }
+
+        this.renderer.setAttribute(path, `id`, `windDirectionPath`)
+        this.renderer.setAttribute(path, `transform`, `rotate(` + windDeg + `,150,150)`)
+        this.renderer.appendChild(infoGroup, path)
       }
-      if (windSpeed >= 6 && windSpeed <= 29) {
-        this.renderer.setAttribute(path, `d`, `M 150,150 150,` + windScalerFirstLast + ` 155,` + windScalerSecondThird +
-          ` 145,` + windScalerSecondThird + ` 150,` + windScalerFirstLast)
-      }
-      if (windSpeed >= 1 && windSpeed <= 5) {
-        this.renderer.setAttribute(path, `d`, `M 150,150 150,198 145,178 155,178 150,198 `)
+      if (imperialMetricChoice === `metric`) {
+        const path = document.createElementNS(`http://www.w3.org/2000/svg`, `path`)
+
+        if (windSpeed >= 30) {
+          this.renderer.setAttribute(path, `d`, `M 150,150 150,298 145,278 155,278 150,298 `)
+        }
+        if (windSpeed >= 6 && windSpeed <= 29) {
+          this.renderer.setAttribute(path, `d`, `M 150,150 150,` + windScalerFirstLast + ` 155,` + windScalerSecondThird +
+            ` 145,` + windScalerSecondThird + ` 150,` + windScalerFirstLast)
+        }
+        if (windSpeed >= 1 && windSpeed <= 5) {
+          this.renderer.setAttribute(path, `d`, `M 150,150 150,198 145,178 155,178 150,198 `)
+        }
+
+        this.renderer.setAttribute(path, `id`, `windDirectionPath`)
+        this.renderer.setAttribute(path, `transform`, `rotate(` + windDeg + `,150,150)`)
+        this.renderer.appendChild(infoGroup, path)
       }
 
-      this.renderer.setAttribute(path, `id`, `windDirectionPath`)
-      this.renderer.setAttribute(path, `transform`, `rotate(` + windDeg + `,150,150)`)
-      this.renderer.appendChild(infoGroup, path)
+
 
     }
 
@@ -369,6 +407,13 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(textTemp, `y`, `-30`)
     textTemp.textContent = temp + this.selectedTemperature
 
+    const textDescription = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
+    this.renderer.setAttribute(textDescription, `id`, `textDescription`)
+    this.renderer.setAttribute(textDescription, `dominant-baseline`, `baseline`)
+    this.renderer.setAttribute(textDescription, `x`, `-30`)
+    this.renderer.setAttribute(textDescription, `y`, `-10`)
+    textDescription.textContent = description
+
     const textLocale = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
     this.renderer.setAttribute(textLocale, `id`, `textLocale`)
     this.renderer.setAttribute(textLocale, `dominant-baseline`, `baseline`)
@@ -477,32 +522,53 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.appendChild(infoGroup, textWindVelocity)
 
     const bandGroup = document.createElementNS(`http://www.w3.org/2000/svg`, `g`)
-    this.renderer.setAttribute(bandGroup, `height`, `320`)
-    this.renderer.setAttribute(bandGroup, `width`, `320`)
-    this.renderer.setAttribute(bandGroup, `id`, `BandGroup`)
+    this.renderer.setAttribute(bandGroup, `height`, `360`)
+    this.renderer.setAttribute(bandGroup, `width`, `360`)
+    this.renderer.setAttribute(bandGroup, `id`, `bandGroup`)
 
     const legendGroup = document.createElementNS(`http://www.w3.org/2000/svg`, `g`)
-    this.renderer.setAttribute(legendGroup, `height`, `320`)
-    this.renderer.setAttribute(legendGroup, `width`, `320`)
+    this.renderer.setAttribute(legendGroup, `height`, `360`)
+    this.renderer.setAttribute(legendGroup, `width`, `360`)
     this.renderer.setAttribute(legendGroup, `id`, `legendGroup`)
 
     this.renderer.appendChild(legendGroup, legend30mph)
-    this.renderer.appendChild(bandGroup, band25mph)
+    if (imperialMetricChoice === `imperial`) {
+      this.renderer.appendChild(bandGroup, band25mph)
 
-    this.renderer.appendChild(legendGroup, legend25mph)
-    this.renderer.appendChild(bandGroup, band25mph)
+      this.renderer.appendChild(legendGroup, legend25mph)
+      this.renderer.appendChild(bandGroup, band25mph)
 
-    this.renderer.appendChild(legendGroup, legend20mph)
-    this.renderer.appendChild(bandGroup, band20mph)
+      this.renderer.appendChild(legendGroup, legend20mph)
+      this.renderer.appendChild(bandGroup, band20mph)
 
-    this.renderer.appendChild(legendGroup, legend15mph)
-    this.renderer.appendChild(bandGroup, band15mph)
+      this.renderer.appendChild(legendGroup, legend15mph)
+      this.renderer.appendChild(bandGroup, band15mph)
 
-    this.renderer.appendChild(legendGroup, legend10mph)
-    this.renderer.appendChild(bandGroup, band10mph)
+      this.renderer.appendChild(legendGroup, legend10mph)
+      this.renderer.appendChild(bandGroup, band10mph)
 
-    this.renderer.appendChild(legendGroup, legend5mph)
-    this.renderer.appendChild(bandGroup, band5mph)
+      this.renderer.appendChild(legendGroup, legend5mph)
+      this.renderer.appendChild(bandGroup, band5mph)
+    }
+
+    if (imperialMetricChoice === `metric`) {
+      this.renderer.appendChild(bandGroup, band25mph)
+
+      this.renderer.appendChild(legendGroup, legend25mph)
+      this.renderer.appendChild(bandGroup, band25mph)
+
+      this.renderer.appendChild(legendGroup, legend20mph)
+      this.renderer.appendChild(bandGroup, band20mph)
+
+      this.renderer.appendChild(legendGroup, legend15mph)
+      this.renderer.appendChild(bandGroup, band15mph)
+
+      this.renderer.appendChild(legendGroup, legend10mph)
+      this.renderer.appendChild(bandGroup, band10mph)
+
+      this.renderer.appendChild(legendGroup, legend5mph)
+      this.renderer.appendChild(bandGroup, band5mph)
+    }
 
     this.renderer.appendChild(infoGroup, textN)
     this.renderer.appendChild(infoGroup, textS)
@@ -513,6 +579,7 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.appendChild(infoGroup, textNE)
     this.renderer.appendChild(infoGroup, textSE)
     this.renderer.appendChild(infoGroup, textTemp)
+    this.renderer.appendChild(infoGroup, textDescription)
     this.renderer.appendChild(infoGroup, textLocale)
 
     this.renderer.appendChild(infoGroup, circle)
