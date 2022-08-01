@@ -57,6 +57,20 @@
     background-color: blue !important;
 }
 
+app-weather-container>div>div>div {
+    background-color: #ccc;
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#infoGroup,
+#bandGroup {
+    transform: translate(50px, 50px);
+}
+
+
 // #CardinalN {
 //     transform: translate(140px, -28px);
 //     font-size: 30px;
