@@ -3,7 +3,6 @@
 import { Component, Inject, OnInit, Renderer2 } from '@angular/core';
 
 
-
 @Component({
   selector: 'app-imperial-metric-container',
   templateUrl: './imperial-metric-container.component.html',
@@ -20,11 +19,12 @@ export default class ImperialMetricContainerComponent implements OnInit {
     if (this.imperialMetricChoice === null) {
       localStorage.setItem(`imperialMetricChoice`, `{"imperialMetric":{"choice": "imperial"}}`)
     }
-
+    if (this.imperialMetricChoice !== null) {
     const imperialMetricChoiceStorageParsed = JSON.parse(this.imperialMetricChoice)
 
     const measurementChoice: any = imperialMetricChoiceStorageParsed.imperialMetric.choice
     this.selectedItem = measurementChoice
+    }
   }
 
 
