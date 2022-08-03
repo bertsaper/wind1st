@@ -187,7 +187,7 @@ export class ExploreContainerComponent implements OnInit {
 
     if (imperialMetricChoice === `imperial`) {
 
-     this.windSpeed = Math.round(weatherNowStringOutParsed.wind.speed )
+      this.windSpeed = Math.round(weatherNowStringOutParsed.wind.speed)
     }
 
     if (imperialMetricChoice === `metric`) {
@@ -196,7 +196,7 @@ export class ExploreContainerComponent implements OnInit {
       * Converting meters per second to Kilometers per hour.
       */
 
-      this.windSpeed = 35 // Math.round(((weatherNowStringOutParsed.wind.speed * 3600) / 1000))
+      this.windSpeed = Math.round(((weatherNowStringOutParsed.wind.speed * 3600) / 1000))
     }
 
     const temp = Math.round(weatherNowStringOutParsed.main.temp)
@@ -227,9 +227,9 @@ export class ExploreContainerComponent implements OnInit {
     const ordinalNW = `NW`
     const ordinalSW = `SW`
 
-     /*
-    * Build the svg.
-    */
+    /*
+   * Build the svg.
+   */
 
     const svg = document.createElementNS(`http://www.w3.org/2000/svg`, `svg`)
 
@@ -342,37 +342,16 @@ export class ExploreContainerComponent implements OnInit {
     * KPH circles.
     */
 
-    const band50kph = document.createElementNS(`http://www.w3.org/2000/svg`, `circle`)
-    this.renderer.setAttribute(band50kph, `cx`, `150`)
-    this.renderer.setAttribute(band50kph, `cy`, `150`)
-    this.renderer.setAttribute(band50kph, `r`, `140`)
-    this.renderer.setAttribute(band50kph, `id`, `band50kph`)
-    this.renderer.setAttribute(band50kph, `fill`, bandFill)
-    this.renderer.setAttribute(band50kph, `stroke`, bandStroke)
 
-    const band45kph = document.createElementNS(`http://www.w3.org/2000/svg`, `circle`)
-    this.renderer.setAttribute(band45kph, `cx`, `150`)
-    this.renderer.setAttribute(band45kph, `cy`, `150`)
-    this.renderer.setAttribute(band45kph, `r`, `130`)
-    this.renderer.setAttribute(band45kph, `id`, `band45kph`)
-    this.renderer.setAttribute(band45kph, `fill`, bandFill)
-    this.renderer.setAttribute(band45kph, `stroke`, bandStroke)
 
     const band40kph = document.createElementNS(`http://www.w3.org/2000/svg`, `circle`)
     this.renderer.setAttribute(band40kph, `cx`, `150`)
     this.renderer.setAttribute(band40kph, `cy`, `150`)
-    this.renderer.setAttribute(band40kph, `r`, `120`)
+    this.renderer.setAttribute(band40kph, `r`, `125`)
     this.renderer.setAttribute(band40kph, `id`, `band40kph`)
     this.renderer.setAttribute(band40kph, `fill`, bandFill)
     this.renderer.setAttribute(band40kph, `stroke`, bandStroke)
 
-    const band35kph = document.createElementNS(`http://www.w3.org/2000/svg`, `circle`)
-    this.renderer.setAttribute(band35kph, `cx`, `150`)
-    this.renderer.setAttribute(band35kph, `cy`, `150`)
-    this.renderer.setAttribute(band35kph, `r`, `110`)
-    this.renderer.setAttribute(band35kph, `id`, `band35kph`)
-    this.renderer.setAttribute(band35kph, `fill`, bandFill)
-    this.renderer.setAttribute(band35kph, `stroke`, bandStroke)
 
     const band30kph = document.createElementNS(`http://www.w3.org/2000/svg`, `circle`)
     this.renderer.setAttribute(band30kph, `cx`, `150`)
@@ -382,45 +361,23 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(band30kph, `fill`, bandFill)
     this.renderer.setAttribute(band30kph, `stroke`, bandStroke)
 
-    const band25kph = document.createElementNS(`http://www.w3.org/2000/svg`, `circle`)
-    this.renderer.setAttribute(band25kph, `cx`, `150`)
-    this.renderer.setAttribute(band25kph, `cy`, `150`)
-    this.renderer.setAttribute(band25kph, `r`, `90`)
-    this.renderer.setAttribute(band25kph, `id`, `band25kph`)
-    this.renderer.setAttribute(band25kph, `fill`, bandFill)
-    this.renderer.setAttribute(band25kph, `stroke`, bandStroke)
 
     const band20kph = document.createElementNS(`http://www.w3.org/2000/svg`, `circle`)
     this.renderer.setAttribute(band20kph, `cx`, `150`)
     this.renderer.setAttribute(band20kph, `cy`, `150`)
-    this.renderer.setAttribute(band20kph, `r`, `80`)
+    this.renderer.setAttribute(band20kph, `r`, `75`)
     this.renderer.setAttribute(band20kph, `id`, `band20kph`)
     this.renderer.setAttribute(band20kph, `fill`, bandFill)
     this.renderer.setAttribute(band20kph, `stroke`, bandStroke)
 
-    const band15kph = document.createElementNS(`http://www.w3.org/2000/svg`, `circle`)
-    this.renderer.setAttribute(band15kph, `cx`, `150`)
-    this.renderer.setAttribute(band15kph, `cy`, `150`)
-    this.renderer.setAttribute(band15kph, `r`, `70`)
-    this.renderer.setAttribute(band15kph, `id`, `band15kph`)
-    this.renderer.setAttribute(band15kph, `fill`, bandFill)
-    this.renderer.setAttribute(band15kph, `stroke`, bandStroke)
-
     const band10kph = document.createElementNS(`http://www.w3.org/2000/svg`, `circle`)
     this.renderer.setAttribute(band10kph, `cx`, `150`)
     this.renderer.setAttribute(band10kph, `cy`, `150`)
-    this.renderer.setAttribute(band10kph, `r`, `60`)
+    this.renderer.setAttribute(band10kph, `r`, `50`)
     this.renderer.setAttribute(band10kph, `id`, `band10kph`)
     this.renderer.setAttribute(band10kph, `fill`, bandFill)
     this.renderer.setAttribute(band10kph, `stroke`, bandStroke)
 
-    const band5kph = document.createElementNS(`http://www.w3.org/2000/svg`, `circle`)
-    this.renderer.setAttribute(band5kph, `cx`, `150`)
-    this.renderer.setAttribute(band5kph, `cy`, `150`)
-    this.renderer.setAttribute(band5kph, `r`, `50`)
-    this.renderer.setAttribute(band5kph, `id`, `band5kph`)
-    this.renderer.setAttribute(band5kph, `fill`, bandFill)
-    this.renderer.setAttribute(band5kph, `stroke`, bandStroke)
 
     /*
     * Eight legends on the compass.
@@ -537,10 +494,10 @@ export class ExploreContainerComponent implements OnInit {
     const textWindVelocity = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
     this.renderer.setAttribute(textWindVelocity, `id`, `textWindVelocity`)
 
-    if (this.windSpeed  > 0) {
+    if (this.windSpeed > 0) {
       textWindVelocity.textContent = this.windSpeed + this.selectedWindSpeed
     }
-    if (this.windSpeed  === 0) {
+    if (this.windSpeed === 0) {
       textWindVelocity.textContent = `No Wind`
     }
     this.renderer.setAttribute(textWindVelocity, `dominant-baseline`, `baseline`)
@@ -585,25 +542,13 @@ export class ExploreContainerComponent implements OnInit {
 
     if (imperialMetricChoice === `metric`) {
 
-      this.renderer.appendChild(bandGroup, band50kph)
-
-      this.renderer.appendChild(bandGroup, band45kph)
-
       this.renderer.appendChild(bandGroup, band40kph)
-
-      this.renderer.appendChild(bandGroup, band35kph)
 
       this.renderer.appendChild(bandGroup, band30kph)
 
-      this.renderer.appendChild(bandGroup, band25kph)
-
       this.renderer.appendChild(bandGroup, band20kph)
 
-      this.renderer.appendChild(bandGroup, band15kph)
-
       this.renderer.appendChild(bandGroup, band10kph)
-
-      this.renderer.appendChild(bandGroup, band5kph)
     }
 
     this.renderer.appendChild(infoGroup, textN)
