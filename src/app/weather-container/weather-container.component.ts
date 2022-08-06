@@ -393,78 +393,78 @@ export class ExploreContainerComponent implements OnInit {
     const textN = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
     this.renderer.setAttribute(textN, `id`, `cardinalN`)
     this.renderer.setAttribute(textN, `dominant-baseline`, `auto`)
-    this.renderer.setAttribute(textN, `x`, `145`)
-    this.renderer.setAttribute(textN, `y`, `-10`)
+    this.renderer.setAttribute(textN, `x`, `195`)
+    this.renderer.setAttribute(textN, `y`, `40`)
     textN.textContent = cardinalN
 
     const textS = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
     this.renderer.setAttribute(textS, `id`, `cardinalS`)
     this.renderer.setAttribute(textS, `dominant-baseline`, `hanging`)
-    this.renderer.setAttribute(textS, `x`, `145`)
-    this.renderer.setAttribute(textS, `y`, `310`)
+    this.renderer.setAttribute(textS, `x`, `195`)
+    this.renderer.setAttribute(textS, `y`, `360`)
     textS.textContent = cardinalS
 
     const textE = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
     this.renderer.setAttribute(textE, `id`, `cardinalE`)
     this.renderer.setAttribute(textE, `dominant-baseline`, `middle`)
-    this.renderer.setAttribute(textE, `x`, `310`)
+    this.renderer.setAttribute(textE, `x`, `360`)
     this.renderer.setAttribute(textE, `y`, `200`)
     textE.textContent = cardinalE
 
     const textW = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
     this.renderer.setAttribute(textW, `id`, `cardinalW`)
     this.renderer.setAttribute(textW, `dominant-baseline`, `middle`)
-    this.renderer.setAttribute(textW, `x`, `-25`)
+    this.renderer.setAttribute(textW, `x`, `25`)
     this.renderer.setAttribute(textW, `y`, `200`)
     textW.textContent = cardinalW
 
     const textNW = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
     this.renderer.setAttribute(textNW, `id`, `ordinalNW`)
     this.renderer.setAttribute(textNW, `dominant-baseline`, `baseline`)
-    this.renderer.setAttribute(textNW, `x`, `15`)
-    this.renderer.setAttribute(textNW, `y`, `35`)
+    this.renderer.setAttribute(textNW, `x`, `65`)
+    this.renderer.setAttribute(textNW, `y`, `85`)
     textNW.textContent = ordinalNW
 
     const textSW = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
     this.renderer.setAttribute(textSW, `id`, `ordinalSW`)
     this.renderer.setAttribute(textSW, `dominant-baseline`, `hanging`)
-    this.renderer.setAttribute(textSW, `x`, `15`)
-    this.renderer.setAttribute(textSW, `y`, `265`)
+    this.renderer.setAttribute(textSW, `x`, `65`)
+    this.renderer.setAttribute(textSW, `y`, `315`)
     textSW.textContent = ordinalSW
 
     const textNE = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
     this.renderer.setAttribute(textNE, `id`, `ordinalNE`)
     this.renderer.setAttribute(textNE, `dominant-baseline`, `baseline`)
-    this.renderer.setAttribute(textNE, `x`, `260`)
-    this.renderer.setAttribute(textNE, `y`, `35`)
+    this.renderer.setAttribute(textNE, `x`, `310`) 
+    this.renderer.setAttribute(textNE, `y`, `85`)
     textNE.textContent = ordinalNE
 
     const textSE = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
     this.renderer.setAttribute(textSE, `id`, `ordinalSE`)
     this.renderer.setAttribute(textSE, `dominant-baseline`, `hanging`)
-    this.renderer.setAttribute(textSE, `x`, `260`)
-    this.renderer.setAttribute(textSE, `y`, `265`)
+    this.renderer.setAttribute(textSE, `x`, `310`) 
+    this.renderer.setAttribute(textSE, `y`, `315`)
     textSE.textContent = ordinalSE
 
     const textTemp = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
     this.renderer.setAttribute(textTemp, `id`, `textTemp`)
     this.renderer.setAttribute(textTemp, `dominant-baseline`, `baseline`)
-    this.renderer.setAttribute(textTemp, `x`, `-30`)
-    this.renderer.setAttribute(textTemp, `y`, `-30`)
+    this.renderer.setAttribute(textTemp, `x`, `20`)
+    this.renderer.setAttribute(textTemp, `y`, `20`)
     textTemp.textContent = temp + this.selectedTemperature
 
     const textDescription = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
     this.renderer.setAttribute(textDescription, `id`, `textDescription`)
     this.renderer.setAttribute(textDescription, `dominant-baseline`, `baseline`)
-    this.renderer.setAttribute(textDescription, `x`, `-30`)
-    this.renderer.setAttribute(textDescription, `y`, `-10`)
+    this.renderer.setAttribute(textDescription, `x`, `20`)
+    this.renderer.setAttribute(textDescription, `y`, `40`)
     textDescription.textContent = description
 
     const textLocale = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
     this.renderer.setAttribute(textLocale, `id`, `textLocale`)
     this.renderer.setAttribute(textLocale, `dominant-baseline`, `baseline`)
-    this.renderer.setAttribute(textLocale, `x`, `-50`)
-    this.renderer.setAttribute(textLocale, `y`, `350`)
+    this.renderer.setAttribute(textLocale, `x`, `20`)
+    this.renderer.setAttribute(textLocale, `y`, `380`)
     textLocale.textContent = place
 
     if (this.windSpeed !== 0) {
@@ -478,7 +478,7 @@ export class ExploreContainerComponent implements OnInit {
       if (windDeg >= 61 && windDeg <= 120) {
         this.renderer.setAttribute(textE, `fill`, `red`)
       }
-      if (windDeg >= 121 && windDeg <= 200) {
+      if (windDeg >= 121 && windDeg <= 150) {
         this.renderer.setAttribute(textSE, `fill`, `red`)
       }
       if (windDeg >= 151 && windDeg <= 210) {
@@ -510,15 +510,15 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(textWindVelocity, `dominant-baseline`, `baseline`)
 
     if (windDeg <= 170) {
-      this.renderer.setAttribute(textWindVelocity, `x`, `155`)
+      this.renderer.setAttribute(textWindVelocity, `x`, `205`)
     }
     if (windDeg >= 169) {
 
       if (this.windSpeed <= 10) {
-        this.renderer.setAttribute(textWindVelocity, `x`, `95`)
+        this.renderer.setAttribute(textWindVelocity, `x`, `145`)
       }
       if (this.windSpeed > 10) {
-        this.renderer.setAttribute(textWindVelocity, `x`, `92`)
+        this.renderer.setAttribute(textWindVelocity, `x`, `142`)
       }
     }
     this.renderer.setAttribute(textWindVelocity, `y`, `200`)
