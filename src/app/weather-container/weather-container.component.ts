@@ -414,7 +414,7 @@ export class ExploreContainerComponent implements OnInit {
     const textW = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
     this.renderer.setAttribute(textW, `id`, `cardinalW`)
     this.renderer.setAttribute(textW, `dominant-baseline`, `middle`)
-    this.renderer.setAttribute(textW, `x`, `25`)
+    this.renderer.setAttribute(textW, `x`, `28`)
     this.renderer.setAttribute(textW, `y`, `200`)
     textW.textContent = cardinalW
 
