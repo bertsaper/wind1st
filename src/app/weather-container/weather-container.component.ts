@@ -478,7 +478,7 @@ export class ExploreContainerComponent implements OnInit {
       if (windDeg >= 61 && windDeg <= 120) {
         this.renderer.setAttribute(textE, `fill`, `red`)
       }
-      if (windDeg >= 121 && windDeg <= 150) {
+      if (windDeg >= 121 && windDeg <= 10) {
         this.renderer.setAttribute(textSE, `fill`, `red`)
       }
       if (windDeg >= 151 && windDeg <= 210) {
@@ -510,15 +510,15 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(textWindVelocity, `dominant-baseline`, `baseline`)
 
     if (windDeg <= 170) {
-      this.renderer.setAttribute(textWindVelocity, `x`, `205`)
+      this.renderer.setAttribute(textWindVelocity, `x`, `215`)
     }
     if (windDeg >= 169) {
 
       if (this.windSpeed <= 10) {
-        this.renderer.setAttribute(textWindVelocity, `x`, `145`)
+        this.renderer.setAttribute(textWindVelocity, `x`, `135`)
       }
       if (this.windSpeed > 10) {
-        this.renderer.setAttribute(textWindVelocity, `x`, `142`)
+        this.renderer.setAttribute(textWindVelocity, `x`, `132`)
       }
     }
     this.renderer.setAttribute(textWindVelocity, `y`, `200`)
