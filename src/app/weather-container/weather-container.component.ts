@@ -435,14 +435,14 @@ export class ExploreContainerComponent implements OnInit {
     const textNE = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
     this.renderer.setAttribute(textNE, `id`, `ordinalNE`)
     this.renderer.setAttribute(textNE, `dominant-baseline`, `baseline`)
-    this.renderer.setAttribute(textNE, `x`, `310`) 
+    this.renderer.setAttribute(textNE, `x`, `310`)
     this.renderer.setAttribute(textNE, `y`, `85`)
     textNE.textContent = ordinalNE
 
     const textSE = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
     this.renderer.setAttribute(textSE, `id`, `ordinalSE`)
     this.renderer.setAttribute(textSE, `dominant-baseline`, `hanging`)
-    this.renderer.setAttribute(textSE, `x`, `310`) 
+    this.renderer.setAttribute(textSE, `x`, `310`)
     this.renderer.setAttribute(textSE, `y`, `315`)
     textSE.textContent = ordinalSE
 
@@ -470,31 +470,31 @@ export class ExploreContainerComponent implements OnInit {
     if (this.windSpeed !== 0) {
 
       if (windDeg >= 0 && windDeg <= 30) {
-        this.renderer.setAttribute(textN, `fill`, `red`)
+        this.renderer.setAttribute(textN, `font-weight`, `bold`)
       }
       if (windDeg >= 31 && windDeg <= 60) {
-        this.renderer.setAttribute(textNE, `fill`, `red`)
+        this.renderer.setAttribute(textNE, `font-weight`, `bold`)
       }
       if (windDeg >= 61 && windDeg <= 120) {
-        this.renderer.setAttribute(textE, `fill`, `red`)
+        this.renderer.setAttribute(textE, `font-weight`, `bold`)
       }
       if (windDeg >= 121 && windDeg <= 10) {
-        this.renderer.setAttribute(textSE, `fill`, `red`)
+        this.renderer.setAttribute(textSE, `font-weight`, `bold`)
       }
       if (windDeg >= 151 && windDeg <= 210) {
-        this.renderer.setAttribute(textS, `fill`, `red`)
+        this.renderer.setAttribute(textS, `font-weight`, `bold`)
       }
       if (windDeg >= 211 && windDeg <= 240) {
-        this.renderer.setAttribute(textSW, `fill`, `red`)
+        this.renderer.setAttribute(textSW, `font-weight`, `bold`)
       }
       if (windDeg >= 241 && windDeg <= 300) {
-        this.renderer.setAttribute(textW, `fill`, `red`)
+        this.renderer.setAttribute(textW, `font-weight`, `bold`)
       }
       if (windDeg >= 301 && windDeg <= 330) {
-        this.renderer.setAttribute(textNW, `fill`, `red`)
+        this.renderer.setAttribute(textNW, `font-weight`, `bold`)
       }
       if (windDeg >= 331 && windDeg <= 360) {
-        this.renderer.setAttribute(textN, `fill`, `red`)
+        this.renderer.setAttribute(textN, `font-weight`, `bold`)
       }
     }
 
