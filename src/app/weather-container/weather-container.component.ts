@@ -209,7 +209,7 @@ export class ExploreContainerComponent implements OnInit {
     const temp = Math.round(weatherNowStringOutParsed.main.temp)
 
     /*
-    * Weather description comes out in a sub array and the brackets need to be striped.
+    * Weather description comes out in a sub array and the brackets need to be stripped.
     */
 
     const getWeatherDescription = weatherNowStringOutParsed.weather
@@ -252,7 +252,8 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(infoGroup, `id`, `infoGroup`)
 
     /*
-    * Scalers for the length of the wind direction arrow 29 needs to be just under 100
+    * Scalers for the length of the wind direction need to be just under 100 (29 for Imperial 
+    * and 50 for Metric).
     */
 
     if (imperialMetricChoice === `imperial`) {
@@ -356,8 +357,6 @@ export class ExploreContainerComponent implements OnInit {
     * KPH circles.
     */
 
-
-
     const band40kph = document.createElementNS(`http://www.w3.org/2000/svg`, `circle`)
     this.renderer.setAttribute(band40kph, `cx`, `200`)
     this.renderer.setAttribute(band40kph, `cy`, `200`)
@@ -366,7 +365,6 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(band40kph, `fill`, bandFill)
     this.renderer.setAttribute(band40kph, `stroke`, bandStroke)
 
-
     const band30kph = document.createElementNS(`http://www.w3.org/2000/svg`, `circle`)
     this.renderer.setAttribute(band30kph, `cx`, `200`)
     this.renderer.setAttribute(band30kph, `cy`, `200`)
@@ -374,7 +372,6 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(band30kph, `id`, `band30kph`)
     this.renderer.setAttribute(band30kph, `fill`, bandFill)
     this.renderer.setAttribute(band30kph, `stroke`, bandStroke)
-
 
     const band20kph = document.createElementNS(`http://www.w3.org/2000/svg`, `circle`)
     this.renderer.setAttribute(band20kph, `cx`, `200`)
@@ -391,7 +388,6 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(band10kph, `id`, `band10kph`)
     this.renderer.setAttribute(band10kph, `fill`, bandFill)
     this.renderer.setAttribute(band10kph, `stroke`, bandStroke)
-
 
     /*
     * Eight legends on the compass.
@@ -529,9 +525,6 @@ export class ExploreContainerComponent implements OnInit {
       }
     }
     this.renderer.setAttribute(textWindVelocity, `y`, `200`)
-
-
-
 
     this.renderer.appendChild(infoGroup, textWindVelocity)
 
