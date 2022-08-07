@@ -121,7 +121,7 @@ export class ExploreContainerComponent implements OnInit {
 
     try {
 
-      const measurementChoice = this.getMeasurementChoiceMethod()
+      const measurementChoice = this.getMeasurementChoice()
 
       const weatherLocationStorage = localStorage.getItem(this.weatherLocationStorage)
 
@@ -160,7 +160,7 @@ export class ExploreContainerComponent implements OnInit {
 
   chartMethod() {
 
-    const imperialMetricChoice = this.getMeasurementChoiceMethod()
+    const imperialMetricChoice = this.getMeasurementChoice()
 
 
     if (imperialMetricChoice === `imperial`) {
@@ -175,9 +175,9 @@ export class ExploreContainerComponent implements OnInit {
 
     const windVelocity = `rgba(255, 2555, 255, .125)`
 
-    const bandFill = `rgba(255, 255, 255, 0.1)`
+    const bandFill = `rgba(255, 255, 255, 0)`
 
-    const bandStroke = `rgba(0, 0, 0, 0.125)`
+    const bandStroke = `rgba(255, 255, 255, 0.125)`
 
     const weatherNowStringOut = localStorage.getItem(this.currentWeatherStorage)
 
@@ -579,7 +579,7 @@ export class ExploreContainerComponent implements OnInit {
 
   }
 
-  getMeasurementChoiceMethod() {
+  getMeasurementChoice() {
 
     const imperialMetricChoice = localStorage.getItem('imperialMetricChoice')
 
@@ -589,6 +589,11 @@ export class ExploreContainerComponent implements OnInit {
 
     return measurementChoice
 
+  }
+
+  updateWeather() {
+    this.removeElement()
+    this.getWeather()
   }
 
 }
