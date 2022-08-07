@@ -64,9 +64,8 @@ export class ExploreContainerComponent implements OnInit {
 
   displayLocationFlag = false
 
-
-
   @ViewChild('svgWindPointer') container: ElementRef;
+
 
   constructor(
     private http: HttpClient,
@@ -85,16 +84,16 @@ export class ExploreContainerComponent implements OnInit {
       if (event instanceof NavigationEnd) {
 
         /*
-        * this.removeElement() prevents multiple results from displaying
+        * this.removeWeatherDisplay() prevents multiple results from displaying
         */
 
         if (event.url === this.displayLocation) {
-          this.removeElement()
+          this.removeWeatherDisplay()
           // console.log(`Display true`)
           this.getWeather()
         }
         if (event.url === this.fromHome) {
-          //  this.removeElement()
+          //  this.removeWeatherDisplay()
           // console.log(`from home`)
           this.getWeather()
         }
@@ -102,7 +101,14 @@ export class ExploreContainerComponent implements OnInit {
     })
   }
 
-  removeElement() {
+  removeLoadingDisplay() {
+    this.element = document.getElementById(`loadingDiv`)
+    if (this.element) {
+      this.element.remove()
+    }
+  }
+
+  removeWeatherDisplay() {
     this.element = document.getElementById(this.weatherDisplay)
     if (this.element) {
       this.element.remove()
@@ -148,6 +154,7 @@ export class ExploreContainerComponent implements OnInit {
         this.weatherNowString = JSON.stringify(this.weatherNow)
         localStorage.setItem(this.currentWeatherStorage, this.weatherNowString)
 
+        this.removeLoadingDisplay()
         this.chartMethod()
 
       })
@@ -592,7 +599,7 @@ export class ExploreContainerComponent implements OnInit {
   }
 
   updateWeather() {
-    this.removeElement()
+    this.removeWeatherDisplay()
     this.getWeather()
   }
 
