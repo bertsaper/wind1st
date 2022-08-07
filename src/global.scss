@@ -63,36 +63,14 @@
 }
 
 app-weather-container>div>div>div {
-    background-color: #ccc;
-    min-height: 500px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
+
 #infoGroup,
-#bandGroup {
-    transform: translate(50px, 50px);
+#windDirectionPath {
+    fill: #8ab4f8;
+    stroke: #8ab4f8;
 }
-
-
-// #CardinalN {
-//     transform: translate(140px, -28px);
-//     font-size: 30px;
-// }
-// #CardinalS {
-//     transform: translate(140px, 350px);
-//     font-size: 30px;
-// }
-// #CardinalE {
-//     transform: translate(335px, 160px);
-//     font-size: 30px;
-// }
-// #CardinalW {
-//     transform: translate(-50px, 160px);
-//     font-size: 30px;
-// }
-// #WindVelocity {
-//     transform: translate(-150px, -28px);
-//     font-size: 30px;
-// }
