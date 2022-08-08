@@ -45,12 +45,12 @@
     stroke-width: 1px;
 }
 
-#windDirectionHolder {
-    stroke: black;
-    stroke-width: 2px;
-    // -webkit-filter: drop-shadow( 0px 0px 5px rgba(0, 0, 0, .7));
-    // filter: drop-shadow( 0px 0px 5px rgba(0, 0, 0, .7));
-}
+// #windDirectionHolder {
+//     // stroke: black;
+//     stroke-width: 2px;
+//     // -webkit-filter: drop-shadow( 0px 0px 5px rgba(0, 0, 0, .7));
+//     // filter: drop-shadow( 0px 0px 5px rgba(0, 0, 0, .7));
+// }
 
 
 .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle,
@@ -68,9 +68,13 @@ app-weather-container>div>div>div>div {
     justify-content: center;
 }
 
-
 #infoGroup,
+#compassGroup,
 #windDirectionPath {
     fill: #8ab4f8;
     stroke: #8ab4f8;
 }
+
+// #windDirectionHolder { 
+//     stroke: rgba(180, 182, 246, .45);
+// }
