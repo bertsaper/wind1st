@@ -18,10 +18,15 @@ import { HttpClient } from '@angular/common/http'
 export class ExploreContainerComponent implements OnInit {
 
   element: any
+
   windSpeed: any
+
   windSpeedMax: any
+
   windSpeedMin: any
+
   windScalerFirstLast: any
+
   windScalerSecondThird: any
 
   weatherNow: object
@@ -61,6 +66,8 @@ export class ExploreContainerComponent implements OnInit {
   displayLocation = `/tabs/tab1`
 
   weatherDisplay = `windInfo`
+
+  loadingDiv = `loadingDiv`
 
   displayLocationFlag = false
 
@@ -102,7 +109,7 @@ export class ExploreContainerComponent implements OnInit {
   }
 
   removeLoadingDisplay() {
-    this.element = document.getElementById(`loadingDiv`)
+    this.element = document.getElementById(this.loadingDiv)
     if (this.element) {
       this.element.remove()
     }
@@ -171,13 +178,13 @@ export class ExploreContainerComponent implements OnInit {
 
 
     if (imperialMetricChoice === `imperial`) {
-      this.selectedWindSpeed = ` MPH`
-      this.selectedTemperature = ` F`
+      this.selectedWindSpeed = ` mph`
+      this.selectedTemperature = ` f`
     }
 
     if (imperialMetricChoice === `metric`) {
-      this.selectedWindSpeed = ` KPH`
-      this.selectedTemperature = ` C`
+      this.selectedWindSpeed = ` kph`
+      this.selectedTemperature = ` c`
     }
 
     const windVelocity = `rgba(255, 2555, 255, .125)`
@@ -191,6 +198,8 @@ export class ExploreContainerComponent implements OnInit {
     const weatherNowStringOutParsed = JSON.parse(weatherNowStringOut)
 
     const windDeg = weatherNowStringOutParsed.wind.deg
+
+    const humidity =  weatherNowStringOutParsed.main.humidity + `% humidity`
 
     if (imperialMetricChoice === `imperial`) {
 
@@ -233,16 +242,17 @@ export class ExploreContainerComponent implements OnInit {
     const ordinalSE = `SE`
     const ordinalNW = `NW`
     const ordinalSW = `SW`
+    
 
     /*
    * Build the svg.
    */
 
-    const svg = document.createElementNS(`http://www.w3.org/2000/svg`, `svg`)
+    const compass = document.createElementNS(`http://www.w3.org/2000/svg`, `svg`)
 
-    this.renderer.setAttribute(svg, `height`, `400`)
-    this.renderer.setAttribute(svg, `width`, `400`)
-    this.renderer.setAttribute(svg, `id`, this.weatherDisplay)
+    this.renderer.setAttribute(compass, `height`, `400`)
+    this.renderer.setAttribute(compass, `width`, `400`)
+    this.renderer.setAttribute(compass, `id`, this.weatherDisplay)
 
     const infoGroup = document.createElementNS(`http://www.w3.org/2000/svg`, `g`)
     this.renderer.setAttribute(infoGroup, `height`, `360`)
@@ -453,14 +463,21 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(textTemp, `id`, `textTemp`)
     this.renderer.setAttribute(textTemp, `dominant-baseline`, `baseline`)
     this.renderer.setAttribute(textTemp, `x`, `20`)
-    this.renderer.setAttribute(textTemp, `y`, `20`)
+    this.renderer.setAttribute(textTemp, `y`, `15`)
     textTemp.textContent = temp + this.selectedTemperature
+
+    const texthumidity = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
+    this.renderer.setAttribute(texthumidity, `id`, `texthumidity`)
+    this.renderer.setAttribute(texthumidity, `dominant-baseline`, `baseline`)
+    this.renderer.setAttribute(texthumidity, `x`, `70`)
+    this.renderer.setAttribute(texthumidity, `y`, `15`)
+    texthumidity.textContent = humidity
 
     const textDescription = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
     this.renderer.setAttribute(textDescription, `id`, `textDescription`)
     this.renderer.setAttribute(textDescription, `dominant-baseline`, `baseline`)
-    this.renderer.setAttribute(textDescription, `x`, `20`)
-    this.renderer.setAttribute(textDescription, `y`, `40`)
+    this.renderer.setAttribute(textDescription, `x`, `230`)
+    this.renderer.setAttribute(textDescription, `y`, `15`)
     textDescription.textContent = description
 
     const textLocale = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
@@ -568,14 +585,15 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.appendChild(infoGroup, textSE)
     this.renderer.appendChild(infoGroup, textTemp)
     this.renderer.appendChild(infoGroup, textDescription)
+    this.renderer.appendChild(infoGroup, texthumidity)
     this.renderer.appendChild(infoGroup, textLocale)
 
     this.renderer.appendChild(infoGroup, circle)
 
-    this.renderer.appendChild(svg, bandGroup)
-    this.renderer.appendChild(svg, infoGroup)
+    this.renderer.appendChild(compass, bandGroup)
+    this.renderer.appendChild(compass, infoGroup)
 
-    this.renderer.appendChild(this.container.nativeElement, svg)
+    this.renderer.appendChild(this.container.nativeElement, compass)
 
   }
 
