@@ -189,11 +189,9 @@ export class ExploreContainerComponent implements OnInit {
       this.selectedTemperature = ` c`
     }
 
-    const windVelocity = `rgba(255, 255, 255, .125)`
+    const windVelocity = `rgba(255, 255, 255, 0.125)`
 
     const bandFill = `rgba(255, 255, 255, 0)`
-
-    const holderBandStroke = `(180, 182, 246, .125)`
 
     const bandStroke = `rgba(255, 255, 255, 0.125)`
 
@@ -214,9 +212,10 @@ export class ExploreContainerComponent implements OnInit {
 
       /*
       * Converting meters per second to Kilometers per hour.
+      * meters per second * 3600 / 1000 or meters per second * 3.6
       */
 
-      this.windSpeed = Math.round(((weatherNowStringOutParsed.wind.speed * 3600) / 1000))
+      this.windSpeed = Math.round(weatherNowStringOutParsed.wind.speed * 3.6)
     }
 
     const temp = Math.round(weatherNowStringOutParsed.main.temp)
@@ -322,8 +321,8 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(circle, `r`, `150`)
     this.renderer.setAttribute(circle, `id`, `windDirectionHolder`)
     this.renderer.setAttribute(circle, `fill`, windVelocity)
-    this.renderer.setAttribute(circle, `stroke`, holderBandStroke)
-    this.renderer.setAttribute(circle, `class`, `mat-elevation-z4`)
+    this.renderer.setAttribute(circle, `stroke-width`, `0`)
+
 
     /*
     * MPH circles.
