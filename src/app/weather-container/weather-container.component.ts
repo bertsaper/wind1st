@@ -143,9 +143,11 @@ export class ExploreContainerComponent implements OnInit {
       const openWeatherAddress = environment.open_weather_address
 
       const latString = `lat=`
+
       const lati: any = weatherLocationStorageParsed.location.lat
 
       const lonString = `&lon=`
+      
       const long: any = weatherLocationStorageParsed.location.lng
 
       const openWeatherKey: string = environment.open_weather_key
@@ -187,9 +189,11 @@ export class ExploreContainerComponent implements OnInit {
       this.selectedTemperature = ` c`
     }
 
-    const windVelocity = `rgba(255, 2555, 255, .125)`
+    const windVelocity = `rgba(255, 255, 255, .125)`
 
     const bandFill = `rgba(255, 255, 255, 0)`
+
+    const holderBandStroke = `(180, 182, 246, .125)`
 
     const bandStroke = `rgba(255, 255, 255, 0.125)`
 
@@ -318,6 +322,8 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(circle, `r`, `150`)
     this.renderer.setAttribute(circle, `id`, `windDirectionHolder`)
     this.renderer.setAttribute(circle, `fill`, windVelocity)
+    this.renderer.setAttribute(circle, `stroke`, holderBandStroke)
+    this.renderer.setAttribute(circle, `class`, `mat-elevation-z4`)
 
     /*
     * MPH circles.
@@ -427,7 +433,7 @@ export class ExploreContainerComponent implements OnInit {
     const textW = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
     this.renderer.setAttribute(textW, `id`, `cardinalW`)
     this.renderer.setAttribute(textW, `dominant-baseline`, `middle`)
-    this.renderer.setAttribute(textW, `x`, `27`)
+    this.renderer.setAttribute(textW, `x`, `26`)
     this.renderer.setAttribute(textW, `y`, `200`)
     textW.textContent = cardinalW
 
@@ -587,7 +593,6 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.appendChild(infoGroup, textDescription)
     this.renderer.appendChild(infoGroup, texthumidity)
     this.renderer.appendChild(infoGroup, textLocale)
-
     this.renderer.appendChild(infoGroup, circle)
 
     this.renderer.appendChild(compass, bandGroup)
