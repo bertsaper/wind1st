@@ -6,9 +6,12 @@ import { IonicModule } from '@ionic/angular';
 
 import { ExploreContainerComponent } from './weather-container.component';
 
+import { MatButtonModule } from '@angular/material/button';
+
+
 @NgModule({
-  imports: [ CommonModule, FormsModule, IonicModule],
+  imports: [CommonModule, FormsModule, IonicModule, MatButtonModule],
   declarations: [ExploreContainerComponent],
   exports: [ExploreContainerComponent]
 })
-export class WeatherContainerComponentModule {}
+export class WeatherContainerComponentModule { }

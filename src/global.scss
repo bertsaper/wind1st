@@ -14,6 +14,11 @@
 
 @import "~@ionic/angular/css/core.css";
 
+/* Material theme */
+
+@import "../node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css";
+
+
 /* Basic CSS for apps built with Ionic */
 
 @import "~@ionic/angular/css/normalize.css";
@@ -28,41 +33,39 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+.md body {
+    --ion-background-color: #121212;
+    --ion-background-color-rgb: 18,18,18;
+    // color: #8cb6f6;
+    --ion-text-color: #8cb6f6;
+}
+
 #WindInfo {
-    // background-color: red;
-    overflow: visible!important;
+    overflow: visible !important;
 }
 
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle,
+.mat-radio-outer-circle {
+    border-color: blue !important;
+}
+
+.mat-radio-button.mat-accent .mat-radio-inner-circle {
+    background-color: blue !important;
+}
+
+app-weather-container>div>div>div>div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#infoGroup,
 #windDirectionPath {
-    fill: black;
-    stroke: black;
-    stroke-width: 1px;
+    fill: #8ab4f8;
+    stroke: #8ab4f8;
 }
 
-#windDirectionHolder {
-    stroke: black;
-    stroke-width: 2px;
-    // -webkit-filter: drop-shadow( 0px 0px 5px rgba(0, 0, 0, .7));
-    // filter: drop-shadow( 0px 0px 5px rgba(0, 0, 0, .7));
-}
-
-// #CardinalN {
-//     transform: translate(140px, -28px);
-//     font-size: 30px;
-// }
-// #CardinalS {
-//     transform: translate(140px, 350px);
-//     font-size: 30px;
-// }
-// #CardinalE {
-//     transform: translate(335px, 160px);
-//     font-size: 30px;
-// }
-// #CardinalW {
-//     transform: translate(-50px, 160px);
-//     font-size: 30px;
-// }
-// #WindVelocity {
-//     transform: translate(-150px, -28px);
-//     font-size: 30px;
+// #windDirectionHolder { 
+//     stroke: rgba(180, 182, 246, .45);
 // }
