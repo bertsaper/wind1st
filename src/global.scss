@@ -36,7 +36,7 @@
 
 .md body {
     --ion-background-color: #121212;
-    --ion-background-color-rgb: 18,18,18;
+    --ion-background-color-rgb: 18, 18, 18;
     // color: #8cb6f6;
     --ion-text-color: #8cb6f6;
 }
@@ -61,7 +61,8 @@ app-weather-container>div>div>div>div {
 }
 
 #infoGroup,
-#windDirectionPath {
+#windDirectionPath,
+#infoGroupWearable {
     fill: #8ab4f8;
     stroke: #8ab4f8;
 }
