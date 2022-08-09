@@ -69,6 +69,8 @@ export class ExploreContainerComponent implements OnInit {
 
   weatherDisplay = `windInfo`
 
+  wearableDisplay = `wearableDisplay`
+
   loadingDiv = `loadingDiv`
 
   displayLocationFlag = false
@@ -93,17 +95,15 @@ export class ExploreContainerComponent implements OnInit {
       if (event instanceof NavigationEnd) {
 
         /*
-        * this.removeWeatherDisplay() prevents multiple results from displaying
+        * this.removeWeatherDisplay() and removeWeatherDisplayWearable() prevents multiple results from displaying
         */
 
         if (event.url === this.displayLocation) {
           this.removeWeatherDisplay()
-          // console.log(`Display true`)
+          this.removeWeatherDisplayWearable()
           this.getWeather()
         }
         if (event.url === this.fromHome) {
-          //  this.removeWeatherDisplay()
-          // console.log(`from home`)
           this.getWeather()
         }
       }
@@ -123,6 +123,15 @@ export class ExploreContainerComponent implements OnInit {
       this.element.remove()
     }
   }
+
+  removeWeatherDisplayWearable() {
+    this.element = document.getElementById(this.wearableDisplay)
+    if (this.element) {
+      this.element.remove()
+    }
+  }
+
+  displayWearable
 
   async getWeather(): Promise<void> {
 
@@ -527,53 +536,62 @@ export class ExploreContainerComponent implements OnInit {
         this.renderer.setAttribute(textN, `font-weight`, `bold`)
         this.windDirectionWearable = cardinalN
       }
-
-      /*
-      * SVG elements for wearables, that is small viewports.
-      */
-
-      const textLocaleWearable = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
-      this.renderer.setAttribute(textLocaleWearable, `id`, `textLocaleWearable`)
-      this.renderer.setAttribute(textLocaleWearable, `dominant-baseline`, `baseline`)
-      this.renderer.setAttribute(textLocaleWearable, `x`, `20`)
-      this.renderer.setAttribute(textLocaleWearable, `y`, `420`)
-      textLocaleWearable.textContent = place
-
-      const textDescriptionWearable = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
-      this.renderer.setAttribute(textDescriptionWearable, `id`, `textDescriptionWearable`)
-      this.renderer.setAttribute(textDescriptionWearable, `dominant-baseline`, `baseline`)
-      this.renderer.setAttribute(textDescriptionWearable, `x`, `230`)
-      this.renderer.setAttribute(textDescriptionWearable, `y`, `15`)
-      textDescriptionWearable.textContent = description
-
-      const textHumidityWearable = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
-      this.renderer.setAttribute(textHumidityWearable, `id`, `textHumidityWearable`)
-      this.renderer.setAttribute(textHumidityWearable, `dominant-baseline`, `baseline`)
-      this.renderer.setAttribute(textHumidityWearable, `x`, `70`)
-      this.renderer.setAttribute(textHumidityWearable, `y`, `15`)
-      textHumidityWearable.textContent = humidity
-
-      const textTempWearable = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
-      this.renderer.setAttribute(textTempWearable, `id`, `textTempWearable`)
-      this.renderer.setAttribute(textTempWearable, `dominant-baseline`, `baseline`)
-      this.renderer.setAttribute(textTempWearable, `x`, `20`)
-      this.renderer.setAttribute(textTempWearable, `y`, `15`)
-      textTempWearable.textContent = temp + this.selectedTemperature
-
-      const textWindVelocityWearable = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
-      this.renderer.setAttribute(textWindVelocityWearable, `id`, `textWindVelocityWearable`)
-      this.renderer.setAttribute(textWindVelocityWearable, `dominant-baseline`, `baseline`)
-      this.renderer.setAttribute(textWindVelocityWearable, `x`, `20`)
-      this.renderer.setAttribute(textWindVelocityWearable, `y`, `15`)
-      textWindVelocityWearable.textContent = this.windSpeed + this.selectedWindSpeed
-
-      const textWindDirectionWearableWearable = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
-      this.renderer.setAttribute(textWindDirectionWearableWearable, `id`, `textWindDirectionWearableWearable`)
-      this.renderer.setAttribute(textWindDirectionWearableWearable, `dominant-baseline`, `baseline`)
-      this.renderer.setAttribute(textWindDirectionWearableWearable, `x`, `20`)
-      this.renderer.setAttribute(textWindDirectionWearableWearable, `y`, `15`)
-      textWindDirectionWearableWearable.textContent = this.windDirectionWearable
     }
+    /*
+    * SVG elements for wearables, that is small viewports.
+    */
+    const displayWearable = document.createElementNS(`http://www.w3.org/2000/svg`, `svg`)
+    this.renderer.setAttribute(displayWearable, `height`, `320`)
+    this.renderer.setAttribute(displayWearable, `width`, `270`)
+    this.renderer.setAttribute(displayWearable, `id`, `wearableDisplay`)
+
+    const infoGroupWearable = document.createElementNS(`http://www.w3.org/2000/svg`, `g`)
+    this.renderer.setAttribute(infoGroupWearable, `height`, `300`)
+    this.renderer.setAttribute(infoGroupWearable, `width`, `250`)
+    this.renderer.setAttribute(infoGroupWearable, `id`, `infoGroupWearable`)
+
+    const textLocaleWearable = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
+    this.renderer.setAttribute(textLocaleWearable, `id`, `textLocaleWearable`)
+    this.renderer.setAttribute(textLocaleWearable, `dominant-baseline`, `baseline`)
+    this.renderer.setAttribute(textLocaleWearable, `x`, `20`)
+    this.renderer.setAttribute(textLocaleWearable, `y`, `120`)
+    textLocaleWearable.textContent = place
+
+    const textDescriptionWearable = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
+    this.renderer.setAttribute(textDescriptionWearable, `id`, `textDescriptionWearable`)
+    this.renderer.setAttribute(textDescriptionWearable, `dominant-baseline`, `baseline`)
+    this.renderer.setAttribute(textDescriptionWearable, `x`, `20`)
+    this.renderer.setAttribute(textDescriptionWearable, `y`, `100`)
+    textDescriptionWearable.textContent = description
+
+    const textHumidityWearable = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
+    this.renderer.setAttribute(textHumidityWearable, `id`, `textHumidityWearable`)
+    this.renderer.setAttribute(textHumidityWearable, `dominant-baseline`, `baseline`)
+    this.renderer.setAttribute(textHumidityWearable, `x`, `20`)
+    this.renderer.setAttribute(textHumidityWearable, `y`, `80`)
+    textHumidityWearable.textContent = humidity
+
+    const textTempWearable = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
+    this.renderer.setAttribute(textTempWearable, `id`, `textTempWearable`)
+    this.renderer.setAttribute(textTempWearable, `dominant-baseline`, `baseline`)
+    this.renderer.setAttribute(textTempWearable, `x`, `20`)
+    this.renderer.setAttribute(textTempWearable, `y`, `60`)
+    textTempWearable.textContent = temp + this.selectedTemperature
+
+    const textWindVelocityWearable = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
+    this.renderer.setAttribute(textWindVelocityWearable, `id`, `textWindVelocityWearable`)
+    this.renderer.setAttribute(textWindVelocityWearable, `dominant-baseline`, `baseline`)
+    this.renderer.setAttribute(textWindVelocityWearable, `x`, `20`)
+    this.renderer.setAttribute(textWindVelocityWearable, `y`, `40`)
+    textWindVelocityWearable.textContent = this.windSpeed + this.selectedWindSpeed
+
+    const textWindDirectionWearable = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
+    this.renderer.setAttribute(textWindDirectionWearable, `id`, `textWindDirectionWearable`)
+    this.renderer.setAttribute(textWindDirectionWearable, `dominant-baseline`, `baseline`)
+    this.renderer.setAttribute(textWindDirectionWearable, `x`, `20`)
+    this.renderer.setAttribute(textWindDirectionWearable, `y`, `20`)
+    textWindDirectionWearable.textContent = this.windDirectionWearable
+
 
     const textWindVelocity = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
     this.renderer.setAttribute(textWindVelocity, `id`, `textWindVelocity`)
@@ -651,6 +669,18 @@ export class ExploreContainerComponent implements OnInit {
 
     this.renderer.appendChild(this.container.nativeElement, compass)
 
+    this.renderer.appendChild(infoGroupWearable, textWindVelocityWearable)
+    this.renderer.appendChild(infoGroupWearable, textWindDirectionWearable)
+    this.renderer.appendChild(infoGroupWearable, textTempWearable)
+    this.renderer.appendChild(infoGroupWearable, textHumidityWearable)
+    this.renderer.appendChild(infoGroupWearable, textDescriptionWearable)
+    this.renderer.appendChild(infoGroupWearable, textLocaleWearable)
+
+    this.renderer.appendChild(displayWearable, infoGroupWearable)
+
+    this.renderer.appendChild(this.container.nativeElement, displayWearable)
+
+
   }
 
   getMeasurementChoice() {
@@ -667,6 +697,7 @@ export class ExploreContainerComponent implements OnInit {
 
   updateWeather() {
     this.removeWeatherDisplay()
+    this.removeWeatherDisplayWearable()
     this.getWeather()
   }
 
