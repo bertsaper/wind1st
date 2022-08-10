@@ -17,6 +17,12 @@ import { HttpClient } from '@angular/common/http'
 
 export class ExploreContainerComponent implements OnInit {
 
+  /*
+  * Screen size is needed to see if device is wearable
+  */
+
+  getScreenWidth: any
+
   element: any
 
   windSpeed: any
@@ -87,6 +93,10 @@ export class ExploreContainerComponent implements OnInit {
 
   ngOnInit() {
 
+    this.getScreenWidth = window.innerWidth
+
+    console.log(this.getScreenWidth)
+
     this.onDisplay()
   }
 
@@ -130,8 +140,6 @@ export class ExploreContainerComponent implements OnInit {
       this.element.remove()
     }
   }
-
-  displayWearable
 
   async getWeather(): Promise<void> {
 
@@ -191,12 +199,16 @@ export class ExploreContainerComponent implements OnInit {
 
 
     if (imperialMetricChoice === `imperial`) {
+
       this.selectedWindSpeed = ` mph`
+
       this.selectedTemperature = ` f`
     }
 
     if (imperialMetricChoice === `metric`) {
+
       this.selectedWindSpeed = ` kph`
+
       this.selectedTemperature = ` c`
     }
 
