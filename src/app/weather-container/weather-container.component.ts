@@ -95,8 +95,6 @@ export class ExploreContainerComponent implements OnInit {
 
     this.getScreenWidth = window.innerWidth
 
-    console.log(this.getScreenWidth)
-
     this.onDisplay()
   }
 
@@ -109,8 +107,13 @@ export class ExploreContainerComponent implements OnInit {
         */
 
         if (event.url === this.displayLocation) {
-          this.removeWeatherDisplay()
-          this.removeWeatherDisplayWearable()
+          if (this.getScreenWidth >= 380) {
+            this.removeWeatherDisplay()
+          }
+
+          if (this.getScreenWidth < 380) {
+            this.removeWeatherDisplayWearable()
+          }
           this.getWeather()
         }
         if (event.url === this.fromHome) {
@@ -196,6 +199,8 @@ export class ExploreContainerComponent implements OnInit {
   chartMethod() {
 
     const imperialMetricChoice = this.getMeasurementChoice()
+
+    console.log(this.getScreenWidth)
 
 
     if (imperialMetricChoice === `imperial`) {
@@ -553,8 +558,8 @@ export class ExploreContainerComponent implements OnInit {
     * SVG elements for wearables, that is small viewports.
     */
     const displayWearable = document.createElementNS(`http://www.w3.org/2000/svg`, `svg`)
-    this.renderer.setAttribute(displayWearable, `height`, `320`)
-    this.renderer.setAttribute(displayWearable, `width`, `270`)
+    this.renderer.setAttribute(displayWearable, `height`, `150`)
+    this.renderer.setAttribute(displayWearable, `width`, `150`)
     this.renderer.setAttribute(displayWearable, `id`, `wearableDisplay`)
 
     const infoGroupWearable = document.createElementNS(`http://www.w3.org/2000/svg`, `g`)
@@ -679,7 +684,9 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.appendChild(compass, bandGroup)
     this.renderer.appendChild(compass, infoGroup)
 
-    this.renderer.appendChild(this.container.nativeElement, compass)
+    if (this.getScreenWidth >= 380) {
+      this.renderer.appendChild(this.container.nativeElement, compass)
+    }
 
     this.renderer.appendChild(infoGroupWearable, textWindVelocityWearable)
     this.renderer.appendChild(infoGroupWearable, textWindDirectionWearable)
@@ -690,8 +697,9 @@ export class ExploreContainerComponent implements OnInit {
 
     this.renderer.appendChild(displayWearable, infoGroupWearable)
 
-    this.renderer.appendChild(this.container.nativeElement, displayWearable)
-
+    if (this.getScreenWidth < 380) {
+      this.renderer.appendChild(this.container.nativeElement, displayWearable)
+    }
 
   }
 
@@ -708,8 +716,12 @@ export class ExploreContainerComponent implements OnInit {
   }
 
   updateWeather() {
-    this.removeWeatherDisplay()
-    this.removeWeatherDisplayWearable()
+    if (this.getScreenWidth >= 380) {
+      this.removeWeatherDisplay()
+    }
+    if (this.getScreenWidth < 380) {
+      this.removeWeatherDisplayWearable()
+    }
     this.getWeather()
   }
 
