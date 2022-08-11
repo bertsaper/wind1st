@@ -21,14 +21,14 @@ const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: '/tabs/weather',
+        redirectTo: '/weather',
         pathMatch: 'full'
       }
     ]
   },
   {
     path: '',
-    redirectTo: '/tabs/weather',
+    redirectTo: '/weather',
     pathMatch: 'full'
   }
 ];
