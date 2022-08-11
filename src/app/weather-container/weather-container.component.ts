@@ -69,9 +69,9 @@ export class ExploreContainerComponent implements OnInit {
   * and displayLocation are needed for routing.
   */
 
-  ifNoLocationNavTo = `tabs/tab2`
+  ifNoLocationNavTo = `/setings`
 
-  displayLocation = `/tabs/tab1`
+  displayLocation = `/weather`
 
   weatherDisplay = `windInfo`
 
