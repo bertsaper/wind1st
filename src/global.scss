@@ -41,6 +41,19 @@
     --ion-text-color: #8cb6f6;
 }
 
+ion-title {
+    margin-left: 10vw;
+}
+
+.titleicon {
+    float: right;
+    margin-right: 10vw;
+}
+
+.titleicon img {
+    max-height: 25px;
+}
+
 #WindInfo {
     overflow: visible !important;
 }
