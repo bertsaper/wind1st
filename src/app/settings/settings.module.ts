@@ -8,6 +8,8 @@ import { LocationContainerComponentModule } from '../location-container/location
 import { ImperialMetricContainerComponentModule } from '../imperial-metric-container/imperial-metric-container.module';
 import { SettingsPageRoutingModule } from './settings-routing.module';
 
+import { MatButtonModule } from '@angular/material/button';
+
 
 
 @NgModule({
@@ -20,6 +22,7 @@ import { SettingsPageRoutingModule } from './settings-routing.module';
     LocationContainerComponentModule,
     ImperialMetricContainerComponentModule,
     SettingsPageRoutingModule,
+    MatButtonModule,
   ],
   declarations: [SettingsPage]
 })
