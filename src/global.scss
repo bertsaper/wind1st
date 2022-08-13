@@ -41,17 +41,30 @@
     --ion-text-color: #8cb6f6;
 }
 
+ion-title {
+    margin-left: 30vw;
+}
+
+.titleicon {
+    float: right;
+    margin-right: 30vw;
+}
+
+.titleicon img {
+    max-height: 25px;
+}
+
 #WindInfo {
     overflow: visible !important;
 }
 
 .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle,
 .mat-radio-outer-circle {
-    border-color: blue !important;
+    border-color: #efefef !important;
 }
 
 .mat-radio-button.mat-accent .mat-radio-inner-circle {
-    background-color: blue !important;
+    background-color: #efefef !important;
 }
 
 app-weather-container>div>div>div>div {
@@ -67,6 +80,35 @@ app-weather-container>div>div>div>div {
     stroke: #8ab4f8;
 }
 
-// #windDirectionHolder { 
-//     stroke: rgba(180, 182, 246, .45);
-// }
+form,
+input,
+optgroup,
+select {
+    color: #121212;
+}
+
+app-location-container>div>form>div>label {
+    color: #8ab4f8 !important;
+}
+
+@media screen and (max-width:600px) {
+
+    ion-title {
+        margin-left: 10vw;
+    }
+
+    .titleicon {
+        float: right;
+        margin-right: 10vw;
+    }
+
+}
+
+@media screen and (max-width:225px) {
+
+
+    .titleicon {
+        display: none;
+    }
+
+}

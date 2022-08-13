@@ -25,3 +25,18 @@
 #container a {
   text-decoration: none;
 }
+
+.form-group {
+  margin-top: 50px;
+}
+
+input {
+  margin-top: 5px;
+  background-color: #efefef;
+}
+
+input::placeholder {
+  font-weight: bold;
+  opacity: .5;
+  color: #efefef;
+}

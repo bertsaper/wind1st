@@ -3,10 +3,12 @@ import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Tab2Page } from './tab2.page';
+import { SettingsPage } from './settings.page';
 import { LocationContainerComponentModule } from '../location-container/location-container.module';
 import { ImperialMetricContainerComponentModule } from '../imperial-metric-container/imperial-metric-container.module';
-import { Tab2PageRoutingModule } from './tab2-routing.module';
+import { SettingsPageRoutingModule } from './settings-routing.module';
+
+import { MatButtonModule } from '@angular/material/button';
 
 
 
@@ -19,8 +21,9 @@ import { Tab2PageRoutingModule } from './tab2-routing.module';
     FormsModule,
     LocationContainerComponentModule,
     ImperialMetricContainerComponentModule,
-    Tab2PageRoutingModule,
+    SettingsPageRoutingModule,
+    MatButtonModule,
   ],
-  declarations: [Tab2Page]
+  declarations: [SettingsPage]
 })
-export class Tab2PageModule { }
+export class SettingsPageModule { }
