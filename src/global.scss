@@ -42,12 +42,12 @@
 }
 
 ion-title {
-    margin-left: 10vw;
+    margin-left: 30vw;
 }
 
 .titleicon {
     float: right;
-    margin-right: 10vw;
+    margin-right: 30vw;
 }
 
 .titleicon img {
@@ -89,4 +89,26 @@ select {
 
 app-location-container>div>form>div>label {
     color: #8ab4f8 !important;
+}
+
+@media screen and (max-width:600px) {
+
+    ion-title {
+        margin-left: 10vw;
+    }
+
+    .titleicon {
+        float: right;
+        margin-right: 10vw;
+    }
+
+}
+
+@media screen and (max-width:225px) {
+
+
+    .titleicon {
+        display: none;
+    }
+
 }
