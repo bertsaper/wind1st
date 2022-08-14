@@ -75,7 +75,7 @@ app-weather-container>div>div>div>div {
 
 #infoGroup,
 #windDirectionPath,
-#infoGroupWearable {
+#displayAlt {
     fill: #8ab4f8;
     stroke: #8ab4f8;
 }
@@ -89,6 +89,13 @@ select {
 
 app-location-container>div>form>div>label {
     color: #8ab4f8 !important;
+}
+
+#displayAria {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
 }
 
 @media screen and (max-width:600px) {
