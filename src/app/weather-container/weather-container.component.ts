@@ -18,7 +18,7 @@ import { HttpClient } from '@angular/common/http'
 export class ExploreContainerComponent implements OnInit {
 
   /*
-  * Screen size is needed to see if device is wearable
+  * Screen size is needed to see if device is Alt
   */
 
   getScreenWidth: any
@@ -39,7 +39,7 @@ export class ExploreContainerComponent implements OnInit {
 
   weatherNowString: string
 
-  windDirectionWearable: string
+  windDirectionOutputAlt: string
 
   weatherLocationStorage = `weatherLocation`
 
@@ -75,7 +75,7 @@ export class ExploreContainerComponent implements OnInit {
 
   weatherDisplay = `windInfo`
 
-  wearableDisplay = `wearableDisplay`
+  AltDisplay = `AltDisplay`
 
   loadingDiv = `loadingDiv`
 
@@ -103,7 +103,7 @@ export class ExploreContainerComponent implements OnInit {
       if (event instanceof NavigationEnd) {
 
         /*
-        * this.removeWeatherDisplay() and removeWeatherDisplayWearable() prevents multiple results from displaying
+        * this.removeWeatherDisplay() and removeWeatherDisplayAlt() prevents multiple results from displaying
         */
 
         if (event.url === this.displayLocation) {
@@ -112,7 +112,7 @@ export class ExploreContainerComponent implements OnInit {
           }
 
           if (this.getScreenWidth < 380) {
-            this.removeWeatherDisplayWearable()
+            this.removeWeatherDisplayAlt()
           }
           this.getWeather()
         }
@@ -137,8 +137,8 @@ export class ExploreContainerComponent implements OnInit {
     }
   }
 
-  removeWeatherDisplayWearable() {
-    this.element = document.getElementById(this.wearableDisplay)
+  removeWeatherDisplayAlt() {
+    this.element = document.getElementById(this.AltDisplay)
     if (this.element) {
       this.element.remove()
     }
@@ -283,6 +283,8 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(compass, `height`, `440`)
     this.renderer.setAttribute(compass, `width`, `400`)
     this.renderer.setAttribute(compass, `id`, this.weatherDisplay)
+    this.renderer.setAttribute(compass, `aria-hidden`, `true`)
+
 
     const infoGroup = document.createElementNS(`http://www.w3.org/2000/svg`, `g`)
     this.renderer.setAttribute(infoGroup, `height`, `360`)
@@ -436,6 +438,7 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(textN, `dominant-baseline`, `auto`)
     this.renderer.setAttribute(textN, `x`, `195`)
     this.renderer.setAttribute(textN, `y`, `60`)
+    this.renderer.setAttribute(textN, `aria-hidden`, `true`)
     textN.textContent = cardinalN
 
     const textS = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
@@ -443,6 +446,7 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(textS, `dominant-baseline`, `hanging`)
     this.renderer.setAttribute(textS, `x`, `195`)
     this.renderer.setAttribute(textS, `y`, `380`)
+    this.renderer.setAttribute(textS, `aria-hidden`, `true`)
     textS.textContent = cardinalS
 
     const textE = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
@@ -450,6 +454,7 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(textE, `dominant-baseline`, `middle`)
     this.renderer.setAttribute(textE, `x`, `360`)
     this.renderer.setAttribute(textE, `y`, `220`)
+    this.renderer.setAttribute(textE, `aria-hidden`, `true`)
     textE.textContent = cardinalE
 
     const textW = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
@@ -457,6 +462,7 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(textW, `dominant-baseline`, `middle`)
     this.renderer.setAttribute(textW, `x`, `26`)
     this.renderer.setAttribute(textW, `y`, `220`)
+    this.renderer.setAttribute(textW, `aria-hidden`, `true`)
     textW.textContent = cardinalW
 
     const textNW = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
@@ -464,6 +470,7 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(textNW, `dominant-baseline`, `baseline`)
     this.renderer.setAttribute(textNW, `x`, `65`)
     this.renderer.setAttribute(textNW, `y`, `105`)
+    this.renderer.setAttribute(textNW, `aria-hidden`, `true`)
     textNW.textContent = ordinalNW
 
     const textSW = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
@@ -471,6 +478,7 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(textSW, `dominant-baseline`, `hanging`)
     this.renderer.setAttribute(textSW, `x`, `65`)
     this.renderer.setAttribute(textSW, `y`, `335`)
+    this.renderer.setAttribute(textSW, `aria-hidden`, `true`)
     textSW.textContent = ordinalSW
 
     const textNE = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
@@ -478,6 +486,7 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(textNE, `dominant-baseline`, `baseline`)
     this.renderer.setAttribute(textNE, `x`, `310`)
     this.renderer.setAttribute(textNE, `y`, `105`)
+    this.renderer.setAttribute(textNE, `aria-hidden`, `true`)
     textNE.textContent = ordinalNE
 
     const textSE = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
@@ -485,6 +494,7 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(textSE, `dominant-baseline`, `hanging`)
     this.renderer.setAttribute(textSE, `x`, `310`)
     this.renderer.setAttribute(textSE, `y`, `335`)
+    this.renderer.setAttribute(textSE, `aria-hidden`, `true`)
     textSE.textContent = ordinalSE
 
     const textTemp = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
@@ -519,96 +529,143 @@ export class ExploreContainerComponent implements OnInit {
 
       if (windDeg >= 0 && windDeg <= 30) {
         this.renderer.setAttribute(textN, `font-weight`, `bold`)
-        this.windDirectionWearable = cardinalN
+        this.windDirectionOutputAlt = `North`
       }
       if (windDeg >= 31 && windDeg <= 60) {
         this.renderer.setAttribute(textNE, `font-weight`, `bold`)
-        this.windDirectionWearable = ordinalNE
+        this.windDirectionOutputAlt = `Northeast`
       }
       if (windDeg >= 61 && windDeg <= 120) {
         this.renderer.setAttribute(textE, `font-weight`, `bold`)
-        this.windDirectionWearable = cardinalE
+        this.windDirectionOutputAlt = `East`
       }
       if (windDeg >= 121 && windDeg <= 10) {
         this.renderer.setAttribute(textSE, `font-weight`, `bold`)
-        this.windDirectionWearable = ordinalSE
+        this.windDirectionOutputAlt = `Southeast`
       }
       if (windDeg >= 151 && windDeg <= 210) {
         this.renderer.setAttribute(textS, `font-weight`, `bold`)
-        this.windDirectionWearable = cardinalS
+        this.windDirectionOutputAlt = `South`
       }
       if (windDeg >= 211 && windDeg <= 240) {
         this.renderer.setAttribute(textSW, `font-weight`, `bold`)
-        this.windDirectionWearable = ordinalSW
+        this.windDirectionOutputAlt = `Southwest`
       }
       if (windDeg >= 241 && windDeg <= 300) {
         this.renderer.setAttribute(textW, `font-weight`, `bold`)
-        this.windDirectionWearable = cardinalW
+        this.windDirectionOutputAlt = `West`
       }
       if (windDeg >= 301 && windDeg <= 330) {
         this.renderer.setAttribute(textNW, `font-weight`, `bold`)
-        this.windDirectionWearable = ordinalNW
+        this.windDirectionOutputAlt = `Northwest`
       }
       if (windDeg >= 331 && windDeg <= 360) {
         this.renderer.setAttribute(textN, `font-weight`, `bold`)
-        this.windDirectionWearable = cardinalN
+        this.windDirectionOutputAlt = `North`
       }
     }
     /*
-    * SVG elements for wearables, that is small viewports.
+    * SVG elements that have small viewports lke wearables.
     */
-    const displayWearable = document.createElementNS(`http://www.w3.org/2000/svg`, `svg`)
-    this.renderer.setAttribute(displayWearable, `height`, `150`)
-    this.renderer.setAttribute(displayWearable, `width`, `150`)
-    this.renderer.setAttribute(displayWearable, `id`, `wearableDisplay`)
+    const displayAlt = document.createElementNS(`http://www.w3.org/2000/svg`, `svg`)
+    this.renderer.setAttribute(displayAlt, `height`, `150`)
+    this.renderer.setAttribute(displayAlt, `width`, `150`)
+    this.renderer.setAttribute(displayAlt, `id`, `displayAlt`)
+    this.renderer.setAttribute(displayAlt, `aria-label`, `Current Weather for ` + place)
 
-    const infoGroupWearable = document.createElementNS(`http://www.w3.org/2000/svg`, `g`)
-    this.renderer.setAttribute(infoGroupWearable, `height`, `300`)
-    this.renderer.setAttribute(infoGroupWearable, `width`, `250`)
-    this.renderer.setAttribute(infoGroupWearable, `id`, `infoGroupWearable`)
+    const textLocaleAlt = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
+    this.renderer.setAttribute(textLocaleAlt, `id`, `textLocaleAlt`)
+    this.renderer.setAttribute(textLocaleAlt, `dominant-baseline`, `baseline`)
+    this.renderer.setAttribute(textLocaleAlt, `x`, `20`)
+    this.renderer.setAttribute(textLocaleAlt, `y`, `120`)
+    textLocaleAlt.textContent = place
 
-    const textLocaleWearable = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
-    this.renderer.setAttribute(textLocaleWearable, `id`, `textLocaleWearable`)
-    this.renderer.setAttribute(textLocaleWearable, `dominant-baseline`, `baseline`)
-    this.renderer.setAttribute(textLocaleWearable, `x`, `20`)
-    this.renderer.setAttribute(textLocaleWearable, `y`, `120`)
-    textLocaleWearable.textContent = place
+    const textDescriptionAlt = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
+    this.renderer.setAttribute(textDescriptionAlt, `id`, `textDescriptionAlt`)
+    this.renderer.setAttribute(textDescriptionAlt, `dominant-baseline`, `baseline`)
+    this.renderer.setAttribute(textDescriptionAlt, `x`, `20`)
+    this.renderer.setAttribute(textDescriptionAlt, `y`, `100`)
+    textDescriptionAlt.textContent = description
 
-    const textDescriptionWearable = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
-    this.renderer.setAttribute(textDescriptionWearable, `id`, `textDescriptionWearable`)
-    this.renderer.setAttribute(textDescriptionWearable, `dominant-baseline`, `baseline`)
-    this.renderer.setAttribute(textDescriptionWearable, `x`, `20`)
-    this.renderer.setAttribute(textDescriptionWearable, `y`, `100`)
-    textDescriptionWearable.textContent = description
+    const textHumidityAlt = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
+    this.renderer.setAttribute(textHumidityAlt, `id`, `textHumidityAlt`)
+    this.renderer.setAttribute(textHumidityAlt, `dominant-baseline`, `baseline`)
+    this.renderer.setAttribute(textHumidityAlt, `x`, `20`)
+    this.renderer.setAttribute(textHumidityAlt, `y`, `80`)
+    textHumidityAlt.textContent = humidity
 
-    const textHumidityWearable = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
-    this.renderer.setAttribute(textHumidityWearable, `id`, `textHumidityWearable`)
-    this.renderer.setAttribute(textHumidityWearable, `dominant-baseline`, `baseline`)
-    this.renderer.setAttribute(textHumidityWearable, `x`, `20`)
-    this.renderer.setAttribute(textHumidityWearable, `y`, `80`)
-    textHumidityWearable.textContent = humidity
+    const textTempAlt = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
+    this.renderer.setAttribute(textTempAlt, `id`, `textTempAlt`)
+    this.renderer.setAttribute(textTempAlt, `dominant-baseline`, `baseline`)
+    this.renderer.setAttribute(textTempAlt, `x`, `20`)
+    this.renderer.setAttribute(textTempAlt, `y`, `60`)
+    textTempAlt.textContent = temp + this.selectedTemperature
 
-    const textTempWearable = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
-    this.renderer.setAttribute(textTempWearable, `id`, `textTempWearable`)
-    this.renderer.setAttribute(textTempWearable, `dominant-baseline`, `baseline`)
-    this.renderer.setAttribute(textTempWearable, `x`, `20`)
-    this.renderer.setAttribute(textTempWearable, `y`, `60`)
-    textTempWearable.textContent = temp + this.selectedTemperature
+    const textWindVelocityAlt = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
+    this.renderer.setAttribute(textWindVelocityAlt, `id`, `textWindVelocityAlt`)
+    this.renderer.setAttribute(textWindVelocityAlt, `dominant-baseline`, `baseline`)
+    this.renderer.setAttribute(textWindVelocityAlt, `x`, `20`)
+    this.renderer.setAttribute(textWindVelocityAlt, `y`, `40`)
+    textWindVelocityAlt.textContent = this.windSpeed + this.selectedWindSpeed
 
-    const textWindVelocityWearable = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
-    this.renderer.setAttribute(textWindVelocityWearable, `id`, `textWindVelocityWearable`)
-    this.renderer.setAttribute(textWindVelocityWearable, `dominant-baseline`, `baseline`)
-    this.renderer.setAttribute(textWindVelocityWearable, `x`, `20`)
-    this.renderer.setAttribute(textWindVelocityWearable, `y`, `40`)
-    textWindVelocityWearable.textContent = this.windSpeed + this.selectedWindSpeed
+    const textwindDirectionOutputAlt = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
+    this.renderer.setAttribute(textwindDirectionOutputAlt, `id`, `textwindDirectionOutputAlt`)
+    this.renderer.setAttribute(textwindDirectionOutputAlt, `dominant-baseline`, `baseline`)
+    this.renderer.setAttribute(textwindDirectionOutputAlt, `x`, `20`)
+    this.renderer.setAttribute(textwindDirectionOutputAlt, `y`, `20`)
+    textwindDirectionOutputAlt.textContent = this.windDirectionOutputAlt
 
-    const textWindDirectionWearable = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
-    this.renderer.setAttribute(textWindDirectionWearable, `id`, `textWindDirectionWearable`)
-    this.renderer.setAttribute(textWindDirectionWearable, `dominant-baseline`, `baseline`)
-    this.renderer.setAttribute(textWindDirectionWearable, `x`, `20`)
-    this.renderer.setAttribute(textWindDirectionWearable, `y`, `20`)
-    textWindDirectionWearable.textContent = this.windDirectionWearable
+    /*
+    * These are for screen aria readers
+    */
 
+    const displayAria = document.createElementNS(`http://www.w3.org/2000/svg`, `svg`)
+    this.renderer.setAttribute(displayAria, `height`, `1`)
+    this.renderer.setAttribute(displayAria, `width`, `1`)
+    this.renderer.setAttribute(displayAria, `id`, `displayAria`)
+    this.renderer.setAttribute(displayAria, `aria-label`, `Current Weather for ` + place)
+
+    const textLocaleAria = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
+    this.renderer.setAttribute(textLocaleAria, `id`, `textLocaleAria`)
+    this.renderer.setAttribute(textLocaleAria, `dominant-baseline`, `baseline`)
+    this.renderer.setAttribute(textLocaleAria, `x`, `20`)
+    this.renderer.setAttribute(textLocaleAria, `y`, `120`)
+    textLocaleAria.textContent = place
+
+    const textDescriptionAria = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
+    this.renderer.setAttribute(textDescriptionAria, `id`, `textDescriptionAria`)
+    this.renderer.setAttribute(textDescriptionAria, `dominant-baseline`, `baseline`)
+    this.renderer.setAttribute(textDescriptionAria, `x`, `20`)
+    this.renderer.setAttribute(textDescriptionAria, `y`, `100`)
+    textDescriptionAria.textContent = description
+
+    const textHumidityAria = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
+    this.renderer.setAttribute(textHumidityAria, `id`, `textHumidityAria`)
+    this.renderer.setAttribute(textHumidityAria, `dominant-baseline`, `baseline`)
+    this.renderer.setAttribute(textHumidityAria, `x`, `20`)
+    this.renderer.setAttribute(textHumidityAria, `y`, `80`)
+    textHumidityAria.textContent = humidity
+
+    const textTempAria = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
+    this.renderer.setAttribute(textTempAria, `id`, `textTempAria`)
+    this.renderer.setAttribute(textTempAria, `dominant-baseline`, `baseline`)
+    this.renderer.setAttribute(textTempAria, `x`, `20`)
+    this.renderer.setAttribute(textTempAria, `y`, `60`)
+    textTempAria.textContent = temp + this.selectedTemperature
+
+    const textWindVelocityAria = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
+    this.renderer.setAttribute(textWindVelocityAria, `id`, `textWindVelocityAria`)
+    this.renderer.setAttribute(textWindVelocityAria, `dominant-baseline`, `baseline`)
+    this.renderer.setAttribute(textWindVelocityAria, `x`, `20`)
+    this.renderer.setAttribute(textWindVelocityAria, `y`, `40`)
+    textWindVelocityAria.textContent = this.windSpeed + this.selectedWindSpeed
+
+    const textwindDirectionOutputAria = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
+    this.renderer.setAttribute(textwindDirectionOutputAria, `id`, `textwindDirectionOutputAria`)
+    this.renderer.setAttribute(textwindDirectionOutputAria, `dominant-baseline`, `baseline`)
+    this.renderer.setAttribute(textwindDirectionOutputAria, `x`, `20`)
+    this.renderer.setAttribute(textwindDirectionOutputAria, `y`, `20`)
+    textwindDirectionOutputAria.textContent = this.windDirectionOutputAlt
 
     const textWindVelocity = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
     this.renderer.setAttribute(textWindVelocity, `id`, `textWindVelocity`)
@@ -636,6 +693,8 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(textWindVelocity, `y`, `220`)
 
     this.renderer.appendChild(infoGroup, textWindVelocity)
+    //  this.renderer.appendChild(infoGroup, textwindDirectionOutputAlt)
+
 
     const bandGroup = document.createElementNS(`http://www.w3.org/2000/svg`, `g`)
     this.renderer.setAttribute(bandGroup, `height`, `360`)
@@ -684,21 +743,31 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.appendChild(compass, bandGroup)
     this.renderer.appendChild(compass, infoGroup)
 
+    this.renderer.appendChild(displayAria, textWindVelocityAria)
+    this.renderer.appendChild(displayAria, textwindDirectionOutputAria)
+    this.renderer.appendChild(displayAria, textTempAria)
+    this.renderer.appendChild(displayAria, textHumidityAria)
+    this.renderer.appendChild(displayAria, textDescriptionAria)
+    this.renderer.appendChild(displayAria, textLocaleAria)
+
+    this.renderer.appendChild(displayAlt, textWindVelocityAlt)
+    this.renderer.appendChild(displayAlt, textwindDirectionOutputAlt)
+    this.renderer.appendChild(displayAlt, textTempAlt)
+    this.renderer.appendChild(displayAlt, textHumidityAlt)
+    this.renderer.appendChild(displayAlt, textDescriptionAlt)
+    this.renderer.appendChild(displayAlt, textLocaleAlt)
+
     if (this.getScreenWidth >= 380) {
       this.renderer.appendChild(this.container.nativeElement, compass)
+      /*
+      * Below will not appear on screen but has Aria Label. Aria is told to ignore the above.
+      */
+      this.renderer.appendChild(this.container.nativeElement, displayAria)
     }
 
-    this.renderer.appendChild(infoGroupWearable, textWindVelocityWearable)
-    this.renderer.appendChild(infoGroupWearable, textWindDirectionWearable)
-    this.renderer.appendChild(infoGroupWearable, textTempWearable)
-    this.renderer.appendChild(infoGroupWearable, textHumidityWearable)
-    this.renderer.appendChild(infoGroupWearable, textDescriptionWearable)
-    this.renderer.appendChild(infoGroupWearable, textLocaleWearable)
-
-    this.renderer.appendChild(displayWearable, infoGroupWearable)
 
     if (this.getScreenWidth < 380) {
-      this.renderer.appendChild(this.container.nativeElement, displayWearable)
+      this.renderer.appendChild(this.container.nativeElement, displayAlt)
     }
 
   }
@@ -720,7 +789,7 @@ export class ExploreContainerComponent implements OnInit {
       this.removeWeatherDisplay()
     }
     if (this.getScreenWidth < 380) {
-      this.removeWeatherDisplayWearable()
+      this.removeWeatherDisplayAlt()
     }
     this.getWeather()
   }

@@ -1,13 +1,19 @@
-section {
+.settings-holder {
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 100%
+}
+
+.settings-holder h1 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-top: 10vh;
+    padding: 20px 0 30px;
 }
 
 
 .button-holder {
-    margin-top: 20px;
+    margin-top: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
