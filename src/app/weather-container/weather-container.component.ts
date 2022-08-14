@@ -565,13 +565,13 @@ export class ExploreContainerComponent implements OnInit {
       }
     }
     /*
-    * SVG elements for Alts, that is small viewports.
+    * SVG elements that have small viewports lke wearables.
     */
     const displayAlt = document.createElementNS(`http://www.w3.org/2000/svg`, `svg`)
     this.renderer.setAttribute(displayAlt, `height`, `150`)
     this.renderer.setAttribute(displayAlt, `width`, `150`)
     this.renderer.setAttribute(displayAlt, `id`, `displayAlt`)
-    this.renderer.setAttribute(displayAlt, `aria-label`, `Current Weather`)
+    this.renderer.setAttribute(displayAlt, `aria-label`, `Current Weather for ` + place)
 
     const textLocaleAlt = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
     this.renderer.setAttribute(textLocaleAlt, `id`, `textLocaleAlt`)
@@ -615,11 +615,15 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(textwindDirectionOutputAlt, `y`, `20`)
     textwindDirectionOutputAlt.textContent = this.windDirectionOutputAlt
 
+    /*
+    * These are for screen aria readers
+    */
+
     const displayAria = document.createElementNS(`http://www.w3.org/2000/svg`, `svg`)
     this.renderer.setAttribute(displayAria, `height`, `1`)
     this.renderer.setAttribute(displayAria, `width`, `1`)
     this.renderer.setAttribute(displayAria, `id`, `displayAria`)
-    this.renderer.setAttribute(displayAria, `aria-label`, `Current Weather`)
+    this.renderer.setAttribute(displayAria, `aria-label`, `Current Weather for ` + place)
 
     const textLocaleAria = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
     this.renderer.setAttribute(textLocaleAria, `id`, `textLocaleAria`)
@@ -755,6 +759,9 @@ export class ExploreContainerComponent implements OnInit {
 
     if (this.getScreenWidth >= 380) {
       this.renderer.appendChild(this.container.nativeElement, compass)
+      /*
+      * Below will not appear on screen but has Aria Label. Aria is told to ignore the above.
+      */
       this.renderer.appendChild(this.container.nativeElement, displayAria)
     }
 
