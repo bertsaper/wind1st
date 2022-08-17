@@ -14,7 +14,7 @@ import { catchError, map } from 'rxjs/operators';
 // autocomplete from  https://www.thecodehubs.com/integrate-google-map-places-autocomplete-in-angular/
 
 declare const google;
-const googleMapsKey = environment.google_maps_api_key
+const googleMapsKey = environment.googleMapsApiKey
 
 @Component({
   selector: 'app-location-container',

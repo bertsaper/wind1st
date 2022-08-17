@@ -47,6 +47,8 @@ export class ExploreContainerComponent implements OnInit {
 
   weatherNowStringOutParsed: object
 
+  weatherTimeStamp: object
+
   /*
   * Needed for Imperial / Metric Selection
   */
@@ -75,7 +77,7 @@ export class ExploreContainerComponent implements OnInit {
 
   weatherDisplay = `windInfo`
 
-  AltDisplay = `AltDisplay`
+  altDisplay = `altDisplay`
 
   loadingDiv = `loadingDiv`
 
@@ -103,7 +105,8 @@ export class ExploreContainerComponent implements OnInit {
       if (event instanceof NavigationEnd) {
 
         /*
-        * this.removeWeatherDisplay() and removeWeatherDisplayAlt() prevents multiple results from displaying
+        * this.removeWeatherDisplay() and removeWeatherDisplayAlt(),
+        * which prevents multiple results from displaying
         */
 
         if (event.url === this.displayLocation) {
@@ -138,7 +141,7 @@ export class ExploreContainerComponent implements OnInit {
   }
 
   removeWeatherDisplayAlt() {
-    this.element = document.getElementById(this.AltDisplay)
+    this.element = document.getElementById(this.altDisplay)
     if (this.element) {
       this.element.remove()
     }
@@ -162,7 +165,7 @@ export class ExploreContainerComponent implements OnInit {
 
       const weatherLocationStorageParsed = JSON.parse(weatherLocationStorage)
 
-      const openWeatherAddress = environment.open_weather_address
+      const openWeatherAddress = environment.openWeatherAddress
 
       const latString = `lat=`
 
@@ -172,7 +175,7 @@ export class ExploreContainerComponent implements OnInit {
 
       const long: any = weatherLocationStorageParsed.location.lng
 
-      const openWeatherKey: string = environment.open_weather_key
+      const openWeatherKey: string = environment.openWeatherKey
 
       const unitSelecton: string = `&units=` + measurementChoice
 
@@ -184,6 +187,13 @@ export class ExploreContainerComponent implements OnInit {
         this.weatherNow = res
         this.weatherNowString = JSON.stringify(this.weatherNow)
         localStorage.setItem(this.currentWeatherStorage, this.weatherNowString)
+
+        /*
+        * Set the download time
+        */
+
+        this.weatherTimeStamp = { timestamp: new Date().getTime() }
+        localStorage.setItem(`time`, JSON.stringify(this.weatherTimeStamp))
 
         this.removeLoadingDisplay()
         this.chartMethod()
@@ -197,10 +207,8 @@ export class ExploreContainerComponent implements OnInit {
   }
 
   chartMethod() {
-
+    console.log(`getTime() ` + this.getTime())
     const imperialMetricChoice = this.getMeasurementChoice()
-
-    console.log(this.getScreenWidth)
 
 
     if (imperialMetricChoice === `imperial`) {
@@ -781,6 +789,22 @@ export class ExploreContainerComponent implements OnInit {
     const measurementChoice: any = imperialMetricChoiceStorageParsed.imperialMetric.choice
 
     return measurementChoice
+
+  }
+
+  getTime() {
+
+    const updateTime = localStorage.getItem('time')
+
+    const updateTimetStorageParsed = JSON.parse(updateTime)
+
+    const downloadTime: any = updateTimetStorageParsed.timestamp
+
+    const dateOutput = new Date(downloadTime).toLocaleDateString([], { day: `numeric`, month: `short` })
+
+    const timeOutput = new Date(downloadTime).toLocaleTimeString([], { hour: `2-digit`, minute: `2-digit` })
+
+    return dateOutput + ` ` + timeOutput
 
   }
 
