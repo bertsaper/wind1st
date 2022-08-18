@@ -542,14 +542,14 @@ export class ExploreContainerComponent implements OnInit {
     const textDownloadTime = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
     this.renderer.setAttribute(textDownloadTime, `id`, `textDownloadTime`)
     this.renderer.setAttribute(textDownloadTime, `dominant-baseline`, `baseline`)
-    this.renderer.setAttribute(textDownloadTime, `x`, `285`)
+    this.renderer.setAttribute(textDownloadTime, `x`, `315`)
     this.renderer.setAttribute(textDownloadTime, `y`, `410`)
     textDownloadTime.textContent = downloadTime
 
     const textDownloadDate = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
     this.renderer.setAttribute(textDownloadDate, `id`, `textDownloadDate`)
     this.renderer.setAttribute(textDownloadDate, `dominant-baseline`, `baseline`)
-    this.renderer.setAttribute(textDownloadDate, `x`, `303`)
+    this.renderer.setAttribute(textDownloadDate, `x`, `325`)
     this.renderer.setAttribute(textDownloadDate, `y`, `430`)
     textDownloadDate.textContent = downloadDate
 
