@@ -452,7 +452,6 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(textN, `dominant-baseline`, `auto`)
     this.renderer.setAttribute(textN, `x`, `195`)
     this.renderer.setAttribute(textN, `y`, `60`)
-    this.renderer.setAttribute(textN, `aria-hidden`, `true`)
     textN.textContent = cardinalN
 
     const textS = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
@@ -460,7 +459,6 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(textS, `dominant-baseline`, `hanging`)
     this.renderer.setAttribute(textS, `x`, `195`)
     this.renderer.setAttribute(textS, `y`, `380`)
-    this.renderer.setAttribute(textS, `aria-hidden`, `true`)
     textS.textContent = cardinalS
 
     const textE = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
@@ -468,7 +466,6 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(textE, `dominant-baseline`, `middle`)
     this.renderer.setAttribute(textE, `x`, `360`)
     this.renderer.setAttribute(textE, `y`, `220`)
-    this.renderer.setAttribute(textE, `aria-hidden`, `true`)
     textE.textContent = cardinalE
 
     const textW = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
@@ -476,7 +473,6 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(textW, `dominant-baseline`, `middle`)
     this.renderer.setAttribute(textW, `x`, `26`)
     this.renderer.setAttribute(textW, `y`, `220`)
-    this.renderer.setAttribute(textW, `aria-hidden`, `true`)
     textW.textContent = cardinalW
 
     const textNW = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
@@ -484,7 +480,6 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(textNW, `dominant-baseline`, `baseline`)
     this.renderer.setAttribute(textNW, `x`, `65`)
     this.renderer.setAttribute(textNW, `y`, `105`)
-    this.renderer.setAttribute(textNW, `aria-hidden`, `true`)
     textNW.textContent = ordinalNW
 
     const textSW = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
@@ -492,7 +487,6 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(textSW, `dominant-baseline`, `hanging`)
     this.renderer.setAttribute(textSW, `x`, `65`)
     this.renderer.setAttribute(textSW, `y`, `335`)
-    this.renderer.setAttribute(textSW, `aria-hidden`, `true`)
     textSW.textContent = ordinalSW
 
     const textNE = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
@@ -500,7 +494,6 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(textNE, `dominant-baseline`, `baseline`)
     this.renderer.setAttribute(textNE, `x`, `310`)
     this.renderer.setAttribute(textNE, `y`, `105`)
-    this.renderer.setAttribute(textNE, `aria-hidden`, `true`)
     textNE.textContent = ordinalNE
 
     const textSE = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
@@ -508,7 +501,6 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(textSE, `dominant-baseline`, `hanging`)
     this.renderer.setAttribute(textSE, `x`, `310`)
     this.renderer.setAttribute(textSE, `y`, `335`)
-    this.renderer.setAttribute(textSE, `aria-hidden`, `true`)
     textSE.textContent = ordinalSE
 
     const textTemp = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
