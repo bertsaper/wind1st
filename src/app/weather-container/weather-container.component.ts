@@ -47,6 +47,8 @@ export class ExploreContainerComponent implements OnInit {
 
   weatherNowStringOutParsed: object
 
+  weatherTimeStamp: object
+
   /*
   * Needed for Imperial / Metric Selection
   */
@@ -75,7 +77,7 @@ export class ExploreContainerComponent implements OnInit {
 
   weatherDisplay = `windInfo`
 
-  AltDisplay = `AltDisplay`
+  altDisplay = `altDisplay`
 
   loadingDiv = `loadingDiv`
 
@@ -103,7 +105,8 @@ export class ExploreContainerComponent implements OnInit {
       if (event instanceof NavigationEnd) {
 
         /*
-        * this.removeWeatherDisplay() and removeWeatherDisplayAlt() prevents multiple results from displaying
+        * this.removeWeatherDisplay() and removeWeatherDisplayAlt(),
+        * which prevents multiple results from displaying
         */
 
         if (event.url === this.displayLocation) {
@@ -138,7 +141,7 @@ export class ExploreContainerComponent implements OnInit {
   }
 
   removeWeatherDisplayAlt() {
-    this.element = document.getElementById(this.AltDisplay)
+    this.element = document.getElementById(this.altDisplay)
     if (this.element) {
       this.element.remove()
     }
@@ -162,7 +165,7 @@ export class ExploreContainerComponent implements OnInit {
 
       const weatherLocationStorageParsed = JSON.parse(weatherLocationStorage)
 
-      const openWeatherAddress = environment.open_weather_address
+      const openWeatherAddress = environment.openWeatherAddress
 
       const latString = `lat=`
 
@@ -172,7 +175,7 @@ export class ExploreContainerComponent implements OnInit {
 
       const long: any = weatherLocationStorageParsed.location.lng
 
-      const openWeatherKey: string = environment.open_weather_key
+      const openWeatherKey: string = environment.openWeatherKey
 
       const unitSelecton: string = `&units=` + measurementChoice
 
@@ -184,6 +187,13 @@ export class ExploreContainerComponent implements OnInit {
         this.weatherNow = res
         this.weatherNowString = JSON.stringify(this.weatherNow)
         localStorage.setItem(this.currentWeatherStorage, this.weatherNowString)
+
+        /*
+        * Set the download time
+        */
+
+        this.weatherTimeStamp = { timestamp: new Date().getTime() }
+        localStorage.setItem(`time`, JSON.stringify(this.weatherTimeStamp))
 
         this.removeLoadingDisplay()
         this.chartMethod()
@@ -197,10 +207,14 @@ export class ExploreContainerComponent implements OnInit {
   }
 
   chartMethod() {
-
     const imperialMetricChoice = this.getMeasurementChoice()
 
-    console.log(this.getScreenWidth)
+    const downloadDate = this.getDate()
+
+    const downloadTime = this.getTime()
+
+    const downloadDateTime = this.getDateTime()
+
 
 
     if (imperialMetricChoice === `imperial`) {
@@ -522,8 +536,22 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(textLocale, `id`, `textLocale`)
     this.renderer.setAttribute(textLocale, `dominant-baseline`, `baseline`)
     this.renderer.setAttribute(textLocale, `x`, `20`)
-    this.renderer.setAttribute(textLocale, `y`, `420`)
+    this.renderer.setAttribute(textLocale, `y`, `410`)
     textLocale.textContent = place
+
+    const textDownloadTime = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
+    this.renderer.setAttribute(textDownloadTime, `id`, `textDownloadTime`)
+    this.renderer.setAttribute(textDownloadTime, `dominant-baseline`, `baseline`)
+    this.renderer.setAttribute(textDownloadTime, `x`, `285`)
+    this.renderer.setAttribute(textDownloadTime, `y`, `410`)
+    textDownloadTime.textContent = downloadTime
+
+    const textDownloadDate = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
+    this.renderer.setAttribute(textDownloadDate, `id`, `textDownloadDate`)
+    this.renderer.setAttribute(textDownloadDate, `dominant-baseline`, `baseline`)
+    this.renderer.setAttribute(textDownloadDate, `x`, `303`)
+    this.renderer.setAttribute(textDownloadDate, `y`, `430`)
+    textDownloadDate.textContent = downloadDate
 
     if (this.windSpeed !== 0) {
 
@@ -615,6 +643,13 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(textwindDirectionOutputAlt, `y`, `20`)
     textwindDirectionOutputAlt.textContent = this.windDirectionOutputAlt
 
+    const textDownloadTimeAlt = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
+    this.renderer.setAttribute(textDownloadTimeAlt, `id`, `textDownloadTimeAlt`)
+    this.renderer.setAttribute(textDownloadTimeAlt, `dominant-baseline`, `baseline`)
+    this.renderer.setAttribute(textDownloadTimeAlt, `x`, `20`)
+    this.renderer.setAttribute(textDownloadTimeAlt, `y`, `120`)
+    textDownloadTimeAlt.textContent = downloadDateTime
+
     /*
     * These are for screen aria readers
     */
@@ -666,6 +701,13 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(textwindDirectionOutputAria, `x`, `20`)
     this.renderer.setAttribute(textwindDirectionOutputAria, `y`, `20`)
     textwindDirectionOutputAria.textContent = this.windDirectionOutputAlt
+
+    const textDownloadTimeAria = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
+    this.renderer.setAttribute(textDownloadTimeAria, `id`, `textDownloadTimeAria`)
+    this.renderer.setAttribute(textDownloadTimeAria, `dominant-baseline`, `baseline`)
+    this.renderer.setAttribute(textDownloadTimeAria, `x`, `20`)
+    this.renderer.setAttribute(textDownloadTimeAria, `y`, `140`)
+    textDownloadTimeAria.textContent = downloadDateTime
 
     const textWindVelocity = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
     this.renderer.setAttribute(textWindVelocity, `id`, `textWindVelocity`)
@@ -738,6 +780,8 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.appendChild(infoGroup, textDescription)
     this.renderer.appendChild(infoGroup, textHumidity)
     this.renderer.appendChild(infoGroup, textLocale)
+    this.renderer.appendChild(infoGroup, textDownloadTime)
+    this.renderer.appendChild(infoGroup, textDownloadDate)
     this.renderer.appendChild(infoGroup, circle)
 
     this.renderer.appendChild(compass, bandGroup)
@@ -749,13 +793,15 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.appendChild(displayAria, textHumidityAria)
     this.renderer.appendChild(displayAria, textDescriptionAria)
     this.renderer.appendChild(displayAria, textLocaleAria)
+    this.renderer.appendChild(displayAria, textDownloadTimeAria)
+
 
     this.renderer.appendChild(displayAlt, textWindVelocityAlt)
     this.renderer.appendChild(displayAlt, textwindDirectionOutputAlt)
     this.renderer.appendChild(displayAlt, textTempAlt)
     this.renderer.appendChild(displayAlt, textHumidityAlt)
     this.renderer.appendChild(displayAlt, textDescriptionAlt)
-    this.renderer.appendChild(displayAlt, textLocaleAlt)
+    this.renderer.appendChild(displayAlt, textDownloadTimeAlt)
 
     if (this.getScreenWidth >= 380) {
       this.renderer.appendChild(this.container.nativeElement, compass)
@@ -781,6 +827,50 @@ export class ExploreContainerComponent implements OnInit {
     const measurementChoice: any = imperialMetricChoiceStorageParsed.imperialMetric.choice
 
     return measurementChoice
+
+  }
+
+  getDate() {
+
+    const updateTime = localStorage.getItem('time')
+
+    const updateTimetStorageParsed = JSON.parse(updateTime)
+
+    const downloadTime: any = updateTimetStorageParsed.timestamp
+
+    const dateOutput = new Date(downloadTime).toLocaleDateString([], { day: `numeric`, month: `short` })
+
+    return dateOutput
+
+  }
+
+  getTime() {
+
+    const updateTime = localStorage.getItem('time')
+
+    const updateTimetStorageParsed = JSON.parse(updateTime)
+
+    const downloadTime: any = updateTimetStorageParsed.timestamp
+
+    const timeOutput = new Date(downloadTime).toLocaleTimeString([], { hour: `2-digit`, minute: `2-digit` })
+
+    return timeOutput.toLowerCase()
+
+  }
+
+  getDateTime() {
+
+    const updateTime = localStorage.getItem('time')
+
+    const updateTimetStorageParsed = JSON.parse(updateTime)
+
+    const downloadTime: any = updateTimetStorageParsed.timestamp
+
+    const dateOutput = new Date(downloadTime).toLocaleDateString([], { day: `numeric`, month: `short` })
+
+    const timeOutput = new Date(downloadTime).toLocaleTimeString([], { hour: `2-digit`, minute: `2-digit` })
+
+    return dateOutput + ` ` + timeOutput.toLowerCase()
 
   }
 
