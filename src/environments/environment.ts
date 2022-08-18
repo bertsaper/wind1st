@@ -4,10 +4,10 @@
 
 export const environment = {
   production: false,
-  open_weather_address: "https://api.openweathermap.org/data/2.5/weather?",
+  openWeatherAddress: `https://api.openweathermap.org/data/2.5/weather?`,
 
-  open_weather_key: "&appid=YOUR OPEN WEATHER KEY",
-  google_maps_api_key: "YOUR GOOGLE MAP KEY"
+  openWeatherKey: `&appid=Your_OpenWeather_API_Key`,
+  googleMapsApiKey: `Your_Google_Places_API_Key`
 };
 
 /*
