@@ -2,7 +2,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 10vh 7vw;
+    margin: 10vh 20vw;
 }
 
 .about-holder h1 {
@@ -10,4 +10,16 @@
     font-weight: 700;
     padding: 20px 0 30px;
     text-align: center;
+}
+
+@media screen and (max-width: 800px) {
+    .about-holder {
+        margin: 5vh 12vw;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .about-holder {
+        margin: 5vh 7vw;
+    }
 }
