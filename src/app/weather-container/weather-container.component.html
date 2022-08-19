@@ -4,16 +4,10 @@
 
     <div class="ion-canvas">
 
-        <div id="svgWindHolder">
-            
-            <div #svgWindPointer>
-
-            </div>
-
+        <div #svgWindPointer></div>
+        <div id="buttonHolder">
+            <button mat-raised-button (click)="updateWeather()"> UPDATE </button>
         </div>
-
-        <button mat-raised-button (click)="updateWeather()"> UPDATE </button>
-
     </div>
 
 </div>
