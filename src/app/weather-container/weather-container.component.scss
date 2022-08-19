@@ -23,9 +23,11 @@
     text-decoration: none;
 }
 
-#svgWindHolder {
-    min-height: 400px;
-    display: block;
+@media screen and (min-width:381px) and (max-width:395px) {
+    #buttonHolder {
+        margin-left: 12px;
+    }
+
 }
 
 @media screen and (max-width:400px) {
