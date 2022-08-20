@@ -77,7 +77,9 @@ export class ExploreContainerComponent implements OnInit {
 
   weatherDisplay = `windInfo`
 
-  altDisplay = `altDisplay`
+  altDisplay = `displayAlt`
+
+  ariaDisplay = `displayAria`
 
   loadingDiv = `loadingDiv`
 
@@ -105,13 +107,14 @@ export class ExploreContainerComponent implements OnInit {
       if (event instanceof NavigationEnd) {
 
         /*
-        * this.removeWeatherDisplay() and removeWeatherDisplayAlt(),
+        * this.removeWeatherDisplay(), this.removeWeatherDisplayAria()  and removeWeatherDisplayAlt(),
         * which prevents multiple results from displaying
         */
 
         if (event.url === this.displayLocation) {
           if (this.getScreenWidth >= 380) {
             this.removeWeatherDisplay()
+            this.removeWeatherDisplayAria()
           }
 
           if (this.getScreenWidth < 380) {
@@ -135,6 +138,13 @@ export class ExploreContainerComponent implements OnInit {
 
   removeWeatherDisplay() {
     this.element = document.getElementById(this.weatherDisplay)
+    if (this.element) {
+      this.element.remove()
+    }
+  }
+
+  removeWeatherDisplayAria() {
+    this.element = document.getElementById(this.ariaDisplay)
     if (this.element) {
       this.element.remove()
     }
@@ -870,6 +880,8 @@ export class ExploreContainerComponent implements OnInit {
   updateWeather() {
     if (this.getScreenWidth >= 380) {
       this.removeWeatherDisplay()
+      this.removeWeatherDisplayAria()
+
     }
     if (this.getScreenWidth < 380) {
       this.removeWeatherDisplayAlt()
@@ -878,5 +890,4 @@ export class ExploreContainerComponent implements OnInit {
   }
 
 }
-
 
