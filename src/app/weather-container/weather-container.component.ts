@@ -107,7 +107,7 @@ export class ExploreContainerComponent implements OnInit {
       if (event instanceof NavigationEnd) {
 
         /*
-        * this.removeWeatherDisplay(), this.removeWeatherDisplayAlt()  and removeWeatherDisplayAlt(),
+        * this.removeWeatherDisplay(), this.removeWeatherDisplayAria()  and removeWeatherDisplayAlt(),
         * which prevents multiple results from displaying
         */
 
