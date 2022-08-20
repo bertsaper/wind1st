@@ -64,9 +64,11 @@ export default class LocationContainerComponent implements OnInit {
       const place = autocomplete.getPlace()
       const placeLat = place.geometry.location.lat()
       const placeLng = place.geometry.location.lng()
+      const placeLatString = placeLat.toString()
+      const placeLngString = placeLng.toString()
 
       localStorage.setItem(`weatherLocation`,
-        `{"location":{"lat":"` + placeLat.trim() + `", "lng":"` + placeLng.trim() + `"}}`)
+        `{"location":{"lat":"` + placeLatString.trim() + `", "lng":"` + placeLngString.trim() + `"}}`)
       if (!place) {
 
         /* User entered the name of a Place that was not suggested and
