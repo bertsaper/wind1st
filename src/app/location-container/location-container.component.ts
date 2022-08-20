@@ -64,7 +64,7 @@ export default class LocationContainerComponent implements OnInit {
       const place = autocomplete.getPlace()
 
       /*
-      * Trim incase whitespace is sent by Google (occurred in testing)
+      * Trim incase whitespace is sent by Google (occurred in testing).
       */
 
       localStorage.setItem(`weatherLocation`,
