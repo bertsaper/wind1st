@@ -63,12 +63,8 @@ export default class LocationContainerComponent implements OnInit {
     autocomplete.addListener(`place_changed`, () => {
       const place = autocomplete.getPlace()
 
-      /*
-      * Trim incase whitespace is sent by Google (occurred in testing).
-      */
-
       localStorage.setItem(`weatherLocation`,
-        `{"location":{"lat":"` + place.geometry.location.lat().trim() + `", "lng":"` + place.geometry.location.lng().trim() + `"}}`)
+        `{"location":{"lat":"` + place.geometry.location.lat() + `", "lng":"` + place.geometry.location.lng() + `"}}`)
       if (!place) {
 
         /* User entered the name of a Place that was not suggested and
