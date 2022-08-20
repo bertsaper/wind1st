@@ -60,18 +60,22 @@ export default class LocationContainerComponent implements OnInit {
     const input = document.getElementById(`txtSearchPlaces`) as HTMLInputElement
     const autocomplete = new google.maps.places.Autocomplete(input)
 
+    /*
+    * Sometimes Google sends lat or lng with trailing whitespace.
+    * Changing the number to a string then trimming might prevent crashes.
+    */
+
     autocomplete.addListener(`place_changed`, () => {
       const place = autocomplete.getPlace()
-      const placeLat = place.geometry.location.lat()
-      const placeLng = place.geometry.location.lng()
-      const placeLatString = placeLat.toString()
-      const placeLngString = placeLng.toString()
+      const placeLat = place.geometry.location.lat().toString()
+      const placeLng = place.geometry.location.lng().toString()
 
       localStorage.setItem(`weatherLocation`,
-        `{"location":{"lat":"` + placeLatString.trim() + `", "lng":"` + placeLngString.trim() + `"}}`)
+        `{"location":{"lat":"` + placeLat.trim() + `", "lng":"` + placeLng.trim() + `"}}`)
       if (!place) {
 
-        /* User entered the name of a Place that was not suggested and
+        /*
+        * User entered the name of a Place that was not suggested and
         * pressed the Enter key, or the Place Details request failed.
         */
 
