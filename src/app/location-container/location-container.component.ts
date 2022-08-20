@@ -5,12 +5,13 @@ import { NgForm, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DOCUMENT } from '@angular/common';
 
 import { environment } from 'src/environments/environment';
-import { Observable, of } from 'rxjs';
 
-/*
-* Google Palces Autocomplete info from
-* https://www.thecodehubs.com/integrate-google-map-places-autocomplete-in-angular/
-*/
+
+import { HttpClient } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+
+// autocomplete from  https://www.thecodehubs.com/integrate-google-map-places-autocomplete-in-angular/
 
 declare const google;
 const googleMapsKey = environment.googleMapsApiKey
@@ -25,24 +26,36 @@ export default class LocationContainerComponent implements OnInit {
   searchPlacesForm: NgForm;
   public address: string;
 
+
+
   apiLoaded: Observable<boolean>
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
     private renderer2: Renderer2,
     private fb: FormBuilder
-  ) { }
+  ) {
+    // this.form = fb.group({
+    //   measurementSelectionField: ['', [Validators.required]],
+    // })
+  }
 
   ngOnInit() {
     this.loadAutoComplete()
   }
 
   private loadAutoComplete() {
-
+    '&libraries=places&v=weekly';
     const url = `https://maps.googleapis.com/maps/api/js?key=` + googleMapsKey + `&libraries=places&v=weekly`;
 
     this.loadScript(url).then(() => this.initAutocomplete())
   }
+
+  /*
+  * Google Palces Autocomplete info from
+  * https://www.thecodehubs.com/integrate-google-map-places-autocomplete-in-angular/
+  */
+
   private loadScript(url) {
     return new Promise((resolve, reject) => {
       const script = this.renderer2.createElement('script')
@@ -63,12 +76,8 @@ export default class LocationContainerComponent implements OnInit {
     autocomplete.addListener(`place_changed`, () => {
       const place = autocomplete.getPlace()
 
-      /*
-      * Trim incase whitespace is sent by Google (occurred in testing)
-      */
-
       localStorage.setItem(`weatherLocation`,
-        `{"location":{"lat":"` + place.geometry.location.lat().trim() + `", "lng":"` + place.geometry.location.lng().trim() + `"}}`)
+        `{"location":{"lat": "` + place.geometry.location.lat() + `", "lng": "` + place.geometry.location.lng() + `"}}`)
       if (!place) {
 
         /* User entered the name of a Place that was not suggested and
@@ -85,5 +94,6 @@ export default class LocationContainerComponent implements OnInit {
       `geometry`
     ])
   }
+
 
 }
