@@ -639,7 +639,7 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(textDownloadTimeAlt, `id`, `textDownloadTimeAlt`)
     this.renderer.setAttribute(textDownloadTimeAlt, `dominant-baseline`, `baseline`)
     this.renderer.setAttribute(textDownloadTimeAlt, `x`, `20`)
-    this.renderer.setAttribute(textDownloadTimeAlt, `y`, `120`)
+    this.renderer.setAttribute(textDownloadTimeAlt, `y`, `140`)
     textDownloadTimeAlt.textContent = downloadDateTime
 
     /*
@@ -793,6 +793,7 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.appendChild(displayAlt, textTempAlt)
     this.renderer.appendChild(displayAlt, textHumidityAlt)
     this.renderer.appendChild(displayAlt, textDescriptionAlt)
+    this.renderer.appendChild(displayAlt, textLocaleAlt)
     this.renderer.appendChild(displayAlt, textDownloadTimeAlt)
 
     if (this.getScreenWidth >= 380) {
