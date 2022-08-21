@@ -600,7 +600,7 @@ export class ExploreContainerComponent implements OnInit {
     const displayAlt = document.createElementNS(`http://www.w3.org/2000/svg`, `svg`)
     this.renderer.setAttribute(displayAlt, `height`, `150`)
     this.renderer.setAttribute(displayAlt, `width`, `150`)
-    this.renderer.setAttribute(displayAlt, `id`, `displayAlt`)
+    this.renderer.setAttribute(displayAlt, `id`, this.altDisplay)
     this.renderer.setAttribute(displayAlt, `aria-label`, `Current Weather for ` + place)
 
     const textLocaleAlt = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
@@ -659,7 +659,7 @@ export class ExploreContainerComponent implements OnInit {
     const displayAria = document.createElementNS(`http://www.w3.org/2000/svg`, `svg`)
     this.renderer.setAttribute(displayAria, `height`, `1`)
     this.renderer.setAttribute(displayAria, `width`, `1`)
-    this.renderer.setAttribute(displayAria, `id`, `displayAria`)
+    this.renderer.setAttribute(displayAria, `id`, this.ariaDisplay)
     this.renderer.setAttribute(displayAria, `aria-label`, `Current Weather for ` + place)
 
     const textLocaleAria = document.createElementNS(`http://www.w3.org/2000/svg`, `text`)
