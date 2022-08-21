@@ -344,6 +344,7 @@ export class ExploreContainerComponent implements OnInit {
       /*
       * High wind.
       */
+      
       if (this.windSpeed >= this.windSpeedMax) {
         this.renderer.setAttribute(path, `d`, `M 200,220 200,368 205,348 195,348 200,368`)
       }
