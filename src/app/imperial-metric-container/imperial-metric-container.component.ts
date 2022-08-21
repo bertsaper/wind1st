@@ -34,11 +34,6 @@ export default class ImperialMetricContainerComponent implements OnInit {
     { name: `Metric`, value: `metric` }
   ];
 
-  show(value) {
-    // console.log(this.value)
-    console.log(this.recordData)
-  }
-
   onItemChange(value) {
     localStorage.setItem(`imperialMetricChoice`, `{"imperialMetric":{"choice": "` + value + `"}}`)
     console.log(` Value is : `, value);
