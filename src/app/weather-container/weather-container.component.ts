@@ -350,8 +350,8 @@ export class ExploreContainerComponent implements OnInit {
       * Less than high.
       */
       if (this.windSpeed <= this.windSpeedMax) {
-        this.renderer.setAttribute(path, `d`, `M 200,220 200,` + this.windScalerFirstLast + ` 205,` + this.windScalerSecondThird +
-          ` 195,` + this.windScalerSecondThird + ` 200,` + this.windScalerFirstLast)
+        this.renderer.setAttribute(path, `d`, `M 200,220 200,` + this.windScalerFirstLast + ` 205,` + 
+          this.windScalerSecondThird + ` 195,` + this.windScalerSecondThird + ` 200,` + this.windScalerFirstLast)
       }
 
 
