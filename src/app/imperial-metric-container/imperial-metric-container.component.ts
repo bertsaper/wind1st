@@ -27,8 +27,6 @@ export default class ImperialMetricContainerComponent implements OnInit {
     }
   }
 
-
-
   public rbImperialMetricSelection = [
     { name: `Imperial`, value: `imperial` },
     { name: `Metric`, value: `metric` }
