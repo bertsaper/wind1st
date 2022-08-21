@@ -330,7 +330,6 @@ export class ExploreContainerComponent implements OnInit {
       this.windScalerFirstLast = 228 + (this.windSpeed * 2.8)
       this.windScalerSecondThird = 208 + (this.windSpeed * 2.8)
       this.windSpeedMax = 50
-
     }
 
     if (this.windSpeed !== 0) {
