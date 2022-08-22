@@ -5,4 +5,4 @@ Open Weather Map (https://openweathermap.org/api) and Google Map (https://develo
 
 Visit https://wind1st.com/ to see it.
 
-[View the slide deck] (https://docs.google.com/presentation/d/1OCNaw3F8Iq8cjrdPK7G6bTwlLsYV5VBRMQkX6a2bVoc/edit?usp=sharing).
+View the [Slidedeck](https://pages.github.com/](https://docs.google.com/presentation/d/1OCNaw3F8Iq8cjrdPK7G6bTwlLsYV5VBRMQkX6a2bVoc/edit?usp=sharing).
