@@ -43,6 +43,7 @@
 
 ion-title {
     margin-left: 30vw;
+    transform: translateY(5px);
 }
 
 .titleicon {
@@ -51,7 +52,8 @@ ion-title {
 }
 
 .titleicon img {
-    max-height: 35px;
+    max-height: 45px;
+    transform: translateY(-7px);
 }
 
 #WindInfo {
@@ -111,15 +113,6 @@ app-location-container>div>form>div>label {
     .titleicon {
         float: right;
         margin-right: 10vw;
-    }
-
-}
-
-@media screen and (max-width:225px) {
-
-
-    .titleicon {
-        display: none;
     }
 
 }
