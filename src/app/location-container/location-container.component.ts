@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/member-ordering */
 /* eslint-disable @typescript-eslint/semi */
+
 import { Component, Inject, OnInit, Renderer2 } from '@angular/core';
 import { NgForm, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DOCUMENT } from '@angular/common';
@@ -20,10 +21,23 @@ const googleMapsKey = environment.googleMapsApiKey
   templateUrl: './location-container.component.html',
   styleUrls: ['./location-container.component.scss'],
 })
+
 export default class LocationContainerComponent implements OnInit {
 
   searchPlacesForm: NgForm;
   public address: string;
+  deviceLocation: any
+  recordData = `deviceLocation`
+  selectedItem = `deviceLocation`
+  enteredLocation: boolean
+
+  /*
+  * Geolocation
+  */
+
+  lat
+  lng
+
 
   apiLoaded: Observable<boolean>
 
@@ -34,10 +48,16 @@ export default class LocationContainerComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.loadAutoComplete()
   }
 
+  public rbDeviceLocationSelection = [
+    { name: `Device Location`, value: `deviceLocation` },
+    { name: `Enter Location`, value: `enteredLocation` }
+  ]
+
   private loadAutoComplete() {
+
+    this.getUserLocation();
 
     const url = `https://maps.googleapis.com/maps/api/js?key=` + googleMapsKey + `&libraries=places&v=weekly`;
 
@@ -56,6 +76,7 @@ export default class LocationContainerComponent implements OnInit {
       this.renderer2.appendChild(this.document.head, script)
     })
   }
+
   initAutocomplete() {
     const input = document.getElementById(`txtSearchPlaces`) as HTMLInputElement
     const autocomplete = new google.maps.places.Autocomplete(input)
@@ -90,4 +111,35 @@ export default class LocationContainerComponent implements OnInit {
     ])
   }
 
+  getUserLocation() {
+    // get Users current position
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(position => {
+        this.lat = position.coords.latitude;
+        this.lng = position.coords.longitude;
+        console.log(`pos:` + position)
+      });
+    } else {
+      console.log(`User not allowed`)
+    }
+  }
+
+  onItemChange(value) {
+    localStorage.setItem(`imperialMetricChoice`, `{"imperialMetric":{"choice": "` + value + `"}}`)
+  }
+
+  locationPreference(value) {
+
+    if (value === `enteredLocation`) {
+      this.enteredLocation = true
+      console.log(value)
+    }
+
+    if (value === `deviceLocation`) {
+      this.enteredLocation = false
+      console.log(value)
+    }
+
+  }
 }

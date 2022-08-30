@@ -20,27 +20,19 @@ export default class ImperialMetricContainerComponent implements OnInit {
       localStorage.setItem(`imperialMetricChoice`, `{"imperialMetric":{"choice": "imperial"}}`)
     }
     if (this.imperialMetricChoice !== null) {
-    const imperialMetricChoiceStorageParsed = JSON.parse(this.imperialMetricChoice)
+      const imperialMetricChoiceStorageParsed = JSON.parse(this.imperialMetricChoice)
 
-    const measurementChoice: any = imperialMetricChoiceStorageParsed.imperialMetric.choice
-    this.selectedItem = measurementChoice
+      const measurementChoice: any = imperialMetricChoiceStorageParsed.imperialMetric.choice
+      this.selectedItem = measurementChoice
     }
   }
-
-
 
   public rbImperialMetricSelection = [
     { name: `Imperial`, value: `imperial` },
     { name: `Metric`, value: `metric` }
-  ];
-
-  show(value) {
-    // console.log(this.value)
-    console.log(this.recordData)
-  }
+  ]
 
   onItemChange(value) {
     localStorage.setItem(`imperialMetricChoice`, `{"imperialMetric":{"choice": "` + value + `"}}`)
-    console.log(` Value is : `, value);
   }
 }

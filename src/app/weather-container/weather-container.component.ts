@@ -330,28 +330,32 @@ export class ExploreContainerComponent implements OnInit {
       this.windScalerFirstLast = 228 + (this.windSpeed * 2.8)
       this.windScalerSecondThird = 208 + (this.windSpeed * 2.8)
       this.windSpeedMax = 50
-
     }
 
     if (this.windSpeed !== 0) {
 
       const path = document.createElementNS(`http://www.w3.org/2000/svg`, `path`)
+
       /*
       * Direction arrow. The four number group describes the line and
       * the three two number groups are the points of the arrow,
       */
+
       /*
       * High wind.
       */
+
       if (this.windSpeed >= this.windSpeedMax) {
         this.renderer.setAttribute(path, `d`, `M 200,220 200,368 205,348 195,348 200,368`)
       }
+
       /*
       * Less than high.
       */
+
       if (this.windSpeed <= this.windSpeedMax) {
-        this.renderer.setAttribute(path, `d`, `M 200,220 200,` + this.windScalerFirstLast + ` 205,` + this.windScalerSecondThird +
-          ` 195,` + this.windScalerSecondThird + ` 200,` + this.windScalerFirstLast)
+        this.renderer.setAttribute(path, `d`, `M 200,220 200,` + this.windScalerFirstLast + ` 205,` +
+          this.windScalerSecondThird + ` 195,` + this.windScalerSecondThird + ` 200,` + this.windScalerFirstLast)
       }
 
 
@@ -360,6 +364,7 @@ export class ExploreContainerComponent implements OnInit {
       this.renderer.appendChild(infoGroup, path)
 
     }
+
     /*
     * Bounding circle.
     */
@@ -890,4 +895,3 @@ export class ExploreContainerComponent implements OnInit {
   }
 
 }
-
