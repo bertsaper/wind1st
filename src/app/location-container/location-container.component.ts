@@ -108,9 +108,9 @@ export default class LocationContainerComponent implements OnInit {
     }
 
     if (value === `deviceLocation`) {
+
       this.enteredLocation = false
       localStorage.setItem(`weatherLocation`, `{"location":{"lat":"useDevice", "lng":"useDevice"}}`)
-
     }
   }
 }
