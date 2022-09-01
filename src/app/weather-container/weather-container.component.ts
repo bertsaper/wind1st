@@ -99,7 +99,9 @@ export class ExploreContainerComponent implements OnInit {
     private http: HttpClient,
     public router: Router,
     private renderer: Renderer2,
-  ) { }
+  ) {
+    this.getLocation()
+  }
 
 
   ngOnInit() {
@@ -107,8 +109,6 @@ export class ExploreContainerComponent implements OnInit {
     this.getScreenWidth = window.innerWidth
 
     this.onDisplay()
-
-    this.getLocation()
 
   }
 
@@ -176,6 +176,9 @@ export class ExploreContainerComponent implements OnInit {
     * location will be used: "lat":"useDevice".
     *
     * If there is not "weatherLocation" visitors are sent to Settings.
+    *
+    * All of this is delayed  so this.getLocation() is called from the
+    * constructor.
     */
 
     if (localStorage.getItem(this.weatherLocationStorage) === null) {
