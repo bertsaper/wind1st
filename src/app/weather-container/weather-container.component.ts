@@ -9,6 +9,7 @@ import { NavigationEnd, Router } from '@angular/router'
 
 import { HttpClient } from '@angular/common/http'
 
+
 @Component({
   selector: 'app-weather-container',
   templateUrl: './weather-container.component.html',
@@ -49,6 +50,18 @@ export class ExploreContainerComponent implements OnInit {
 
   weatherTimeStamp: object
 
+  lati: any
+
+  long: any
+
+  /*
+  * for getLocation()
+  */
+
+  public lat
+
+  public lng
+
   /*
   * Needed for Imperial / Metric Selection
   */
@@ -59,16 +72,10 @@ export class ExploreContainerComponent implements OnInit {
 
   selectedTemperature: string
 
-
-  lat: number
-
-  lng: number
-
   fromHome = `/`
 
   /*
-  * If no location found in localstorage, ifNoLocationNavTo
-  * and displayLocation are needed for routing.
+  * If no location found in localstorage, go to settings.
   */
 
   ifNoLocationNavTo = `/settings`
@@ -100,6 +107,9 @@ export class ExploreContainerComponent implements OnInit {
     this.getScreenWidth = window.innerWidth
 
     this.onDisplay()
+
+    this.getLocation()
+
   }
 
   onDisplay() {
@@ -107,8 +117,9 @@ export class ExploreContainerComponent implements OnInit {
       if (event instanceof NavigationEnd) {
 
         /*
-        * this.removeWeatherDisplay(), this.removeWeatherDisplayAria()  and removeWeatherDisplayAlt(),
-        * which prevents multiple results from displaying
+        * this.removeWeatherDisplay(), this.removeWeatherDisplayAria()
+        * and removeWeatherDisplayAlt(), which prevents multiple results
+        * from displaying.
         */
 
         if (event.url === this.displayLocation) {
@@ -160,7 +171,11 @@ export class ExploreContainerComponent implements OnInit {
   async getWeather(): Promise<void> {
 
     /*
-    * If no location found, send to location selector
+    * If no location found in local storage, send to location selector.
+    * The contents of weatherLocation "weatherLocation" flag if the device's
+    * location will be used: "lat":"useDevice".
+    *
+    * If there is not "weatherLocation" visitors are sent to Settings.
     */
 
     if (localStorage.getItem(this.weatherLocationStorage) === null) {
@@ -177,19 +192,46 @@ export class ExploreContainerComponent implements OnInit {
 
       const openWeatherAddress = environment.openWeatherAddress
 
+      /*
+      * lati and long are from the device, or from the location entry
+      * made on settings.
+      */
+
       const latString = `lat=`
 
-      const lati: any = weatherLocationStorageParsed.location.lat
+      if (weatherLocationStorageParsed.location.lat !== `useDevice`) {
+        this.lati = weatherLocationStorageParsed.location.lat
+      }
+
+      if (weatherLocationStorageParsed.location.lat === `useDevice`) {
+        if (this.lat) {
+          this.lati = this.lat
+        } else {
+          alert(`Geolocation is not available on this device. \n\rPlease go to "Settings" and enter a location.`)
+          this.lati = 0
+        }
+      }
 
       const lonString = `&lon=`
 
-      const long: any = weatherLocationStorageParsed.location.lng
+      if (weatherLocationStorageParsed.location.lng !== `useDevice`) {
+        this.long = weatherLocationStorageParsed.location.lng
+      }
+
+      if (weatherLocationStorageParsed.location.lng === `useDevice`) {
+        if (this.lng) {
+          this.long = this.lng
+        } else {
+          this.long = 0
+        }
+
+      }
 
       const openWeatherKey: string = environment.openWeatherKey
 
       const unitSelecton: string = `&units=` + measurementChoice
 
-      const resString: string = openWeatherAddress + latString + lati + lonString + long +
+      const resString: string = openWeatherAddress + latString + this.lati + lonString + this.long +
         unitSelecton + openWeatherKey
 
       await this.http.get(resString).subscribe((res) => {
@@ -224,8 +266,6 @@ export class ExploreContainerComponent implements OnInit {
     const downloadTime = this.getTime()
 
     const downloadDateTime = this.getDateTime()
-
-
 
     if (imperialMetricChoice === `imperial`) {
 
@@ -335,26 +375,26 @@ export class ExploreContainerComponent implements OnInit {
     if (this.windSpeed !== 0) {
 
       const path = document.createElementNS(`http://www.w3.org/2000/svg`, `path`)
-      
+
       /*
       * Direction arrow. The four number group describes the line and
       * the three two number groups are the points of the arrow,
       */
-      
+
       /*
       * High wind.
       */
-      
+
       if (this.windSpeed >= this.windSpeedMax) {
         this.renderer.setAttribute(path, `d`, `M 200,220 200,368 205,348 195,348 200,368`)
       }
-      
+
       /*
       * Less than high.
       */
-      
+
       if (this.windSpeed <= this.windSpeedMax) {
-        this.renderer.setAttribute(path, `d`, `M 200,220 200,` + this.windScalerFirstLast + ` 205,` + 
+        this.renderer.setAttribute(path, `d`, `M 200,220 200,` + this.windScalerFirstLast + ` 205,` +
           this.windScalerSecondThird + ` 195,` + this.windScalerSecondThird + ` 200,` + this.windScalerFirstLast)
       }
 
@@ -364,7 +404,7 @@ export class ExploreContainerComponent implements OnInit {
       this.renderer.appendChild(infoGroup, path)
 
     }
-    
+
     /*
     * Bounding circle.
     */
@@ -599,9 +639,11 @@ export class ExploreContainerComponent implements OnInit {
         this.windDirectionOutputAlt = `North`
       }
     }
+
     /*
     * SVG elements that have small viewports lke wearables.
     */
+
     const displayAlt = document.createElementNS(`http://www.w3.org/2000/svg`, `svg`)
     this.renderer.setAttribute(displayAlt, `height`, `150`)
     this.renderer.setAttribute(displayAlt, `width`, `150`)
@@ -742,8 +784,6 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(textWindVelocity, `y`, `220`)
 
     this.renderer.appendChild(infoGroup, textWindVelocity)
-    //  this.renderer.appendChild(infoGroup, textwindDirectionOutputAlt)
-
 
     const bandGroup = document.createElementNS(`http://www.w3.org/2000/svg`, `g`)
     this.renderer.setAttribute(bandGroup, `height`, `360`)
@@ -813,9 +853,11 @@ export class ExploreContainerComponent implements OnInit {
 
     if (this.getScreenWidth >= 380) {
       this.renderer.appendChild(this.container.nativeElement, compass)
+
       /*
       * Below will not appear on screen but has Aria Label. Aria is told to ignore the above.
       */
+
       this.renderer.appendChild(this.container.nativeElement, displayAria)
     }
 
@@ -894,5 +936,26 @@ export class ExploreContainerComponent implements OnInit {
     this.getWeather()
   }
 
-}
+  /*
+  * This gets the latitude and longitude from the device.
+  */
 
+  getLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position: GeolocationPosition) => {
+        if (position) {
+          console.log(`Latitude: ` + position.coords.latitude +
+            `Longitude: ` + position.coords.longitude);
+          this.lat = position.coords.latitude;
+          this.lng = position.coords.longitude;
+          console.log(this.lat);
+          console.log(this.lat);
+        }
+      },
+        (error: GeolocationPositionError) => console.log(error))
+    } else {
+      alert(`Geolocation is not available on this device. \n\rPlease go to "Settings" and enter a location.`)
+    }
+  }
+
+}

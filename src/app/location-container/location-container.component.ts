@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/member-ordering */
 /* eslint-disable @typescript-eslint/semi */
 import { Component, Inject, OnInit, Renderer2 } from '@angular/core';
-import { NgForm, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { NgForm, FormBuilder } from '@angular/forms';
 import { DOCUMENT } from '@angular/common';
 
 import { environment } from 'src/environments/environment';
@@ -20,10 +20,14 @@ const googleMapsKey = environment.googleMapsApiKey
   templateUrl: './location-container.component.html',
   styleUrls: ['./location-container.component.scss'],
 })
+
 export default class LocationContainerComponent implements OnInit {
 
   searchPlacesForm: NgForm;
   public address: string;
+  deviceLocation: any
+  // recordData = `deviceLocation`
+  enteredLocation: boolean
 
   apiLoaded: Observable<boolean>
 
@@ -43,6 +47,7 @@ export default class LocationContainerComponent implements OnInit {
 
     this.loadScript(url).then(() => this.initAutocomplete())
   }
+
   private loadScript(url) {
     return new Promise((resolve, reject) => {
       const script = this.renderer2.createElement('script')
@@ -56,6 +61,12 @@ export default class LocationContainerComponent implements OnInit {
       this.renderer2.appendChild(this.document.head, script)
     })
   }
+
+  public rbDeviceLocationSelection = [
+    { name: `Device Location`, value: `deviceLocation` },
+    { name: `Enter Location`, value: `enteredLocation` }
+  ]
+
   initAutocomplete() {
     const input = document.getElementById(`txtSearchPlaces`) as HTMLInputElement
     const autocomplete = new google.maps.places.Autocomplete(input)
@@ -90,4 +101,16 @@ export default class LocationContainerComponent implements OnInit {
     ])
   }
 
+  locationPreference(value) {
+
+    if (value === `enteredLocation`) {
+      this.enteredLocation = true
+    }
+
+    if (value === `deviceLocation`) {
+      this.enteredLocation = false
+      localStorage.setItem(`weatherLocation`, `{"location":{"lat":"useDevice", "lng":"useDevice"}}`)
+
+    }
+  }
 }

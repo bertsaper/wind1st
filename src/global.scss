@@ -41,19 +41,34 @@
     --ion-text-color: #8cb6f6;
 }
 
+ion-header {
+    text-align: center;
+}
+
+ion-toolbar {
+    max-height: 40px;
+}
+
 ion-title {
-    margin-left: 30vw;
-    transform: translateY(5px);
+    left: 30vw;
+    position: absolute;
+    top: 6px;
+    z-index: 20;
+}
+
+app-weather-container {
+    margin-top: 50px;
 }
 
 .titleicon {
-    float: right;
-    margin-right: 30vw;
+    right: 30vw;
+    position: absolute;
+    top: 0;
+    z-index: 10;
 }
 
-.titleicon img {
-    max-height: 45px;
-    transform: translateY(-7px);
+ion-toolbar img {
+    max-height: 35px;
 }
 
 #WindInfo {
@@ -102,6 +117,10 @@ app-location-container>div>form>div>label {
     top: 0;
     left: 0;
     z-index: -1;
+}
+
+.mat-radio-button {
+    margin-right: 14px;
 }
 
 @media screen and (max-width:600px) {
