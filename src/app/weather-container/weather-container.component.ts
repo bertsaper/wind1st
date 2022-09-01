@@ -201,31 +201,28 @@ export class ExploreContainerComponent implements OnInit {
       */
 
       const latString = `lat=`
+      const lonString = `&lon=`
 
       if (weatherLocationStorageParsed.location.lat !== `useDevice`) {
         this.lati = weatherLocationStorageParsed.location.lat
-      }
-
-      if (weatherLocationStorageParsed.location.lat === `useDevice`) {
-        if (this.lat) {
-          this.lati = this.lat
-        } else {
-          this.lati = 0
-        }
-      }
-
-      const lonString = `&lon=`
-
-      if (weatherLocationStorageParsed.location.lng !== `useDevice`) {
         this.long = weatherLocationStorageParsed.location.lng
       }
 
-      if (weatherLocationStorageParsed.location.lng === `useDevice`) {
-        if (this.lng) {
-          this.long = this.lng
-        } else {
-          this.long = 0
-        }
+      if (weatherLocationStorageParsed.location.lat === `useDevice`) {
+        setTimeout(() => {
+          if (this.lat) {
+            this.lati = this.lat
+          } else {
+            alert(`Geolocation is not available on this device. \n\rPlease enter a location.`)
+            this.lati = 0
+            this.router.navigate([this.ifNoLocationNavTo])
+          }
+          if (this.lng) {
+            this.long = this.lng
+          } else {
+            this.long = 0
+          }
+        }, 600)
       }
 
       const openWeatherKey: string = environment.openWeatherKey
@@ -954,9 +951,7 @@ export class ExploreContainerComponent implements OnInit {
         }
       },
         (error: GeolocationPositionError) => console.log(error))
-    } else {
-      alert(`Geolocation is not available on this device. \n\rPlease go to "Settings" and enter a location.`)
-    }
+    } else { }
   }
 
 }
