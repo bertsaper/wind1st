@@ -131,10 +131,10 @@ export class ExploreContainerComponent implements OnInit {
           if (this.getScreenWidth < 380) {
             this.removeWeatherDisplayAlt()
           }
-          this.getWeather()
+          setTimeout(() => { this.getWeather() }, 500)
         }
         if (event.url === this.fromHome) {
-          this.getWeather()
+          setTimeout(() => { this.getWeather() }, 500)
         }
       }
     })
@@ -169,9 +169,6 @@ export class ExploreContainerComponent implements OnInit {
     * location will be used: "lat":"useDevice".
     *
     * If there is not "weatherLocation" visitors are sent to Settings.
-    *
-    * All of this is delayed  so this.getLocation() is called from the
-    * constructor.
     */
 
     if (localStorage.getItem(this.weatherLocationStorage) === null) {
@@ -202,20 +199,18 @@ export class ExploreContainerComponent implements OnInit {
       }
 
       if (weatherLocationStorageParsed.location.lat === `useDevice`) {
-        setTimeout(() => {
-          if (this.lat) {
-            this.lati = this.lat
-          } else {
-            alert(`Geolocation is not available on this device. \n\rPlease enter a location.`)
-            this.lati = 0
-            this.router.navigate([this.ifNoLocationNavTo])
-          }
-          if (this.lng) {
-            this.long = this.lng
-          } else {
-            this.long = 0
-          }
-        }, 600)
+        if (this.lat) {
+          this.lati = this.lat
+        } else {
+          alert(`Geolocation is not available on this device. \n\rPlease enter a location.`)
+          this.lati = 0
+          this.router.navigate([this.ifNoLocationNavTo])
+        }
+        if (this.lng) {
+          this.long = this.lng
+        } else {
+          this.long = 0
+        }
       }
 
       const openWeatherKey: string = environment.openWeatherKey
@@ -923,7 +918,7 @@ export class ExploreContainerComponent implements OnInit {
     if (this.getScreenWidth < 380) {
       this.removeWeatherDisplayAlt()
     }
-    this.getWeather()
+    setTimeout(() => { this.getWeather() }, 500)
   }
 
   /*
