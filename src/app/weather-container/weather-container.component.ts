@@ -140,13 +140,6 @@ export class ExploreContainerComponent implements OnInit {
     })
   }
 
-  removeLoadingDisplay() {
-    this.element = document.getElementById(this.loadingDiv)
-    if (this.element) {
-      this.element.remove()
-    }
-  }
-
   removeWeatherDisplay() {
     this.element = document.getElementById(this.weatherDisplay)
     if (this.element) {
@@ -245,7 +238,6 @@ export class ExploreContainerComponent implements OnInit {
         this.weatherTimeStamp = { timestamp: new Date().getTime() }
         localStorage.setItem(`time`, JSON.stringify(this.weatherTimeStamp))
 
-        this.removeLoadingDisplay()
         this.chartMethod()
 
       })
