@@ -42,5 +42,29 @@ input::placeholder {
 }
 
 .mat-radio-button {
-  margin-right: 14px;
+  margin-top: 36px;
+}
+
+
+div.form-expanded,
+div.form-collapsed {
+  display: block;
+
+}
+
+
+div.form-expanded {
+  position: relative;
+  text-align: center;
+}
+
+
+// div.form-expanded>form {
+//   padding-left: 2vw;
+// }
+
+div.form-collapsed {
+  position: absolute;
+  top: -1000px;
+  left: -1000px;
 }

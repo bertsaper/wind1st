@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/member-ordering */
 /* eslint-disable @typescript-eslint/semi */
-
 import { Component, Inject, OnInit, Renderer2 } from '@angular/core';
-import { NgForm, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { NgForm, FormBuilder } from '@angular/forms';
 import { DOCUMENT } from '@angular/common';
 
 import { environment } from 'src/environments/environment';
@@ -27,17 +26,8 @@ export default class LocationContainerComponent implements OnInit {
   searchPlacesForm: NgForm;
   public address: string;
   deviceLocation: any
-  recordData = `deviceLocation`
-  selectedItem = `deviceLocation`
+  // recordData = `deviceLocation`
   enteredLocation: boolean
-
-  /*
-  * Geolocation
-  */
-
-  lat
-  lng
-
 
   apiLoaded: Observable<boolean>
 
@@ -48,21 +38,16 @@ export default class LocationContainerComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.loadAutoComplete()
   }
 
-  public rbDeviceLocationSelection = [
-    { name: `Device Location`, value: `deviceLocation` },
-    { name: `Enter Location`, value: `enteredLocation` }
-  ]
-
   private loadAutoComplete() {
-
-    this.getUserLocation();
 
     const url = `https://maps.googleapis.com/maps/api/js?key=` + googleMapsKey + `&libraries=places&v=weekly`;
 
     this.loadScript(url).then(() => this.initAutocomplete())
   }
+
   private loadScript(url) {
     return new Promise((resolve, reject) => {
       const script = this.renderer2.createElement('script')
@@ -76,6 +61,11 @@ export default class LocationContainerComponent implements OnInit {
       this.renderer2.appendChild(this.document.head, script)
     })
   }
+
+  public rbDeviceLocationSelection = [
+    { name: `Device Location`, value: `deviceLocation` },
+    { name: `Enter Location`, value: `enteredLocation` }
+  ]
 
   initAutocomplete() {
     const input = document.getElementById(`txtSearchPlaces`) as HTMLInputElement
@@ -111,35 +101,16 @@ export default class LocationContainerComponent implements OnInit {
     ])
   }
 
-  getUserLocation() {
-    // get Users current position
-
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(position => {
-        this.lat = position.coords.latitude;
-        this.lng = position.coords.longitude;
-        console.log(`pos:` + position)
-      });
-    } else {
-      console.log(`User not allowed`)
-    }
-  }
-
-  onItemChange(value) {
-    localStorage.setItem(`imperialMetricChoice`, `{"imperialMetric":{"choice": "` + value + `"}}`)
-  }
-
   locationPreference(value) {
 
     if (value === `enteredLocation`) {
       this.enteredLocation = true
-      console.log(value)
     }
 
     if (value === `deviceLocation`) {
       this.enteredLocation = false
-      console.log(value)
-    }
+      localStorage.setItem(`weatherLocation`, `{"location":{"lat":"useDevice", "lng":"useDevice"}}`)
 
+    }
   }
 }

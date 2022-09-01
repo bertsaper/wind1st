@@ -1,15 +1,13 @@
 <div class="container" role="main">
-    <mat-radio-group aria-labelledby="radio-group-label" class="radio-group" class="radio-group"
-        [(ngModel)]="selectedItem">
+    <mat-radio-group aria-labelledby="radio-group-label" class="radio-group" class="radio-group">
         <mat-radio-button class="radio-button" class="radio-button" *ngFor="let data of rbDeviceLocationSelection"
             [value]="data.value" (click)="locationPreference(data.value)">
             {{data.name}}
         </mat-radio-button>
     </mat-radio-group>
-
-    <form MatAutocompleteModule class="form-horizontal" #SearchPlacesForm="ngForm" *ngIf="enteredLocation">
-
-
+</div>
+<div [ngClass]="enteredLocation ? 'form-expanded' : 'form-collapsed'">
+    <form MatAutocompleteModule class="form-horizontal" #SearchPlacesForm="ngForm">
         <div class="form-group">
             <label class="control-label col-sm-6 powered-by-google" for="txtSearchPlaces">Powered by
                 <strong>Google</strong> Places</label>
@@ -20,5 +18,4 @@
             </div>
         </div>
     </form>
-
 </div>
