@@ -224,7 +224,6 @@ export class ExploreContainerComponent implements OnInit {
         } else {
           this.long = 0
         }
-
       }
 
       const openWeatherKey: string = environment.openWeatherKey
@@ -953,9 +952,7 @@ export class ExploreContainerComponent implements OnInit {
         }
       },
         (error: GeolocationPositionError) => console.log(error))
-    } else {
-      alert(`Geolocation is not available on this device. \n\rPlease go to "Settings" and enter a location.`)
-    }
+    } else { }
   }
 
 }
