@@ -1,5 +1,6 @@
 <div class="container" role="main">
-    <mat-radio-group aria-labelledby="radio-group-label" class="radio-group" class="radio-group">
+    <mat-radio-group aria-labelledby="radio-group-label" class="radio-group" class="radio-group"
+        [(ngModel)]="selectedItem">
         <mat-radio-button class="radio-button" class="radio-button" *ngFor="let data of rbDeviceLocationSelection"
             [value]="data.value" (click)="locationPreference(data.value)">
             {{data.name}}

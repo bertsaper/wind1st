@@ -27,7 +27,7 @@ export default class LocationContainerComponent implements OnInit {
   public address: string;
   deviceLocation: any
   public input
-  // recordData = `deviceLocation`
+  selectedItem = `deviceLocation`
   enteredLocation: boolean
 
   apiLoaded: Observable<boolean>
