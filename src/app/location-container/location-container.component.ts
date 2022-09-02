@@ -26,6 +26,7 @@ export default class LocationContainerComponent implements OnInit {
   searchPlacesForm: NgForm;
   public address: string;
   deviceLocation: any
+  public input
   // recordData = `deviceLocation`
   enteredLocation: boolean
 
@@ -68,8 +69,8 @@ export default class LocationContainerComponent implements OnInit {
   ]
 
   initAutocomplete() {
-    const input = document.getElementById(`txtSearchPlaces`) as HTMLInputElement
-    const autocomplete = new google.maps.places.Autocomplete(input)
+    this.input = document.getElementById(`txtSearchPlaces`) as HTMLInputElement
+    const autocomplete = new google.maps.places.Autocomplete(this.input)
 
     /*
     * Sometimes Google sends lat or lng with trailing whitespace.
@@ -90,15 +91,20 @@ export default class LocationContainerComponent implements OnInit {
         * pressed the Enter key, or the Place Details request failed.
         */
 
-        alert(`No details available for input:` + input.value)
+        alert(`No details available for input:` + this.input.value)
         return
       } else {
+        // setTimeout(() => { this.clearTheForm() }, 5000)
         return
       }
     });
     autocomplete.setFields([
       `geometry`
     ])
+  }
+
+  clearTheForm() {
+    this.input.value = ``
   }
 
   locationPreference(value) {
@@ -108,9 +114,9 @@ export default class LocationContainerComponent implements OnInit {
     }
 
     if (value === `deviceLocation`) {
+      this.clearTheForm()
       this.enteredLocation = false
       localStorage.setItem(`weatherLocation`, `{"location":{"lat":"useDevice", "lng":"useDevice"}}`)
-
     }
   }
 }
