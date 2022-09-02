@@ -202,7 +202,6 @@ export class ExploreContainerComponent implements OnInit {
         if (this.lat) {
           this.lati = this.lat
         } else {
-          // alert(`Geolocation is not available on this device. \n\rPlease enter a location.`)
           this.lati = 0
           this.router.navigate([this.ifNoLocationNavTo])
         }
@@ -937,7 +936,11 @@ export class ExploreContainerComponent implements OnInit {
           console.log(this.lat);
         }
       },
-        (error: GeolocationPositionError) => console.log(error))
+        (error: GeolocationPositionError) => {
+          if (error) {
+            alert(`Geolocation is not available on this device. \n\rPlease enter a location.`)
+          }
+        })
     } else { }
   }
 
