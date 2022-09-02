@@ -202,7 +202,7 @@ export class ExploreContainerComponent implements OnInit {
         if (this.lat) {
           this.lati = this.lat
         } else {
-          alert(`Geolocation is not available on this device. \n\rPlease enter a location.`)
+          // alert(`Geolocation is not available on this device. \n\rPlease enter a location.`)
           this.lati = 0
           this.router.navigate([this.ifNoLocationNavTo])
         }
