@@ -6,8 +6,8 @@ export const environment = {
   production: false,
   openWeatherAddress: `https://api.openweathermap.org/data/2.5/weather?`,
 
-  openWeatherKey: `&appid=Your_OpenWeather_API_Key`,
-  googleMapsApiKey: `Your_Google_Places_API_Key`
+  openWeatherKey: `&appid=c75417b460380722fe8fc0ff6201e98a`,
+  googleMapsApiKey: `AIzaSyAOqS8MqbB8QlZ8rP-FpGLctYJGx936E4s`
 };
 
 /*
