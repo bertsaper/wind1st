@@ -5,4 +5,3 @@ export const environment = {
   openWeatherKey: `&appid=Your_OpenWeather_API_Key`,
   googleMapsApiKey: `Your_Google_Places_API_Key`
 };
-
