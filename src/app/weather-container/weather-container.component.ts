@@ -886,7 +886,7 @@ export class ExploreContainerComponent implements OnInit {
 
     const downloadTime: any = updateTimetStorageParsed.timestamp
 
-    const timeOutput = new Date(downloadTime).toLocaleTimeString([], { hour: `numeric`, minute: `2-digit` })
+    const timeOutput = new Date(downloadTime).toLocaleTimeString([], { hour: `numeric`, minute: `numeric` })
 
     return timeOutput.toLowerCase()
 
