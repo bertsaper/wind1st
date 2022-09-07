@@ -29,6 +29,7 @@ export default class LocationContainerComponent implements OnInit {
   public input
   selectedItem = `deviceLocation`
   enteredLocation: boolean
+  txtSearchPlaces = `txtSearchPlaces`
 
   apiLoaded: Observable<boolean>
 
@@ -40,6 +41,11 @@ export default class LocationContainerComponent implements OnInit {
 
   ngOnInit() {
     this.loadAutoComplete()
+    window.addEventListener('resize', (() => {
+      const el = document.getElementById(this.txtSearchPlaces)
+      el.scrollIntoView({ behavior: `smooth` })
+      console.log(`resize`)
+    }))
   }
 
   private loadAutoComplete() {
@@ -69,7 +75,7 @@ export default class LocationContainerComponent implements OnInit {
   ]
 
   initAutocomplete() {
-    this.input = document.getElementById(`txtSearchPlaces`) as HTMLInputElement
+    this.input = document.getElementById(this.txtSearchPlaces) as HTMLInputElement
     const autocomplete = new google.maps.places.Autocomplete(this.input)
 
     /*

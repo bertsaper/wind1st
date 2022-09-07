@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/member-ordering */
 /* eslint-disable @typescript-eslint/semi */
 
-import { Component, OnInit, Input, ElementRef, ViewChild, Renderer2 } from '@angular/core'
+import { Component, OnInit, ElementRef, ViewChild, Renderer2 } from '@angular/core'
 
 import { environment } from 'src/environments/environment'
 
