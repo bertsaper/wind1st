@@ -41,10 +41,13 @@ export default class LocationContainerComponent implements OnInit {
 
   ngOnInit() {
     this.loadAutoComplete()
+    /*
+    * places the text entry into view when keyboard appears
+    */
+
     window.addEventListener('resize', (() => {
       const el = document.getElementById(this.txtSearchPlaces)
       el.scrollIntoView({ behavior: `smooth` })
-      console.log(`resize`)
     }))
   }
 
