@@ -74,11 +74,7 @@ export class ExploreContainerComponent implements OnInit {
 
   fromHome = `/`
 
-  /*
-  * If no location found in localstorage, go to settings.
-  */
-
-  ifNoLocationNavTo = `/settings`
+  locationSettings = `/settings`
 
   displayLocation = `/weather`
 
@@ -133,8 +129,13 @@ export class ExploreContainerComponent implements OnInit {
           }
           setTimeout(() => { this.getWeather() }, 250)
         }
+
         if (event.url === this.fromHome) {
           setTimeout(() => { this.getWeather() }, 250)
+        }
+
+        if (event.url === this.locationSettings) {
+          this.updateButtonToggle = false
         }
       }
     })
@@ -171,8 +172,10 @@ export class ExploreContainerComponent implements OnInit {
     * If there is not "weatherLocation" visitors are sent to Settings.
     */
 
+    this.updateButtonToggle = false
+
     if (localStorage.getItem(this.weatherLocationStorage) === null) {
-      this.router.navigate([this.ifNoLocationNavTo])
+      this.router.navigate([this.locationSettings])
     }
 
     try {
@@ -203,7 +206,7 @@ export class ExploreContainerComponent implements OnInit {
           this.lati = this.lat
         } else {
           this.lati = 0
-          this.router.navigate([this.ifNoLocationNavTo])
+          this.router.navigate([this.locationSettings])
         }
         if (this.lng) {
           this.long = this.lng
@@ -931,8 +934,6 @@ export class ExploreContainerComponent implements OnInit {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position: GeolocationPosition) => {
         if (position) {
-          console.log(`Latitude: ` + position.coords.latitude +
-            `Longitude: ` + position.coords.longitude);
           this.lat = position.coords.latitude;
           this.lng = position.coords.longitude;
           console.log(this.lat);
