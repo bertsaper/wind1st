@@ -950,7 +950,6 @@ export class ExploreContainerComponent implements OnInit {
         if (position) {
           this.lat = position.coords.latitude;
           this.lng = position.coords.longitude;
-          console.log(`updated`);
         }
       },
         (error: GeolocationPositionError) => {
