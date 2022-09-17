@@ -90,9 +90,7 @@ export class ExploreContainerComponent implements OnInit {
 
   loadingDiv = `loadingDiv`
 
-  displayLocationFlag = false
-
-  updateButtonToggle: boolean
+  updateButtonToggle = false
 
   @ViewChild('svgWindPointer') container: ElementRef;
 
@@ -121,7 +119,7 @@ export class ExploreContainerComponent implements OnInit {
         /*
         * this.removeWeatherDisplay(), this.removeWeatherDisplayAria()
         * and removeWeatherDisplayAlt(), which prevents multiple results
-        * from displaying.
+        * from displaying. Timeout needed to ensure LocalStorage JSON is present.
         */
 
         if (event.url === this.displayLocation) {
@@ -222,7 +220,7 @@ export class ExploreContainerComponent implements OnInit {
         unitSelecton + openWeatherKey
 
       await this.http.get(resString).subscribe((res) => {
-        this.updateButtonToggle = false
+
         this.weatherNow = res
         this.weatherNowString = JSON.stringify(this.weatherNow)
         localStorage.setItem(this.currentWeatherStorage, this.weatherNowString)
@@ -847,8 +845,8 @@ export class ExploreContainerComponent implements OnInit {
       this.renderer.appendChild(this.container.nativeElement, displayAria)
 
       this.updateButtonToggle = true
-    }
 
+    }
 
     if (this.getScreenWidth < 380) {
       this.renderer.appendChild(this.container.nativeElement, displayAlt)
@@ -913,6 +911,7 @@ export class ExploreContainerComponent implements OnInit {
   }
 
   updateWeather() {
+    this.updateButtonToggle = false
     if (this.getScreenWidth >= 380) {
       this.removeWeatherDisplay()
       this.removeWeatherDisplayAria()
