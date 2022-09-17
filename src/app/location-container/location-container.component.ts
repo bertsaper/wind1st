@@ -47,6 +47,9 @@ export default class LocationContainerComponent implements OnInit {
 
   ngOnInit() {
     this.loadAutoComplete()
+
+    localStorage.setItem(`weatherLocation`, `{"location":{"lat":"useDevice", "lng":"useDevice"}}`)
+
     /*
     * places the text entry into view when keyboard appears
     */

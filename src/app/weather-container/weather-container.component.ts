@@ -62,6 +62,8 @@ export class ExploreContainerComponent implements OnInit {
 
   public lng
 
+  useDeviceIsSet: boolean
+
   /*
   * Needed for Imperial / Metric Selection
   */
@@ -87,6 +89,8 @@ export class ExploreContainerComponent implements OnInit {
   loadingDiv = `loadingDiv`
 
   updateButtonToggle = false
+
+
 
   @ViewChild('svgWindPointer') container: ElementRef;
 
@@ -199,9 +203,11 @@ export class ExploreContainerComponent implements OnInit {
       if (weatherLocationStorageParsed.location.lat !== `useDevice`) {
         this.lati = weatherLocationStorageParsed.location.lat
         this.long = weatherLocationStorageParsed.location.lng
+        this.useDeviceIsSet = false
       }
 
       if (weatherLocationStorageParsed.location.lat === `useDevice`) {
+        this.useDeviceIsSet = true
         if (this.lat) {
           this.lati = this.lat
         } else {
@@ -914,15 +920,23 @@ export class ExploreContainerComponent implements OnInit {
   }
 
   updateWeather() {
+
     this.updateButtonToggle = false
+
+    if (this.useDeviceIsSet) {
+      this.getLocation()
+    }
+
     if (this.getScreenWidth >= 380) {
       this.removeWeatherDisplay()
       this.removeWeatherDisplayAria()
 
     }
+
     if (this.getScreenWidth < 380) {
       this.removeWeatherDisplayAlt()
     }
+
     setTimeout(() => { this.getWeather() }, 250)
   }
 
@@ -936,8 +950,7 @@ export class ExploreContainerComponent implements OnInit {
         if (position) {
           this.lat = position.coords.latitude;
           this.lng = position.coords.longitude;
-          console.log(this.lat);
-          console.log(this.lat);
+          console.log(`updated`);
         }
       },
         (error: GeolocationPositionError) => {
