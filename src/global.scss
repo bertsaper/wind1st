@@ -111,6 +111,18 @@ app-location-container>div>form>div>label {
     margin-right: 14px;
 }
 
+
+div.form-expanded {
+    position: relative;
+    text-align: center;
+}
+
+div.form-collapsed {
+    position: absolute;
+    top: -1000px;
+    left: -1000px;
+}
+
 @media screen and (min-width:1600px) {
     ion-title {
         margin-left: 30vw;
