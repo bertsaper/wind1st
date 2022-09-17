@@ -23,6 +23,12 @@
     text-decoration: none;
 }
 
+div.form-collapsed {
+    position: absolute;
+    top: -1000px;
+    left: -1000px;
+}
+
 @media screen and (min-width:381px) and (max-width:395px) {
     #buttonHolder {
         margin-left: 12px;

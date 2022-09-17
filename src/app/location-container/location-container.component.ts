@@ -24,11 +24,17 @@ const googleMapsKey = environment.googleMapsApiKey
 export default class LocationContainerComponent implements OnInit {
 
   searchPlacesForm: NgForm;
+
   public address: string;
+
   deviceLocation: any
+
   public input
+
   selectedItem = `deviceLocation`
+
   enteredLocation: boolean
+
   txtSearchPlaces = `txtSearchPlaces`
 
   apiLoaded: Observable<boolean>

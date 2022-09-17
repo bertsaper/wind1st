@@ -92,6 +92,8 @@ export class ExploreContainerComponent implements OnInit {
 
   displayLocationFlag = false
 
+  updateButtonToggle: boolean
+
   @ViewChild('svgWindPointer') container: ElementRef;
 
 
@@ -220,7 +222,7 @@ export class ExploreContainerComponent implements OnInit {
         unitSelecton + openWeatherKey
 
       await this.http.get(resString).subscribe((res) => {
-
+        this.updateButtonToggle = false
         this.weatherNow = res
         this.weatherNowString = JSON.stringify(this.weatherNow)
         localStorage.setItem(this.currentWeatherStorage, this.weatherNowString)
@@ -843,6 +845,8 @@ export class ExploreContainerComponent implements OnInit {
       */
 
       this.renderer.appendChild(this.container.nativeElement, displayAria)
+
+      this.updateButtonToggle = true
     }
 
 

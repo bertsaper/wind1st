@@ -5,9 +5,12 @@
         <div #svgWindPointer></div>
 
         <div id="buttonHolder">
-
-            <button mat-raised-button (click)="updateWeather()"> UPDATE </button>
-
+            <div [ngClass]="updateButtonToggle ? 'form-expanded' : 'form-collapsed'">
+                <button mat-raised-button (click)="updateWeather()"> UPDATE </button>
+            </div>
+            <div [ngClass]="updateButtonToggle ? 'form-collapsed' : 'form-expanded'">
+                <div> Please Wait </div>
+            </div>
         </div>
 
     </div>
