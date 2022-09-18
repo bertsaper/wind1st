@@ -921,6 +921,8 @@ export class ExploreContainerComponent implements OnInit {
 
   updateWeather() {
 
+    localStorage.setItem(this.currentWeatherStorage, ``)
+
     this.updateButtonToggle = false
 
     if (this.useDeviceIsSet) {
@@ -937,7 +939,7 @@ export class ExploreContainerComponent implements OnInit {
       this.removeWeatherDisplayAlt()
     }
 
-    setTimeout(() => { this.getWeather() }, 250)
+    setTimeout(() => { this.getWeather() }, 333)
   }
 
   /*
