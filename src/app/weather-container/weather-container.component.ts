@@ -142,6 +142,7 @@ export class ExploreContainerComponent implements OnInit {
 
         if (event.url === this.locationSettings) {
           localStorage.setItem(this.currentWeatherStorage, ``)
+
           this.updateButtonToggle = false
         }
       }
@@ -181,10 +182,6 @@ export class ExploreContainerComponent implements OnInit {
 
     this.updateButtonToggle = false
 
-    if (localStorage.getItem(this.weatherLocationStorage) === null) {
-      this.router.navigate([this.locationSettings])
-    }
-
     try {
 
       const measurementChoice = this.getMeasurementChoice()
@@ -213,14 +210,9 @@ export class ExploreContainerComponent implements OnInit {
         this.useDeviceIsSet = true
         if (this.lat) {
           this.lati = this.lat
-        } else {
-          this.lati = 0
-          this.router.navigate([this.locationSettings])
         }
         if (this.lng) {
           this.long = this.lng
-        } else {
-          this.long = 0
         }
       }
 
