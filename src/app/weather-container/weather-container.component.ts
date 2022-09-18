@@ -141,6 +141,7 @@ export class ExploreContainerComponent implements OnInit {
         }
 
         if (event.url === this.locationSettings) {
+          localStorage.setItem(this.currentWeatherStorage, ``)
           this.updateButtonToggle = false
         }
       }
