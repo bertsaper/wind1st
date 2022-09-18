@@ -106,6 +106,8 @@ export class ExploreContainerComponent implements OnInit {
 
   ngOnInit() {
 
+    localStorage.setItem(this.currentWeatherStorage, ``)
+
     this.getScreenWidth = window.innerWidth
 
     this.onDisplay()
@@ -178,7 +180,7 @@ export class ExploreContainerComponent implements OnInit {
 
     this.updateButtonToggle = false
 
-    if (localStorage.getItem(this.weatherLocationStorage) === null) {
+    if (localStorage.getItem(this.weatherLocationStorage).length === null) {
       this.router.navigate([this.locationSettings])
     }
 
