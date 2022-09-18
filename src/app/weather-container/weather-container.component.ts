@@ -180,7 +180,7 @@ export class ExploreContainerComponent implements OnInit {
 
     this.updateButtonToggle = false
 
-    if (localStorage.getItem(this.weatherLocationStorage).length === null) {
+    if (localStorage.getItem(this.weatherLocationStorage) === null) {
       this.router.navigate([this.locationSettings])
     }
 
