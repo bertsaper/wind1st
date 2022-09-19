@@ -110,8 +110,6 @@ export class ExploreContainerComponent implements OnInit {
       this.router.navigate([this.locationSettings])
     }
 
-    localStorage.setItem(this.currentWeatherStorage, ``)
-
     this.getScreenWidth = window.innerWidth
 
     this.onDisplay()
