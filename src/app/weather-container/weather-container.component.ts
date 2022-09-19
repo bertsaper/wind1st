@@ -64,6 +64,8 @@ export class ExploreContainerComponent implements OnInit {
 
   useDeviceIsSet: boolean
 
+  locationUnavailable: boolean
+
   /*
   * Needed for Imperial / Metric Selection
   */
@@ -954,6 +956,7 @@ export class ExploreContainerComponent implements OnInit {
         }
       },
         (error: GeolocationPositionError) => {
+          this.locationUnavailable = true
           alert(`Device location is not available.\n\rPlease enable or enter a location.`)
         })
     } else { }
