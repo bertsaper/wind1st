@@ -9,7 +9,8 @@
                 <button mat-raised-button (click)="updateWeather()"> UPDATE </button>
             </div>
             <div [ngClass]="updateButtonToggle ? 'form-collapsed' : 'form-expanded'">
-                <div>{{locationUnavailable === true ? "Device location unavailable. Please go to `Settings` and enter a
+                <div>{{(useDeviceIsSet === true && locationUnavailable === true) ? "Device location unavailable. Please
+                    go to `Settings` and enter a
                     location." : "Please Wait"}}</div>
             </div>
         </div>
