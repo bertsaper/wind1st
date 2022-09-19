@@ -936,7 +936,7 @@ export class ExploreContainerComponent implements OnInit {
       this.removeWeatherDisplayAlt()
     }
 
-    setTimeout(() => { this.getWeather() }, 333)
+    setTimeout(() => { this.getWeather() }, 667)
   }
 
   /*
