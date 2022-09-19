@@ -920,6 +920,13 @@ export class ExploreContainerComponent implements OnInit {
 
     localStorage.setItem(this.currentWeatherStorage, ``)
 
+    if (localStorage.getItem(this.weatherLocationStorage) === null) {
+      localStorage.setItem(`weatherLocation`, `{"location":{"lat":"useDevice", "lng":"useDevice"}}`)
+    }
+    if (localStorage.getItem(this.imperialMetricChoice) === null) {
+      localStorage.setItem(`imperialMetricChoice`, `{"imperialMetric":{"choice": "imperial"}}`)
+    }
+
     this.updateButtonToggle = false
 
     if (this.useDeviceIsSet) {
