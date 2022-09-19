@@ -91,7 +91,6 @@ export class ExploreContainerComponent implements OnInit {
   updateButtonToggle = false
 
 
-
   @ViewChild('svgWindPointer') container: ElementRef;
 
 
@@ -139,12 +138,10 @@ export class ExploreContainerComponent implements OnInit {
         }
 
         if (event.url === this.fromHome) {
-          setTimeout(() => { this.getWeather() }, 250)
+          this.router.navigate([this.locationSettings])
         }
 
         if (event.url === this.locationSettings) {
-          localStorage.setItem(this.currentWeatherStorage, ``)
-
           this.updateButtonToggle = false
         }
       }
@@ -917,8 +914,6 @@ export class ExploreContainerComponent implements OnInit {
   }
 
   updateWeather() {
-
-    localStorage.setItem(this.currentWeatherStorage, ``)
 
     if (localStorage.getItem(this.weatherLocationStorage) === null) {
       localStorage.setItem(`weatherLocation`, `{"location":{"lat":"useDevice", "lng":"useDevice"}}`)
