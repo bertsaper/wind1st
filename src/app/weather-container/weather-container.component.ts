@@ -62,11 +62,7 @@ export class ExploreContainerComponent implements OnInit {
 
   public lng
 
-  /*
-  * As seesion begins, everyone is set for useDeviceisSet, even if an address was entered.
-  */
-
-  useDeviceIsSet = true
+  useDeviceIsSet: boolean
 
   locationUnavailable: boolean
 
