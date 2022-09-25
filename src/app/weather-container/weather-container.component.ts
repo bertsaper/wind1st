@@ -62,7 +62,11 @@ export class ExploreContainerComponent implements OnInit {
 
   public lng
 
-  useDeviceIsSet: boolean
+  /*
+  * As seesion begins, everyone is set for useDeviceisSet, even if an address was entered.
+  */
+
+  useDeviceIsSet = true
 
   locationUnavailable: boolean
 
@@ -927,10 +931,6 @@ export class ExploreContainerComponent implements OnInit {
 
     this.updateButtonToggle = false
 
-    if (this.useDeviceIsSet && !this.locationUnavailable) {
-      this.getLocation()
-    }
-
     if (this.getScreenWidth >= 380) {
       this.removeWeatherDisplay()
       this.removeWeatherDisplayAria()
@@ -941,7 +941,17 @@ export class ExploreContainerComponent implements OnInit {
       this.removeWeatherDisplayAlt()
     }
 
-    setTimeout(() => { this.getWeather() }, 125)
+    if (this.useDeviceIsSet) {
+      this.getLocation()
+
+      /*
+      * When travelling, device location update might lag, so getWether is delayed 1.75 seconds.
+      */
+
+      setTimeout(() => { this.getWeather() }, 1750)
+    } else {
+      setTimeout(() => { this.getWeather() }, 250)
+    }
   }
 
   /*
@@ -954,10 +964,6 @@ export class ExploreContainerComponent implements OnInit {
         if (position) {
           this.lat = position.coords.latitude
           this.lng = position.coords.longitude
-          setInterval(function() {
-            this.lat = position.coords.latitude
-            this.lng = position.coords.longitude
-          }, 60000);
         }
       },
         (error: GeolocationPositionError) => {
