@@ -949,22 +949,23 @@ export class ExploreContainerComponent implements OnInit {
   */
 
   getLocation() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position: GeolocationPosition) => {
-        if (position) {
-          this.lat = position.coords.latitude
-          this.lng = position.coords.longitude
-          setInterval(function() {
+    if (!this.locationUnavailable) {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position: GeolocationPosition) => {
+          if (position) {
             this.lat = position.coords.latitude
             this.lng = position.coords.longitude
-          }, 60000);
-        }
-      },
-        (error: GeolocationPositionError) => {
-          this.locationUnavailable = true
-          alert(`Device location is not available.\n\rPlease enable or enter a location.`)
-        })
+            setInterval(function() {
+              this.lat = position.coords.latitude
+              this.lng = position.coords.longitude
+            }, 60000);
+          }
+        },
+          (error: GeolocationPositionError) => {
+            this.locationUnavailable = true
+            alert(`Device location is not available.\n\rPlease enable or enter a location.`)
+          })
+      }
     }
   }
-
 }
