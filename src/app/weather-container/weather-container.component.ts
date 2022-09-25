@@ -248,6 +248,7 @@ export class ExploreContainerComponent implements OnInit {
   }
 
   chartMethod() {
+
     const imperialMetricChoice = this.getMeasurementChoice()
 
     const downloadDate = this.getDate()
@@ -940,7 +941,7 @@ export class ExploreContainerComponent implements OnInit {
       this.removeWeatherDisplayAlt()
     }
 
-    setTimeout(() => { this.getWeather() }, 1000)
+    setTimeout(() => { this.getWeather() }, 125)
   }
 
   /*
@@ -951,8 +952,12 @@ export class ExploreContainerComponent implements OnInit {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position: GeolocationPosition) => {
         if (position) {
-          this.lat = position.coords.latitude;
-          this.lng = position.coords.longitude;
+          this.lat = position.coords.latitude
+          this.lng = position.coords.longitude
+          setInterval(function() {
+            this.lat = position.coords.latitude
+            this.lng = position.coords.longitude
+          }, 60000);
         }
       },
         (error: GeolocationPositionError) => {
