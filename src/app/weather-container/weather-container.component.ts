@@ -927,7 +927,7 @@ export class ExploreContainerComponent implements OnInit {
 
     this.updateButtonToggle = false
 
-    if (this.useDeviceIsSet) {
+    if (this.useDeviceIsSet && !this.locationUnavailable) {
       this.getLocation()
     }
 
@@ -949,23 +949,22 @@ export class ExploreContainerComponent implements OnInit {
   */
 
   getLocation() {
-    if (!this.locationUnavailable) {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition((position: GeolocationPosition) => {
-          if (position) {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position: GeolocationPosition) => {
+        if (position) {
+          this.lat = position.coords.latitude
+          this.lng = position.coords.longitude
+          setInterval(function() {
             this.lat = position.coords.latitude
             this.lng = position.coords.longitude
-            setInterval(function() {
-              this.lat = position.coords.latitude
-              this.lng = position.coords.longitude
-            }, 60000);
-          }
-        },
-          (error: GeolocationPositionError) => {
-            this.locationUnavailable = true
-            alert(`Device location is not available.\n\rPlease enable or enter a location.`)
-          })
-      }
+          }, 60000);
+        }
+      },
+        (error: GeolocationPositionError) => {
+          this.locationUnavailable = true
+          alert(`Device location is not available.\n\rPlease enable or enter a location.`)
+        })
     }
   }
+
 }
