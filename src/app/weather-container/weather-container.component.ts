@@ -964,7 +964,7 @@ export class ExploreContainerComponent implements OnInit {
           this.locationUnavailable = true
           alert(`Device location is not available.\n\rPlease enable or enter a location.`)
         })
-    } else { }
+    }
   }
 
 }
