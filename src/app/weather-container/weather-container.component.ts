@@ -178,8 +178,19 @@ export class ExploreContainerComponent implements OnInit {
     * The contents of weatherLocation "weatherLocation" flag if the device's
     * location will be used: "lat":"useDevice".
     *
-    * If there is not "weatherLocation" visitors are sent to Settings.
+    * If there is no "weatherLocation" visitors are sent to Settings.
     */
+
+    /*
+    * If the UseDeviceIsSet is set and locatinUnavailable is not set, the user must
+    * have updated the session. The below makes any new location available.
+    */
+
+    if (this.useDeviceIsSet && !this.locationUnavailable) {
+      setInterval(() => {
+        this.getLocation()
+      }, 60000)
+    }
 
     this.updateButtonToggle = false
 
@@ -248,12 +259,6 @@ export class ExploreContainerComponent implements OnInit {
   }
 
   chartMethod() {
-
-    if (this.useDeviceIsSet && !this.locationUnavailable) {
-      setInterval(() => {
-        this.getLocation()
-      }, 60000)
-    }
 
     const imperialMetricChoice = this.getMeasurementChoice()
 
