@@ -918,6 +918,8 @@ export class ExploreContainerComponent implements OnInit {
 
   updateWeather() {
 
+    this.getLocation()
+
     if (localStorage.getItem(this.weatherLocationStorage) === null) {
       localStorage.setItem(`weatherLocation`, `{"location":{"lat":"useDevice", "lng":"useDevice"}}`)
     }
@@ -953,12 +955,13 @@ export class ExploreContainerComponent implements OnInit {
 
           /*
           * The below updates the location once a minute.
-          */
+
 
           setInterval(() => {
             this.lat = position.coords.latitude
             this.lng = position.coords.longitude
           }, 60000)
+          */
 
         }
       },
