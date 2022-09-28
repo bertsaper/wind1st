@@ -1,0 +1,21 @@
+<div id="container">
+
+    <div class="ion-canvas">
+
+        <div #svgWindPointer></div>
+
+        <div id="buttonHolder">
+            <div [ngClass]="updateButtonToggle ? 'form-expanded' : 'form-collapsed'">
+                <button mat-raised-button (click)="updateWeather()"> UPDATE </button>
+            </div>
+            <div [ngClass]="updateButtonToggle ? 'form-collapsed' : 'form-expanded'">
+                <div>{{(useDeviceIsSet === true && locationUnavailable === true) ? "" : "Please Wait"}}</div>
+            </div>
+
+            <div *ngIf="(useDeviceIsSet === true && locationUnavailable === true)" id="deviceLocationUnavailable">Device
+                location unavailable. Please go to `Settings` and enter&nbsp;a&nbsp;location.</div>
+        </div>
+
+    </div>
+
+</div>

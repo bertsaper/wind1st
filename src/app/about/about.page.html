@@ -1,0 +1,40 @@
+<ion-header [translucent]="true">
+    <ion-toolbar>
+        <ion-title>
+            About
+        </ion-title>
+        <div class="titleicon">
+            <img src="assets/wind1st.gif" alt="Wind1st.Com" />
+        </div>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <ion-header collapse="condense">
+    </ion-header>
+    <div class="about-holder">
+        <div>
+            <h1>About Wind 1st</h1>
+            <p>For bicycle commuters, wind direction and velocity are important pieces of information.
+                Finding these on most weather apps takes a lot of&nbsp;digging.</p>
+            <p>This app is designed to make wind direction and velocity&nbsp;foremost.</p>
+            <p>The app is built with the <a href="https://openweathermap.org/api" target="_blank">OpenWeather API</a>
+                and the <a href="https://developers.google.com/maps/documentation/places/web-service/overview"
+                    target="_blank">Google&nbsp;Places&nbsp;API</a>.</p>
+            <p>GitHub Repo: <a href="https://github.com/bertsaper/wind1st/"
+                    target="_blank">https://github.com/bertsaper/wind1st/</a></p>
+            <p><strong>FAQs</strong></p>
+            <p><strong><span class="bullet"> > </span>Why is the location entered in Settings different than the
+                    location
+                    displayed
+                    on&nbsp;Weather?</strong></p>
+            <p>Your longitude and latitude are returned from Google Places and sent to OpenWeather. OpenWeather
+                often uses a different name for the same&nbsp;locale.</p>
+            <p><strong><span class="bullet"> > </span>Which time zone displays?</strong></p>
+            <p>The time zone is the one set on your device, not the&nbsp;locale's.</p>
+            <p><strong><span class="bullet"> > </span>Why does a specific address return a blank screen?</strong></p>
+            <p>When a specific location is entered, like a restaurant or a shop, Google Places returns
+                lengthy numbers for longitude and latitude. These number cannot be consumed by the OpenWeather API. Try
+                entering a town name instead.</p>
+        </div>
+    </div>
+</ion-content>

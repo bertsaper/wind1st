@@ -1,0 +1,35 @@
+.about-holder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0.5vw 30vw;
+}
+
+.about-holder h1 {
+    font-size: 18px;
+    font-weight: 700;
+    padding: 20px 0 30px;
+    text-align: center;
+}
+
+.bullet {
+    color: crimson;
+}
+
+@media screen and (max-width: 800px) {
+    .about-holder {
+        margin: 1vh 12vw;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .about-holder {
+        margin: 1vh 7vw;
+    }
+}
+
+@media screen and (max-width: 325px) {
+    .about-holder {
+        margin: 1vh 12vw;
+    }
+}

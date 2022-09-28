@@ -1,0 +1,144 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+
+/* Core CSS required for Ionic components to work properly */
+
+@import "~@ionic/angular/css/core.css";
+
+/* Material theme */
+
+@import "../node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css";
+
+
+/* Basic CSS for apps built with Ionic */
+
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+@import '~@ionic/angular/css/display.css';
+
+/* Optional CSS utils that can be commented out */
+
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
+
+.md body {
+    --ion-background-color: #121212;
+    --ion-background-color-rgb: 18, 18, 18;
+    // color: #8cb6f6;
+    --ion-text-color: #8cb6f6;
+}
+
+ion-toolbar {
+    max-height: 38px;
+}
+
+ion-title {
+    float: left;
+}
+
+app-weather-container {
+    margin-top: 50px;
+}
+
+ion-toolbar img {
+    max-height: 40px;
+    float: right;
+    transform: translateY(-6px);
+}
+
+#WindInfo {
+    overflow: visible !important;
+}
+
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle,
+.mat-radio-outer-circle {
+    border-color: #efefef !important;
+}
+
+.mat-radio-button.mat-accent .mat-radio-inner-circle {
+    background-color: #efefef !important;
+}
+
+app-weather-container>div>div>div>div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#infoGroup,
+#windDirectionPath,
+#displayAlt {
+    fill: #8ab4f8;
+    stroke: #8ab4f8;
+}
+
+form,
+input,
+optgroup,
+select {
+    color: #121212;
+}
+
+.powered-by-google {
+    font-size: 15px;
+}
+
+app-location-container>div>form>div>label {
+    color: #8ab4f8 !important;
+}
+
+#displayAria {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+.mat-radio-button {
+    margin-right: 14px;
+}
+
+
+div.form-expanded {
+    position: relative;
+    text-align: center;
+}
+
+div.form-collapsed {
+    position: absolute;
+    top: -1000px;
+    left: -1000px;
+}
+
+@media screen and (min-width:1600px) {
+    ion-title {
+        margin-left: 30vw;
+    }
+
+    ion-toolbar img {
+        margin-right: 30vw;
+    }
+}
+
+@media screen and (min-width:750px) {
+    ion-title {
+        margin-left: 20vw;
+    }
+
+    ion-toolbar img {
+        margin-right: 20vw;
+    }
+}

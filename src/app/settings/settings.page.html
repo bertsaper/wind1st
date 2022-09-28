@@ -1,0 +1,27 @@
+<ion-header [translucent]="true">
+    <ion-toolbar>
+        <ion-title>
+            Settings
+        </ion-title>
+        <div class="titleicon">
+            <img src="assets/wind1st.gif" alt="Wind1st.Com" />
+        </div>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <section>
+        <div class="settings-holder">
+            <h1>Find Local Weather</h1>
+        </div>
+        <div class="settings-holder">
+            <div>
+                <app-imperial-metric-container></app-imperial-metric-container>
+                <app-location-container></app-location-container>
+                <div class="button-holder">
+                    <button mat-raised-button (click)="updateWeather()"> CONTINUE </button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+</ion-content>

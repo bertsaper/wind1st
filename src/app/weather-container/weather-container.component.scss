@@ -1,0 +1,44 @@
+#container {
+    text-align: center;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+#container strong {
+    font-size: 20px;
+    line-height: 26px;
+}
+
+#container p {
+    font-size: 16px;
+    line-height: 22px;
+    color: #8c8c8c;
+    margin: 0;
+}
+
+#container a {
+    text-decoration: none;
+}
+
+#deviceLocationUnavailable {
+    font-weight: 900;
+    transform: translateY(-150px);
+    background-color: #121212;
+    padding: 5px;
+}
+
+@media screen and (min-width:381px) and (max-width:395px) {
+    #buttonHolder {
+        margin-left: 12px;
+    }
+
+}
+
+@media screen and (max-width:400px) {
+    #svgWindHolder {
+        min-height: 20px;
+    }
+}
