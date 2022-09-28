@@ -249,6 +249,12 @@ export class ExploreContainerComponent implements OnInit {
 
   chartMethod() {
 
+    if (this.useDeviceIsSet && !this.locationUnavailable) {
+      setInterval(() => {
+        this.getLocation()
+      }, 60000)
+    }
+
     const imperialMetricChoice = this.getMeasurementChoice()
 
     const downloadDate = this.getDate()
@@ -937,17 +943,7 @@ export class ExploreContainerComponent implements OnInit {
       this.removeWeatherDisplayAlt()
     }
 
-    if (this.useDeviceIsSet) {
-      this.getLocation()
-
-      /*
-      * When travelling, device location update might lag, so getWether is delayed 1.75 seconds.
-      */
-
-      setTimeout(() => { this.getWeather() }, 1750)
-    } else {
-      setTimeout(() => { this.getWeather() }, 250)
-    }
+    setTimeout(() => { this.getWeather() }, 250)
   }
 
   /*
