@@ -181,17 +181,6 @@ export class ExploreContainerComponent implements OnInit {
     * If there is no "weatherLocation" visitors are sent to Settings.
     */
 
-    /*
-    * If the UseDeviceIsSet is set and locatinUnavailable is not set, the user must
-    * have updated the session. The below makes any new location available.
-    */
-
-    if (this.useDeviceIsSet && !this.locationUnavailable) {
-      setInterval(() => {
-        this.getLocation()
-      }, 60000)
-    }
-
     this.updateButtonToggle = false
 
     try {
@@ -961,6 +950,19 @@ export class ExploreContainerComponent implements OnInit {
         if (position) {
           this.lat = position.coords.latitude
           this.lng = position.coords.longitude
+
+          /*
+          * If the UseDeviceIsSet is set, the user must have updated the session.
+          * The below updates the location once a minute.
+          */
+
+          if (this.useDeviceIsSet && !this.locationUnavailable) {
+            setInterval(() => {
+              this.lat = position.coords.latitude
+              this.lng = position.coords.longitude
+            }, 60000)
+          }
+
         }
       },
         (error: GeolocationPositionError) => {
