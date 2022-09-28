@@ -952,16 +952,13 @@ export class ExploreContainerComponent implements OnInit {
           this.lng = position.coords.longitude
 
           /*
-          * If the UseDeviceIsSet is set, the user must have updated the session.
           * The below updates the location once a minute.
           */
 
-          if (this.useDeviceIsSet && !this.locationUnavailable) {
-            setInterval(() => {
-              this.lat = position.coords.latitude
-              this.lng = position.coords.longitude
-            }, 60000)
-          }
+          setInterval(() => {
+            this.lat = position.coords.latitude
+            this.lng = position.coords.longitude
+          }, 60000)
 
         }
       },
