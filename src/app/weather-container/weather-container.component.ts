@@ -62,6 +62,8 @@ export class ExploreContainerComponent implements OnInit {
 
   public lng
 
+  public updateLocal
+
   useDeviceIsSet: boolean
 
   locationUnavailable: boolean
@@ -253,10 +255,17 @@ export class ExploreContainerComponent implements OnInit {
     * Update the location once a minute.
     */
 
+
     if (this.useDeviceIsSet && !this.locationUnavailable) {
-      setInterval(() => {
+
+      if (this.updateLocal) {
+        clearInterval(this.updateLocal)
+      }
+
+      this.updateLocal = setInterval(() => {
         this.getLocation()
       }, 60000)
+
     }
 
     const imperialMetricChoice = this.getMeasurementChoice()
@@ -927,8 +936,6 @@ export class ExploreContainerComponent implements OnInit {
   }
 
   updateWeather() {
-
-    this.getLocation()
 
     if (localStorage.getItem(this.weatherLocationStorage) === null) {
       localStorage.setItem(`weatherLocation`, `{"location":{"lat":"useDevice", "lng":"useDevice"}}`)
