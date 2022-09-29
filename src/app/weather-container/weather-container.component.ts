@@ -255,12 +255,11 @@ export class ExploreContainerComponent implements OnInit {
     * Update the location once a minute.
     */
 
+    if (this.updateLocal) {
+      clearInterval(this.updateLocal)
+    }
 
     if (this.useDeviceIsSet && !this.locationUnavailable) {
-
-      if (this.updateLocal) {
-        clearInterval(this.updateLocal)
-      }
 
       this.updateLocal = setInterval(() => {
         this.getLocation()
