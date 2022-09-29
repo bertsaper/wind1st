@@ -249,6 +249,16 @@ export class ExploreContainerComponent implements OnInit {
 
   chartMethod() {
 
+    /*
+    * Update the location once a minute.
+    */
+
+    if (this.useDeviceIsSet && !this.locationUnavailable) {
+      setInterval(() => {
+        this.getLocation()
+      }, 60000)
+    }
+
     const imperialMetricChoice = this.getMeasurementChoice()
 
     const downloadDate = this.getDate()
@@ -952,17 +962,6 @@ export class ExploreContainerComponent implements OnInit {
         if (position) {
           this.lat = position.coords.latitude
           this.lng = position.coords.longitude
-
-          /*
-          * The below updates the location once a minute.
-
-
-          setInterval(() => {
-            this.lat = position.coords.latitude
-            this.lng = position.coords.longitude
-          }, 60000)
-          */
-
         }
       },
         (error: GeolocationPositionError) => {
