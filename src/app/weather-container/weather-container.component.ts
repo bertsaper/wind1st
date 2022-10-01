@@ -971,8 +971,10 @@ export class ExploreContainerComponent implements OnInit {
         }
       },
         (error: GeolocationPositionError) => {
+          if (!this.locationUnavailable) {
+            alert(`Device location is not available.\n\rPlease enable or enter a location.`)
+          }
           this.locationUnavailable = true
-          alert(`Device location is not available.\n\rPlease enable or enter a location.`)
         })
     }
   }
