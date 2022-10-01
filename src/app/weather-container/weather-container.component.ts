@@ -66,7 +66,7 @@ export class ExploreContainerComponent implements OnInit {
 
   useDeviceIsSet: boolean
 
-  locationUnavailable: boolean
+  locationUnavailable = false
 
   /*
   * Needed for Imperial / Metric Selection
@@ -102,12 +102,12 @@ export class ExploreContainerComponent implements OnInit {
     private http: HttpClient,
     public router: Router,
     private renderer: Renderer2,
-  ) {
-    this.getLocation()
-  }
+  ) { }
 
 
   ngOnInit() {
+
+    this.getLocation()
 
     if (localStorage.getItem(this.weatherLocationStorage) === null) {
       this.router.navigate([this.locationSettings])
