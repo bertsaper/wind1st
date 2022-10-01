@@ -259,10 +259,6 @@ export class ExploreContainerComponent implements OnInit {
       clearInterval(this.updateLocal)
     }
 
-    /*
-    * Shorthand not used below because some devices did not repond
-    */
-
     if (this.useDeviceIsSet && !this.locationUnavailable) {
 
       this.updateLocal = setInterval(() => {
