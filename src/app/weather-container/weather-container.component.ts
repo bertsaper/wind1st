@@ -252,7 +252,7 @@ export class ExploreContainerComponent implements OnInit {
   chartMethod() {
 
     /*
-    * Update the location once a minute.
+    * Update the location once every 10 minutes.
     */
 
     if (this.updateLocal) {
@@ -263,7 +263,7 @@ export class ExploreContainerComponent implements OnInit {
 
       this.updateLocal = setInterval(() => {
         this.getLocation()
-      }, 60000)
+      }, 600000)
 
     }
 
