@@ -798,82 +798,88 @@ export class ExploreContainerComponent implements OnInit {
     this.renderer.setAttribute(bandGroup, `width`, `360`)
     this.renderer.setAttribute(bandGroup, `id`, `bandGroup`)
 
-    if (imperialMetricChoice === `imperial`) {
-      this.renderer.appendChild(bandGroup, band25mph)
+    try {
 
-      this.renderer.appendChild(bandGroup, band25mph)
+      if (imperialMetricChoice === `imperial`) {
+        this.renderer.appendChild(bandGroup, band25mph)
 
-      this.renderer.appendChild(bandGroup, band20mph)
+        this.renderer.appendChild(bandGroup, band25mph)
 
-      this.renderer.appendChild(bandGroup, band15mph)
+        this.renderer.appendChild(bandGroup, band20mph)
 
-      this.renderer.appendChild(bandGroup, band10mph)
+        this.renderer.appendChild(bandGroup, band15mph)
 
-      this.renderer.appendChild(bandGroup, band5mph)
+        this.renderer.appendChild(bandGroup, band10mph)
+
+        this.renderer.appendChild(bandGroup, band5mph)
+      }
+
+      if (imperialMetricChoice === `metric`) {
+
+        this.renderer.appendChild(bandGroup, band40kph)
+
+        this.renderer.appendChild(bandGroup, band30kph)
+
+        this.renderer.appendChild(bandGroup, band20kph)
+
+        this.renderer.appendChild(bandGroup, band10kph)
+      }
+
+      this.renderer.appendChild(infoGroup, textN)
+      this.renderer.appendChild(infoGroup, textS)
+      this.renderer.appendChild(infoGroup, textE)
+      this.renderer.appendChild(infoGroup, textW)
+      this.renderer.appendChild(infoGroup, textNW)
+      this.renderer.appendChild(infoGroup, textSW)
+      this.renderer.appendChild(infoGroup, textNE)
+      this.renderer.appendChild(infoGroup, textSE)
+      this.renderer.appendChild(infoGroup, textTemp)
+      this.renderer.appendChild(infoGroup, textDescription)
+      this.renderer.appendChild(infoGroup, textHumidity)
+      this.renderer.appendChild(infoGroup, textLocale)
+      this.renderer.appendChild(infoGroup, textDownloadTime)
+      this.renderer.appendChild(infoGroup, textDownloadDate)
+      this.renderer.appendChild(infoGroup, circle)
+
+      this.renderer.appendChild(compass, bandGroup)
+      this.renderer.appendChild(compass, infoGroup)
+
+      this.renderer.appendChild(displayAria, textWindVelocityAria)
+      this.renderer.appendChild(displayAria, textwindDirectionOutputAria)
+      this.renderer.appendChild(displayAria, textTempAria)
+      this.renderer.appendChild(displayAria, textHumidityAria)
+      this.renderer.appendChild(displayAria, textDescriptionAria)
+      this.renderer.appendChild(displayAria, textLocaleAria)
+      this.renderer.appendChild(displayAria, textDownloadTimeAria)
+
+
+      this.renderer.appendChild(displayAlt, textWindVelocityAlt)
+      this.renderer.appendChild(displayAlt, textwindDirectionOutputAlt)
+      this.renderer.appendChild(displayAlt, textTempAlt)
+      this.renderer.appendChild(displayAlt, textHumidityAlt)
+      this.renderer.appendChild(displayAlt, textDescriptionAlt)
+      this.renderer.appendChild(displayAlt, textLocaleAlt)
+      this.renderer.appendChild(displayAlt, textDownloadTimeAlt)
+
+      if (this.getScreenWidth >= 380) {
+        this.renderer.appendChild(this.container.nativeElement, compass)
+
+        /*
+        * Below will not appear on screen but has Aria Label. Aria is told to ignore the above.
+        */
+
+        this.renderer.appendChild(this.container.nativeElement, displayAria)
+
+        this.updateButtonToggle = true
+      }
+
+      if (this.getScreenWidth < 380) {
+        this.renderer.appendChild(this.container.nativeElement, displayAlt)
+      }
     }
 
-    if (imperialMetricChoice === `metric`) {
-
-      this.renderer.appendChild(bandGroup, band40kph)
-
-      this.renderer.appendChild(bandGroup, band30kph)
-
-      this.renderer.appendChild(bandGroup, band20kph)
-
-      this.renderer.appendChild(bandGroup, band10kph)
-    }
-
-    this.renderer.appendChild(infoGroup, textN)
-    this.renderer.appendChild(infoGroup, textS)
-    this.renderer.appendChild(infoGroup, textE)
-    this.renderer.appendChild(infoGroup, textW)
-    this.renderer.appendChild(infoGroup, textNW)
-    this.renderer.appendChild(infoGroup, textSW)
-    this.renderer.appendChild(infoGroup, textNE)
-    this.renderer.appendChild(infoGroup, textSE)
-    this.renderer.appendChild(infoGroup, textTemp)
-    this.renderer.appendChild(infoGroup, textDescription)
-    this.renderer.appendChild(infoGroup, textHumidity)
-    this.renderer.appendChild(infoGroup, textLocale)
-    this.renderer.appendChild(infoGroup, textDownloadTime)
-    this.renderer.appendChild(infoGroup, textDownloadDate)
-    this.renderer.appendChild(infoGroup, circle)
-
-    this.renderer.appendChild(compass, bandGroup)
-    this.renderer.appendChild(compass, infoGroup)
-
-    this.renderer.appendChild(displayAria, textWindVelocityAria)
-    this.renderer.appendChild(displayAria, textwindDirectionOutputAria)
-    this.renderer.appendChild(displayAria, textTempAria)
-    this.renderer.appendChild(displayAria, textHumidityAria)
-    this.renderer.appendChild(displayAria, textDescriptionAria)
-    this.renderer.appendChild(displayAria, textLocaleAria)
-    this.renderer.appendChild(displayAria, textDownloadTimeAria)
-
-
-    this.renderer.appendChild(displayAlt, textWindVelocityAlt)
-    this.renderer.appendChild(displayAlt, textwindDirectionOutputAlt)
-    this.renderer.appendChild(displayAlt, textTempAlt)
-    this.renderer.appendChild(displayAlt, textHumidityAlt)
-    this.renderer.appendChild(displayAlt, textDescriptionAlt)
-    this.renderer.appendChild(displayAlt, textLocaleAlt)
-    this.renderer.appendChild(displayAlt, textDownloadTimeAlt)
-
-    if (this.getScreenWidth >= 380) {
-      this.renderer.appendChild(this.container.nativeElement, compass)
-
-      /*
-      * Below will not appear on screen but has Aria Label. Aria is told to ignore the above.
-      */
-
-      this.renderer.appendChild(this.container.nativeElement, displayAria)
-
-      this.updateButtonToggle = true
-
-    }
-
-    if (this.getScreenWidth < 380) {
-      this.renderer.appendChild(this.container.nativeElement, displayAlt)
+    catch (error) {
+      this.router.navigate([this.locationSettings])
     }
 
   }
