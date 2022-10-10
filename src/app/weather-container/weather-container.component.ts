@@ -95,7 +95,7 @@ export class ExploreContainerComponent implements OnInit {
   updateButtonToggle = false
 
 
-  @ViewChild('svgWindPointer') container: ElementRef;
+  @ViewChild(`svgWindPointer`) container: ElementRef;
 
 
   constructor(
@@ -245,7 +245,9 @@ export class ExploreContainerComponent implements OnInit {
 
     }
 
-    catch (error) { }
+    catch (error) {
+      this.router.navigate([this.locationSettings])
+    }
 
   }
 
@@ -886,7 +888,7 @@ export class ExploreContainerComponent implements OnInit {
 
   getMeasurementChoice() {
 
-    const imperialMetricChoice = localStorage.getItem('imperialMetricChoice')
+    const imperialMetricChoice = localStorage.getItem(`imperialMetricChoice`)
 
     const imperialMetricChoiceStorageParsed = JSON.parse(imperialMetricChoice)
 
@@ -898,7 +900,7 @@ export class ExploreContainerComponent implements OnInit {
 
   getDate() {
 
-    const updateTime = localStorage.getItem('time')
+    const updateTime = localStorage.getItem(`time`)
 
     const updateTimetStorageParsed = JSON.parse(updateTime)
 
@@ -912,7 +914,7 @@ export class ExploreContainerComponent implements OnInit {
 
   getTime() {
 
-    const updateTime = localStorage.getItem('time')
+    const updateTime = localStorage.getItem(`time`)
 
     const updateTimetStorageParsed = JSON.parse(updateTime)
 
@@ -926,7 +928,7 @@ export class ExploreContainerComponent implements OnInit {
 
   getDateTime() {
 
-    const updateTime = localStorage.getItem('time')
+    const updateTime = localStorage.getItem(`time`)
 
     const updateTimetStorageParsed = JSON.parse(updateTime)
 
