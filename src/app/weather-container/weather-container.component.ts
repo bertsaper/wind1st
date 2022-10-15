@@ -62,6 +62,8 @@ export class ExploreContainerComponent implements OnInit {
 
   public lng
 
+  public updateLocal
+
   useDeviceIsSet: boolean
 
   locationUnavailable = false
@@ -251,6 +253,21 @@ export class ExploreContainerComponent implements OnInit {
 
   chartMethod() {
 
+    /*
+    * Update the location once every 10 minutes.
+    */
+
+    if (this.updateLocal) {
+      clearInterval(this.updateLocal)
+    }
+
+    if (this.useDeviceIsSet && !this.locationUnavailable) {
+
+      this.updateLocal = setInterval(() => {
+        this.getLocation()
+      }, 600000)
+
+    }
 
     const imperialMetricChoice = this.getMeasurementChoice()
 
@@ -948,7 +965,7 @@ export class ExploreContainerComponent implements OnInit {
       this.removeWeatherDisplayAlt()
     }
 
-    setTimeout(() => { this.getWeather() }, 1500)
+    setTimeout(() => { this.getWeather() }, 2250)
   }
 
   /*
