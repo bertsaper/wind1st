@@ -224,8 +224,7 @@ export class ExploreContainerComponent implements OnInit {
       const resString: string = openWeatherAddress + latString + this.lati + lonString + this.long +
         unitSelecton + openWeatherKey
 
-      await this.http.get(resString).subscribe((res) => {
-
+      this.http.get(resString).subscribe((res) => {
         this.weatherNow = res
         this.weatherNowString = JSON.stringify(this.weatherNow)
         localStorage.setItem(this.currentWeatherStorage, this.weatherNowString)
@@ -238,8 +237,9 @@ export class ExploreContainerComponent implements OnInit {
         localStorage.setItem(`time`, JSON.stringify(this.weatherTimeStamp))
 
         this.chartMethod()
-
-      })
+      },
+        error => this.router.navigate([this.locationSettings])
+      )
 
     }
 
@@ -927,13 +927,6 @@ export class ExploreContainerComponent implements OnInit {
 
   updateWeather() {
 
-    if (localStorage.getItem(this.weatherLocationStorage) === null) {
-      localStorage.setItem(`weatherLocation`, `{"location":{"lat":"useDevice", "lng":"useDevice"}}`)
-    }
-    if (localStorage.getItem(this.imperialMetricChoice) === null) {
-      localStorage.setItem(`imperialMetricChoice`, `{"imperialMetric":{"choice": "imperial"}}`)
-    }
-
     this.updateButtonToggle = false
 
     this.getLocation()
@@ -948,7 +941,19 @@ export class ExploreContainerComponent implements OnInit {
       this.removeWeatherDisplayAlt()
     }
 
-    setTimeout(() => { this.getWeather() }, 1500)
+    if (this.useDeviceIsSet && !this.locationUnavailable) {
+
+      /*
+      * This gives the location a chance to update.
+      */
+
+      setTimeout(() => { this.getWeather() }, 2250)
+    }
+
+    if (!this.useDeviceIsSet) {
+      this.getWeather()
+    }
+
   }
 
   /*
