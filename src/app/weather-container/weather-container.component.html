@@ -11,9 +11,10 @@
             <div [ngClass]="updateButtonToggle ? 'form-collapsed' : 'form-expanded'">
                 <div>{{(useDeviceIsSet === true && locationUnavailable === true) ? "" : "Please Wait"}}</div>
             </div>
-
+            <div *ngIf="(updateFailed === true)" id="deviceLocationUnavailable">
+                Update Failed<br><br>Please Try Again or Return to Settings</div>
             <div *ngIf="(useDeviceIsSet === true && locationUnavailable === true)" id="deviceLocationUnavailable">
-                Please enter location.</div>
+                Device Location Unavailable<br><br>Return to Settings and Enter a Location</div>
         </div>
 
     </div>

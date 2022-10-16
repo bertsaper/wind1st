@@ -66,6 +66,8 @@ export class ExploreContainerComponent implements OnInit {
 
   locationUnavailable = false
 
+  updateFailed = false
+
   /*
   * Needed for Imperial / Metric Selection
   */
@@ -183,6 +185,8 @@ export class ExploreContainerComponent implements OnInit {
 
     this.updateButtonToggle = false
 
+    this.updateFailed = false
+
     try {
 
       const measurementChoice = this.getMeasurementChoice()
@@ -237,8 +241,14 @@ export class ExploreContainerComponent implements OnInit {
         localStorage.setItem(`time`, JSON.stringify(this.weatherTimeStamp))
 
         this.chartMethod()
+
       },
-        error => this.router.navigate([this.locationSettings])
+        error => {
+
+          this.updateFailed = true
+          this.updateButtonToggle = true
+
+        }
       )
 
     }
@@ -250,7 +260,6 @@ export class ExploreContainerComponent implements OnInit {
   }
 
   chartMethod() {
-
 
     const imperialMetricChoice = this.getMeasurementChoice()
 
@@ -926,6 +935,8 @@ export class ExploreContainerComponent implements OnInit {
   }
 
   updateWeather() {
+
+    this.updateFailed = false
 
     this.updateButtonToggle = false
 
