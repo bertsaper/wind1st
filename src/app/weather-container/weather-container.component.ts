@@ -245,8 +245,8 @@ export class ExploreContainerComponent implements OnInit {
       },
         error => {
 
-        this.updateFailed = true
-        this.updateButtonToggle = true
+          this.updateFailed = true
+          this.updateButtonToggle = true
 
         }
       )
