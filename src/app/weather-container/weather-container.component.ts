@@ -138,7 +138,7 @@ export class ExploreContainerComponent implements OnInit {
           if (this.getScreenWidth < 380) {
             this.removeWeatherDisplayAlt()
           }
-          setTimeout(() => { this.getWeather() }, 250)
+          setTimeout(() => { this.getWeather() }, 2250)
         }
 
         if (event.url === this.fromHome) {
