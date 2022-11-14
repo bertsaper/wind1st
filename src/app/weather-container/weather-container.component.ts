@@ -138,6 +138,7 @@ export class ExploreContainerComponent implements OnInit {
           if (this.getScreenWidth < 380) {
             this.removeWeatherDisplayAlt()
           }
+          this.updateButtonToggle = false
           setTimeout(() => { this.getWeather() }, 2250)
         }
 
