@@ -229,29 +229,23 @@ export class ExploreContainerComponent implements OnInit {
       const resString: string = openWeatherAddress + latString + this.lati + lonString + this.long +
         unitSelecton + openWeatherKey
 
-      this.http.get(resString).subscribe((res) => {
-        this.weatherNow = res
-        this.weatherNowString = JSON.stringify(this.weatherNow)
-        localStorage.setItem(this.currentWeatherStorage, this.weatherNowString)
-
-        /*
-        * Set the download time
-        */
-
-        this.weatherTimeStamp = { timestamp: new Date().getTime() }
-        localStorage.setItem(`time`, JSON.stringify(this.weatherTimeStamp))
-
-        this.chartMethod()
-
-      },
-        error => {
-
+      this.http.get(resString).subscribe({
+        next: (res) => { this.weatherNow = res },
+        error: (err) => {
           this.updateFailed = true
           this.updateButtonToggle = true
-
+        },
+        complete: () => {
+          this.weatherNowString = JSON.stringify(this.weatherNow)
+          localStorage.setItem(this.currentWeatherStorage, this.weatherNowString)
+          /*
+          * Set the download time
+          */
+          this.weatherTimeStamp = { timestamp: new Date().getTime() }
+          localStorage.setItem(`time`, JSON.stringify(this.weatherTimeStamp))
+          this.chartMethod()
         }
-      )
-
+      })
     }
 
     catch (error) {
@@ -864,13 +858,12 @@ export class ExploreContainerComponent implements OnInit {
         */
 
         this.renderer.appendChild(this.container.nativeElement, displayAria)
-
-        this.updateButtonToggle = true
       }
 
       if (this.getScreenWidth < 380) {
         this.renderer.appendChild(this.container.nativeElement, displayAlt)
       }
+      this.updateButtonToggle = true
     }
 
     catch (error) {
