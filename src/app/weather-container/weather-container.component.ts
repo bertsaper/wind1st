@@ -111,6 +111,8 @@ export class ExploreContainerComponent implements OnInit {
 
     if (localStorage.getItem(this.weatherLocationStorage) === null) {
       this.router.navigate([this.locationSettings])
+      this.updateFailed = false
+      this.updateButtonToggle = false
     }
 
     this.getScreenWidth = window.innerWidth
@@ -214,38 +216,48 @@ export class ExploreContainerComponent implements OnInit {
 
       if (weatherLocationStorageParsed.location.lat === `useDevice`) {
         this.useDeviceIsSet = true
-        if (this.lat) {
-          this.lati = this.lat
-        }
-        if (this.lng) {
+
+        if (this.lng !== `undefined`) {
           this.long = this.lng
         }
+
+        if (this.lat !== `undefined`) {
+          this.lati = this.lat
+        }
+
       }
 
-      const openWeatherKey: string = environment.openWeatherKey
+      if (this.lat === undefined || this.lng === undefined) {
+        this.router.navigate([this.locationSettings])
+      }
 
-      const unitSelecton: string = `&units=` + measurementChoice
+      if (this.lat !== undefined || this.lng !== undefined) {
 
-      const resString: string = openWeatherAddress + latString + this.lati + lonString + this.long +
-        unitSelecton + openWeatherKey
+        const openWeatherKey: string = environment.openWeatherKey
 
-      this.http.get(resString).subscribe({
-        next: (res) => { this.weatherNow = res },
-        error: (err) => {
-          this.updateFailed = true
-          this.updateButtonToggle = true
-        },
-        complete: () => {
-          this.weatherNowString = JSON.stringify(this.weatherNow)
-          localStorage.setItem(this.currentWeatherStorage, this.weatherNowString)
-          /*
-          * Set the download time
-          */
-          this.weatherTimeStamp = { timestamp: new Date().getTime() }
-          localStorage.setItem(`time`, JSON.stringify(this.weatherTimeStamp))
-          this.chartMethod()
-        }
-      })
+        const unitSelecton: string = `&units=` + measurementChoice
+
+        const resString: string = openWeatherAddress + latString + this.lati + lonString + this.long +
+          unitSelecton + openWeatherKey
+
+        this.http.get(resString).subscribe({
+          next: (res) => { this.weatherNow = res },
+          error: (err) => {
+            this.updateFailed = true
+            this.updateButtonToggle = true
+          },
+          complete: () => {
+            this.weatherNowString = JSON.stringify(this.weatherNow)
+            localStorage.setItem(this.currentWeatherStorage, this.weatherNowString)
+            /*
+            * Set the download time
+            */
+            this.weatherTimeStamp = { timestamp: new Date().getTime() }
+            localStorage.setItem(`time`, JSON.stringify(this.weatherTimeStamp))
+            this.chartMethod()
+          }
+        })
+      }
     }
 
     catch (error) {
