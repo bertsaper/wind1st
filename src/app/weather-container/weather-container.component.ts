@@ -327,13 +327,9 @@ export class ExploreContainerComponent implements OnInit {
 
     const getWeatherDescription = weatherNowStringOutParsed.weather
 
-    const weatherDescString = JSON.stringify(getWeatherDescription)
+    console.log(weatherNowStringOutParsed.weather.description)
 
-    const weatherDescriptionPreParsed = weatherDescString.slice(1, -1)
-
-    const weatherDescriptionParsed = JSON.parse(weatherDescriptionPreParsed)
-
-    const description = weatherDescriptionParsed.description
+    const description = getWeatherDescription.description
 
     const place = weatherNowStringOutParsed.name
 
