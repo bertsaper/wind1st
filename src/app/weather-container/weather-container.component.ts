@@ -110,7 +110,6 @@ export class ExploreContainerComponent implements OnInit {
     this.getLocation()
 
     if (localStorage.getItem(this.weatherLocationStorage) === null) {
-      this.router.navigate([this.locationSettings])
       this.updateFailed = false
       this.updateButtonToggle = false
     }
@@ -227,37 +226,30 @@ export class ExploreContainerComponent implements OnInit {
 
       }
 
-      if (this.lat === undefined || this.lng === undefined) {
-        this.router.navigate([this.locationSettings])
-      }
+      const openWeatherKey: string = environment.openWeatherKey
 
-      if (this.lat !== undefined || this.lng !== undefined) {
+      const unitSelecton: string = `&units=` + measurementChoice
 
-        const openWeatherKey: string = environment.openWeatherKey
+      const resString: string = openWeatherAddress + latString + this.lati + lonString + this.long +
+        unitSelecton + openWeatherKey
 
-        const unitSelecton: string = `&units=` + measurementChoice
-
-        const resString: string = openWeatherAddress + latString + this.lati + lonString + this.long +
-          unitSelecton + openWeatherKey
-
-        this.http.get(resString).subscribe({
-          next: (res) => { this.weatherNow = res },
-          error: (err) => {
-            this.updateFailed = true
-            this.updateButtonToggle = true
-          },
-          complete: () => {
-            this.weatherNowString = JSON.stringify(this.weatherNow)
-            localStorage.setItem(this.currentWeatherStorage, this.weatherNowString)
-            /*
-            * Set the download time
-            */
-            this.weatherTimeStamp = { timestamp: new Date().getTime() }
-            localStorage.setItem(`time`, JSON.stringify(this.weatherTimeStamp))
-            this.chartMethod()
-          }
-        })
-      }
+      this.http.get(resString).subscribe({
+        next: (res) => { this.weatherNow = res },
+        error: (err) => {
+          this.updateFailed = true
+          this.updateButtonToggle = true
+        },
+        complete: () => {
+          this.weatherNowString = JSON.stringify(this.weatherNow)
+          localStorage.setItem(this.currentWeatherStorage, this.weatherNowString)
+          /*
+          * Set the download time
+          */
+          this.weatherTimeStamp = { timestamp: new Date().getTime() }
+          localStorage.setItem(`time`, JSON.stringify(this.weatherTimeStamp))
+          this.chartMethod()
+        }
+      })
     }
 
     catch (error) {
@@ -321,15 +313,7 @@ export class ExploreContainerComponent implements OnInit {
 
     const temp = Math.round(weatherNowStringOutParsed.main.temp)
 
-    /*
-    * Weather description comes out in a sub array and the brackets need to be stripped.
-    */
-
-    const getWeatherDescription = weatherNowStringOutParsed.weather
-
-    console.log(weatherNowStringOutParsed.weather.description)
-
-    const description = getWeatherDescription.description
+    const description = weatherNowStringOutParsed.weather[0].description
 
     const place = weatherNowStringOutParsed.name
 
