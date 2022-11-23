@@ -58,6 +58,10 @@ app-weather-container {
     margin-top: 50px;
 }
 
+ion-header {
+    position: fixed;
+}
+
 ion-toolbar img {
     max-height: 40px;
     float: right;
