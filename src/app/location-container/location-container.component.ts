@@ -35,7 +35,7 @@ export default class LocationContainerComponent implements OnInit {
 
   enteredLocation: boolean
 
-  txtSearchPlaces = `settingsHolder`
+  txtSearchPlaces = `txtSearchPlaces`
 
   settingsHolder = `settingsHolder`
 
