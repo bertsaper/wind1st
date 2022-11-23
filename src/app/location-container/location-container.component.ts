@@ -39,7 +39,6 @@ export default class LocationContainerComponent implements OnInit {
 
   settingsHolder = `settingsHolder`
 
-
   apiLoaded: Observable<boolean>
 
   constructor(
