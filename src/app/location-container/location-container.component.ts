@@ -37,6 +37,8 @@ export default class LocationContainerComponent implements OnInit {
 
   txtSearchPlaces = `txtSearchPlaces`
 
+  settingsHolder = `settingsHolder`
+
   apiLoaded: Observable<boolean>
 
   constructor(
@@ -55,7 +57,7 @@ export default class LocationContainerComponent implements OnInit {
     */
 
     window.addEventListener('resize', (() => {
-      const el = document.getElementById(this.txtSearchPlaces)
+      const el = document.getElementById(this.settingsHolder)
       el.scrollIntoView({ behavior: `smooth` })
     }))
   }
