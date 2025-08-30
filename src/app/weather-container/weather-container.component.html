@@ -1,5 +1,5 @@
 <div id="container">
-
+<div #svgWindPointer></div>
     <div class="ion-canvas">
 
         <div #svgWindPointer></div>
@@ -9,7 +9,8 @@
                 <button mat-raised-button (click)="updateWeather()"> UPDATE </button>
             </div>
             <div [ngClass]="updateButtonToggle ? 'form-collapsed' : 'form-expanded'">
-                <div>{{(useDeviceIsSet === true && locationUnavailable === true) ? "" : "Please Wait"}}</div>
+                <div>{{(showPleaseWait === true) ? "Please Wait" : ""}}</div>
+                
             </div>
             <div *ngIf="(updateFailed === true)" id="locationUnavailable">
                 Update Failed<br><br>Please Try Again or Return to Settings</div>
