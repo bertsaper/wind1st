@@ -297,8 +297,8 @@ export class WeatherSvgService {
     this.renderer.setAttribute(animate, 'attributeName', 'd');
     this.renderer.setAttribute(animate, 'from', initialPath.trim());
     this.renderer.setAttribute(animate, 'to', finalPath.trim());
-    this.renderer.setAttribute(animate, 'repeatCount', '4'); // 'indefinite repeats
-    // this.renderer.setAttribute(animate, 'begin', '0s');
+    this.renderer.setAttribute(animate, 'repeatCount', '4'); 
+    this.renderer.setAttribute(animate, 'begin', '0s');
     this.renderer.setAttribute(animate, 'fill', 'freeze');
     this.renderer.setAttribute(animate, 'dur', '1s');
 
