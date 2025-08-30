@@ -265,23 +265,44 @@ export class WeatherSvgService {
     this.renderer.setAttribute(path, 'stroke', '#ffffff');
     this.renderer.setAttribute(path, 'stroke-width', '3');
 
-    // Calculate arrow length based on wind speed (scale to max 100px for visibility)
+    // Calculate arrow length based on wind speed (scale to max 110px for visibility)
     const maxSpeed = unitSystem === UnitSystem.Imperial ? 25 : 40; // Max speed for scaling (mph or kph)
-    const arrowLength = Math.min(windSpeed / maxSpeed * 110, 110); // Scale length up to 100px
+    const arrowLength = Math.min(windSpeed / maxSpeed * 110, 110); // Scalable length up to 110px
     const arrowHeadSize = 12;
 
-    // Define arrow path: line from center to scaled length with arrowhead
-    const pathData = `
+    // Define initial and final path data for animation
+    const initialPath = `
+      M 200 220
+      L 200 220
+      M ${200 - arrowHeadSize / 2} 220
+      L 200 220
+      L ${200 + arrowHeadSize / 2} 220
+    `;
+    const finalPath = `
       M 200 220
       L 200 ${220 - arrowLength}
       M ${200 - arrowHeadSize / 2} ${220 - arrowLength + arrowHeadSize}
       L 200 ${220 - arrowLength}
       L ${200 + arrowHeadSize / 2} ${220 - arrowLength + arrowHeadSize}
     `;
-    this.renderer.setAttribute(path, 'd', pathData.trim());
 
-    // Rotate arrow based on wind direction (SVG rotates around 200,220)
+    // Set initial path
+    this.renderer.setAttribute(path, 'd', initialPath.trim());
+
+    // Rotate arrow based on wind direction
     this.renderer.setAttribute(path, 'transform', `rotate(${windDeg}, 200, 220)`);
+
+    // Create animation element
+    const animate = document.createElementNS('http://www.w3.org/2000/svg', 'animate');
+    this.renderer.setAttribute(animate, 'attributeName', 'd');
+    this.renderer.setAttribute(animate, 'from', initialPath.trim());
+    this.renderer.setAttribute(animate, 'to', finalPath.trim());
+    this.renderer.setAttribute(animate, 'repeatCount', '4'); // 'indefinite repeats
+    // this.renderer.setAttribute(animate, 'begin', '0s');
+    this.renderer.setAttribute(animate, 'fill', 'freeze');
+    this.renderer.setAttribute(animate, 'dur', '1s');
+
+    this.renderer.appendChild(path, animate);
 
     return path;
   }
