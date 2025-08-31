@@ -84,12 +84,12 @@ export class WeatherSvgService {
       const bands = this.createSpeedBands(unitSystem);
       const directionElements = this.createDirectionLabels();
 
-      console.log('Wind data:', {
-        windDeg,
-        windSpeed,
-        direction: this.getWindDirection(windDeg),
-        directionElements: Object.keys(directionElements),
-      });
+      // console.log('Wind data:', {
+      //   windDeg,
+      //   windSpeed,
+      //   direction: this.getWindDirection(windDeg),
+      //   directionElements: Object.keys(directionElements),
+      // });
 
       this.highlightDirection(windDeg, directionElements);
       const weatherTexts = this.createWeatherInfoTexts(

@@ -67,7 +67,6 @@ export class ExploreContainerComponent implements OnInit, OnDestroy { // Added O
 
     // Subscribe to animation completion
     this.animationSubscription = this.weatherSvgService.animationComplete$.subscribe(() => {
-      console.log('Animation complete, showing button'); // Debugging
       this.updateButtonToggle = true; // Show the UPDATE button
     });
   }
