@@ -1,8 +1,9 @@
 {
   "name": "wind1st",
-  "version": "1.0.0",
+  "version": "1.5.0",
   "author": "Bert Saper",
   "homepage": "https://wind1st.com",
+  "description": "A web page that shows wind direction and velocity.",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -17,8 +18,8 @@
     "@angular/common": "16.2.12",
     "@angular/core": "^16.2.12",
     "@angular/forms": "^16.2.12",
-    "@angular/google-maps": "^14.0.4",
-    "@angular/material": "14.2.7",
+    "@angular/google-maps": "^16.2.14",
+    "@angular/material": "^16.2.12",
     "@angular/platform-browser": "^16.2.12",
     "@angular/platform-browser-dynamic": "16.2.12",
     "@angular/router": "^16.2.12",
@@ -64,6 +65,5 @@
     "protractor": "~7.0.0",
     "ts-node": "~10.8.1",
     "typescript": "~5.1.6"
-  },
-  "description": "A web page that shows wind direction and velocity."
+  }
 }

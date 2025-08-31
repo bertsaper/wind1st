@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/member-ordering */
 /* eslint-disable @typescript-eslint/semi */
-import { Component, Inject, OnInit, Renderer2 } from '@angular/core';
+import { Component, Inject, OnInit, Renderer2, signal } from '@angular/core';
 import { NgForm, FormBuilder } from '@angular/forms';
 import { DOCUMENT } from '@angular/common';
 
@@ -14,7 +14,7 @@ import { Observable, of } from 'rxjs';
 
 declare const google;
 const googleMapsKey = environment.googleMapsApiKey
-  
+
 @Component({
   selector: 'app-location-container',
   templateUrl: './location-container.component.html',
@@ -69,18 +69,19 @@ export default class LocationContainerComponent implements OnInit {
     this.loadScript(url).then(() => this.initAutocomplete())
   }
 
-  private loadScript(url) {
+  private loadScript(url: string): Promise<void> {
     return new Promise((resolve, reject) => {
-      const script = this.renderer2.createElement('script')
-      script.type = `text/javascript`
-      script.src = url
-      script.text = ``
-      script.async = true
-      script.defer = true
-      script.onload = resolve
-      script.onerror = reject
-      this.renderer2.appendChild(this.document.head, script)
-    })
+      const script = this.renderer2.createElement('script');
+      script.type = 'text/javascript';
+
+      script.async = true;
+      script.defer = true;
+      script.src = url;
+
+      script.src = url + '&loading=async';
+
+      this.renderer2.appendChild(this.document.head, script);
+    });
   }
 
   public rbDeviceLocationSelection = [
