@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/member-ordering */
 /* eslint-disable @typescript-eslint/semi */
-import { Component, Inject, OnInit, Renderer2, signal } from '@angular/core';
+import { Component, Inject, OnInit, Renderer2 } from '@angular/core';
 import { NgForm, FormBuilder } from '@angular/forms';
 import { DOCUMENT } from '@angular/common';
 
@@ -83,7 +83,6 @@ export default class LocationContainerComponent implements OnInit {
       this.renderer2.appendChild(this.document.head, script);
     });
   }
-
   public rbDeviceLocationSelection = [
     { name: `Device Location`, value: `deviceLocation` },
     { name: `Enter Location`, value: `enteredLocation` }
