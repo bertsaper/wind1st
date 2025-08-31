@@ -14,7 +14,7 @@ import { Observable, of } from 'rxjs';
 
 declare const google;
 const googleMapsKey = environment.googleMapsApiKey
-
+  
 @Component({
   selector: 'app-location-container',
   templateUrl: './location-container.component.html',
@@ -64,7 +64,7 @@ export default class LocationContainerComponent implements OnInit {
 
   private loadAutoComplete() {
 
-    const url = `https://maps.googleapis.com/maps/api/js?key=` + googleMapsKey + `&libraries=places&v=weekly`;
+    const url = `https://maps.googleapis.com/maps/api/js?key=` + googleMapsKey + `&libraries=places`;
 
     this.loadScript(url).then(() => this.initAutocomplete())
   }
