@@ -1,12 +1,11 @@
 import { Injectable, Renderer2, RendererFactory2 } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subject } from 'rxjs';
 
 interface WeatherData {
-  wind: { deg: number; speed: number } | null;
-  main: { humidity: number; temp: number } | null;
-  weather: [{ description: string }] | null;
-  name: string | null;
+  wind: { deg: number; speed: number };
+  main: { humidity: number; temp: number };
+  weather: [{ description: string }];
+  name: string;
 }
 
 enum UnitSystem {
@@ -30,14 +29,12 @@ enum WindDirection {
 })
 export class WeatherSvgService {
   private renderer: Renderer2;
-  private animationCompleteSubject = new Subject<void>();
-  animationComplete$ = this.animationCompleteSubject.asObservable();
 
   constructor(rendererFactory: RendererFactory2, private router: Router) {
     this.renderer = rendererFactory.createRenderer(null, null);
   }
 
-  getWindDirection(deg: number | null): string {
+  getWindDirection(deg: number): string {
     if (deg == null || isNaN(deg)) return WindDirection.North;
     deg = deg % 360; // Normalize degree to 0-360
     if (deg >= 337.5 || deg < 22.5) return WindDirection.North;
@@ -72,6 +69,7 @@ export class WeatherSvgService {
 
       const windSpeed = this.calculateWindSpeed(weatherData.wind?.speed ?? 0, unitSystem);
       const windDeg = weatherData.wind?.deg ?? 0;
+
       const temp = Math.round(weatherData.main?.temp ?? 0);
       const humidity = weatherData.main?.humidity ? `${weatherData.main.humidity}% humidity` : 'N/A';
       const description = weatherData.weather?.[0]?.description ?? 'No description';
@@ -80,63 +78,19 @@ export class WeatherSvgService {
       const compass = this.createCompassSvg(weatherDisplayId);
       const infoGroup = this.createSvgGroup('infoGroup', '360', '360');
       const bandGroup = this.createSvgGroup('bandGroup', '360', '360');
+
       const circle = this.createBoundingCircle();
       const bands = this.createSpeedBands(unitSystem);
       const directionElements = this.createDirectionLabels();
-
+      console.log('Wind data:', { windDeg, windSpeed, direction: this.getWindDirection(windDeg), directionElements: Object.keys(directionElements) });
       this.highlightDirection(windDeg, directionElements);
-      const weatherTexts = this.createWeatherInfoTexts(
-        temp,
-        selectedTemperature,
-        humidity,
-        description,
-        place,
-        downloadTime,
-        downloadDate
-      );
+      const weatherTexts = this.createWeatherInfoTexts(temp, selectedTemperature, humidity, description, place, downloadTime, downloadDate);
       const windVelocityText = this.createWindVelocityText(windSpeed, selectedWindSpeed, windDeg);
       const windVectorArrow = this.createWindVectorArrow(windSpeed, windDeg, unitSystem);
-      const displayAlt = this.createAltDisplay(
-        altDisplayId,
-        place,
-        description,
-        humidity,
-        temp,
-        selectedTemperature,
-        windSpeed,
-        selectedWindSpeed,
-        this.getWindDirection(windDeg),
-        downloadDateTime
-      );
-      const displayAria = this.createAriaDisplay(
-        ariaDisplayId,
-        place,
-        description,
-        humidity,
-        temp,
-        selectedTemperature,
-        windSpeed,
-        selectedWindSpeed,
-        this.getWindDirection(windDeg),
-        downloadDateTime
-      );
+      const displayAlt = this.createAltDisplay(altDisplayId, place, description, humidity, temp, selectedTemperature, windSpeed, selectedWindSpeed, this.getWindDirection(windDeg), downloadDateTime);
+      const displayAria = this.createAriaDisplay(ariaDisplayId, place, description, humidity, temp, selectedTemperature, windSpeed, selectedWindSpeed, this.getWindDirection(windDeg), downloadDateTime);
 
-      this.assembleSvg(
-        compass,
-        bandGroup,
-        infoGroup,
-        bands,
-        Object.values(directionElements),
-        weatherTexts,
-        windVelocityText,
-        circle,
-        windVectorArrow,
-        displayAlt,
-        displayAria,
-        container,
-        screenWidth,
-        locationSettings
-      );
+      this.assembleSvg(compass, bandGroup, infoGroup, bands, Object.values(directionElements), weatherTexts, windVelocityText, circle, windVectorArrow, displayAlt, displayAria, container, screenWidth, locationSettings);
     } catch (error) {
       console.error('Error building weather SVG:', error);
       this.router.navigate([locationSettings]);
@@ -165,17 +119,20 @@ export class WeatherSvgService {
   }
 
   private createBoundingCircle(): SVGCircleElement {
+    const fill = 'rgba(255, 255, 255, 0.125)';
     const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
     this.renderer.setAttribute(circle, 'cx', '200');
     this.renderer.setAttribute(circle, 'cy', '220');
     this.renderer.setAttribute(circle, 'r', '150');
     this.renderer.setAttribute(circle, 'id', 'windDirectionHolder');
-    this.renderer.setAttribute(circle, 'fill', 'rgba(255, 255, 255, 0.125)');
+    this.renderer.setAttribute(circle, 'fill', fill);
     this.renderer.setAttribute(circle, 'stroke-width', '0');
     return circle;
   }
 
   private createSpeedBands(unit: UnitSystem): SVGCircleElement[] {
+    const fill = 'rgba(255, 255, 255, 0)';
+    const stroke = 'rgba(255, 255, 255, 0.125)';
     const bands: SVGCircleElement[] = [];
     const createBand = (id: string, r: string) => {
       const band = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
@@ -183,8 +140,8 @@ export class WeatherSvgService {
       this.renderer.setAttribute(band, 'cy', '220');
       this.renderer.setAttribute(band, 'r', r);
       this.renderer.setAttribute(band, 'id', id);
-      this.renderer.setAttribute(band, 'fill', 'rgba(255, 255, 255, 0)');
-      this.renderer.setAttribute(band, 'stroke', 'rgba(255, 255, 255, 0.125)');
+      this.renderer.setAttribute(band, 'fill', fill);
+      this.renderer.setAttribute(band, 'stroke', stroke);
       bands.push(band);
     };
 
@@ -203,8 +160,8 @@ export class WeatherSvgService {
     return bands;
   }
 
-  private createDirectionLabels(): { [key in WindDirection]: SVGTextElement } {
-    const createText = (id: string, baseline: string, x: string, y: string, text: string): SVGTextElement => {
+  private createDirectionLabels(): { [key: string]: SVGTextElement } {
+    const createText = (id: string, baseline: string, x: string, y: string, text: string) => {
       const elem = document.createElementNS('http://www.w3.org/2000/svg', 'text');
       this.renderer.setAttribute(elem, 'id', id);
       this.renderer.setAttribute(elem, 'dominant-baseline', baseline);
@@ -215,20 +172,48 @@ export class WeatherSvgService {
     };
 
     return {
-      [WindDirection.North]: createText('cardinalN', 'auto', '195', '60', 'N'),
-      [WindDirection.South]: createText('cardinalS', 'hanging', '195', '380', 'S'),
-      [WindDirection.East]: createText('cardinalE', 'middle', '360', '220', 'E'),
-      [WindDirection.West]: createText('cardinalW', 'middle', '26', '220', 'W'),
-      [WindDirection.Northwest]: createText('ordinalNW', 'baseline', '65', '105', 'NW'),
-      [WindDirection.Southwest]: createText('ordinalSW', 'hanging', '65', '335', 'SW'),
-      [WindDirection.Northeast]: createText('ordinalNE', 'baseline', '310', '105', 'NE'),
-      [WindDirection.Southeast]: createText('ordinalSE', 'hanging', '310', '335', 'SE'),
+      N: createText('cardinalN', 'auto', '195', '60', 'N'),
+      S: createText('cardinalS', 'hanging', '195', '380', 'S'),
+      E: createText('cardinalE', 'middle', '360', '220', 'E'),
+      W: createText('cardinalW', 'middle', '26', '220', 'W'),
+      NW: createText('ordinalNW', 'baseline', '65', '105', 'NW'),
+      SW: createText('ordinalSW', 'hanging', '65', '335', 'SW'),
+      NE: createText('ordinalNE', 'baseline', '310', '105', 'NE'),
+      SE: createText('ordinalSE', 'hanging', '310', '335', 'SE'),
     };
   }
 
-  private highlightDirection(deg: number, elements: { [key in WindDirection]: SVGTextElement }): void {
+  private highlightDirection(deg: number, elements: { [key: string]: SVGTextElement }): void {
     const direction = this.getWindDirection(deg);
-    const elemKey = direction as WindDirection;
+    let elemKey: string;
+    switch (direction) {
+      case WindDirection.North:
+        elemKey = 'N';
+        break;
+      case WindDirection.South:
+        elemKey = 'S';
+        break;
+      case WindDirection.East:
+        elemKey = 'E';
+        break;
+      case WindDirection.West:
+        elemKey = 'W';
+        break;
+      case WindDirection.Northeast:
+        elemKey = 'NE';
+        break;
+      case WindDirection.Southeast:
+        elemKey = 'SE';
+        break;
+      case WindDirection.Southwest:
+        elemKey = 'SW';
+        break;
+      case WindDirection.Northwest:
+        elemKey = 'NW';
+        break;
+      default:
+        elemKey = 'N'; // Fallback
+    }
     if (elements[elemKey]) {
       this.renderer.setAttribute(elements[elemKey], 'font-weight', 'bold');
     } else {
@@ -236,16 +221,8 @@ export class WeatherSvgService {
     }
   }
 
-  private createWeatherInfoTexts(
-    temp: number,
-    selectedTemp: string,
-    humidity: string,
-    description: string,
-    place: string,
-    downloadTime: string,
-    downloadDate: string
-  ): SVGTextElement[] {
-    const createText = (id: string, x: string, y: string, text: string): SVGTextElement => {
+  private createWeatherInfoTexts(temp: number, selectedTemp: string, humidity: string, description: string, place: string, downloadTime: string, downloadDate: string): SVGTextElement[] {
+    const createText = (id: string, x: string, y: string, text: string) => {
       const elem = document.createElementNS('http://www.w3.org/2000/svg', 'text');
       this.renderer.setAttribute(elem, 'id', id);
       this.renderer.setAttribute(elem, 'dominant-baseline', 'baseline');
@@ -270,8 +247,13 @@ export class WeatherSvgService {
     this.renderer.setAttribute(text, 'id', 'textWindVelocity');
     this.renderer.setAttribute(text, 'dominant-baseline', 'baseline');
     this.renderer.setAttribute(text, 'y', '230');
-    const x = windDeg <= 171 ? (windSpeed <= 10 ? '135' : '132') : '215';
+
+    let x = '215';
+    if (windDeg <= 171) {
+      x = windSpeed <= 10 ? '135' : '132';
+    }
     this.renderer.setAttribute(text, 'x', x);
+
     text.textContent = windSpeed > 0 ? `${windSpeed}${selectedWindSpeed}` : 'No Wind';
     return text;
   }
@@ -283,68 +265,28 @@ export class WeatherSvgService {
     this.renderer.setAttribute(path, 'stroke', '#ffffff');
     this.renderer.setAttribute(path, 'stroke-width', '3');
 
-    if (windSpeed == null || typeof windSpeed === 'undefined' || windSpeed < 1) {
-      this.renderer.setAttribute(path, 'd', '');
-      this.animationCompleteSubject.next(); // Notify immediately as no animation
-      return path;
-    }
-
-    const maxSpeed = unitSystem === UnitSystem.Imperial ? 25 : 40;
-    const arrowLength = Math.min(windSpeed / maxSpeed * 110, 110);
+    // Calculate arrow length based on wind speed (scale to max 100px for visibility)
+    const maxSpeed = unitSystem === UnitSystem.Imperial ? 25 : 40; // Max speed for scaling (mph or kph)
+    const arrowLength = Math.min(windSpeed / maxSpeed * 110, 110); // Scale length up to 100px
     const arrowHeadSize = 12;
 
-    const initialPath = `
-      M 200 220
-      L 200 220
-      M ${200 - arrowHeadSize / 2} 220
-      L 200 220
-      L ${200 + arrowHeadSize / 2} 220
-    `;
-    const finalPath = `
+    // Define arrow path: line from center to scaled length with arrowhead
+    const pathData = `
       M 200 220
       L 200 ${220 - arrowLength}
       M ${200 - arrowHeadSize / 2} ${220 - arrowLength + arrowHeadSize}
       L 200 ${220 - arrowLength}
       L ${200 + arrowHeadSize / 2} ${220 - arrowLength + arrowHeadSize}
     `;
+    this.renderer.setAttribute(path, 'd', pathData.trim());
 
-    const supportsSMIL = typeof SVGAnimateElement !== 'undefined';
-
-    if (supportsSMIL) {
-      this.renderer.setAttribute(path, 'd', initialPath.trim());
-      const animate = document.createElementNS('http://www.w3.org/2000/svg', 'animate');
-      this.renderer.setAttribute(animate, 'attributeName', 'd');
-      this.renderer.setAttribute(animate, 'from', initialPath.trim());
-      this.renderer.setAttribute(animate, 'to', finalPath.trim());
-      this.renderer.setAttribute(animate, 'dur', '1s');
-      this.renderer.setAttribute(animate, 'repeatCount', '4');
-      this.renderer.setAttribute(animate, 'begin', '0s');
-      this.renderer.setAttribute(animate, 'fill', 'freeze');
-      this.renderer.listen(animate, 'endEvent', () => {
-        this.animationCompleteSubject.next(); // Notify completion
-      });
-      this.renderer.appendChild(path, animate);
-    } else {
-      this.renderer.setAttribute(path, 'd', finalPath.trim());
-      this.animationCompleteSubject.next(); // Notify immediately for non-SMIL browsers
-    }
-
+    // Rotate arrow based on wind direction (SVG rotates around 200,220)
     this.renderer.setAttribute(path, 'transform', `rotate(${windDeg}, 200, 220)`);
+
     return path;
   }
 
-  private createAltDisplay(
-    id: string,
-    place: string,
-    description: string,
-    humidity: string,
-    temp: number,
-    selectedTemp: string,
-    windSpeed: number,
-    selectedWindSpeed: string,
-    windDirection: string,
-    downloadDateTime: string
-  ): SVGSVGElement {
+  private createAltDisplay(id: string, place: string, description: string, humidity: string, temp: number, selectedTemp: string, windSpeed: number, selectedWindSpeed: string, windDirection: string, downloadDateTime: string): SVGSVGElement {
     const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     this.renderer.setAttribute(svg, 'height', '150');
     this.renderer.setAttribute(svg, 'width', '150');
@@ -374,30 +316,8 @@ export class WeatherSvgService {
     return svg;
   }
 
-  private createAriaDisplay(
-    id: string,
-    place: string,
-    description: string,
-    humidity: string,
-    temp: number,
-    selectedTemp: string,
-    windSpeed: number,
-    selectedWindSpeed: string,
-    windDirection: string,
-    downloadDateTime: string
-  ): SVGSVGElement {
-    const svg = this.createAltDisplay(
-      id,
-      place,
-      description,
-      humidity,
-      temp,
-      selectedTemp,
-      windSpeed,
-      selectedWindSpeed,
-      windDirection,
-      downloadDateTime
-    );
+  private createAriaDisplay(id: string, place: string, description: string, humidity: string, temp: number, selectedTemp: string, windSpeed: number, selectedWindSpeed: string, windDirection: string, downloadDateTime: string): SVGSVGElement {
+    const svg = this.createAltDisplay(id, place, description, humidity, temp, selectedTemp, windSpeed, selectedWindSpeed, windDirection, downloadDateTime);
     this.renderer.setAttribute(svg, 'height', '1');
     this.renderer.setAttribute(svg, 'width', '1');
     return svg;
@@ -426,9 +346,11 @@ export class WeatherSvgService {
       this.renderer.appendChild(infoGroup, windVelocityText);
       this.renderer.appendChild(infoGroup, circle);
       this.renderer.appendChild(infoGroup, windVectorArrow);
+
       this.renderer.appendChild(compass, bandGroup);
       this.renderer.appendChild(compass, infoGroup);
 
+      // Clear container to prevent duplicate SVGs
       while (container.firstChild) {
         this.renderer.removeChild(container, container.firstChild);
       }
