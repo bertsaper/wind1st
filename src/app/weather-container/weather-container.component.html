@@ -1,23 +1,19 @@
 <div id="container">
-<div #svgWindPointer></div>
     <div class="ion-canvas">
-
-        <div #svgWindPointer></div>
-
+        <div #svgWindPointer></div> <!-- Single SVG container -->
         <div id="buttonHolder">
             <div [ngClass]="updateButtonToggle ? 'form-expanded' : 'form-collapsed'">
-                <button mat-raised-button (click)="updateWeather()"> UPDATE </button>
+                <button mat-raised-button (click)="updateWeather()">UPDATE</button>
             </div>
             <div [ngClass]="updateButtonToggle ? 'form-collapsed' : 'form-expanded'">
-                <div>{{(showPleaseWait === true) ? "Please Wait" : ""}}</div>
-                
+                <div>{{ showPleaseWait ? 'Please Wait' : '' }}</div>
             </div>
-            <div *ngIf="(updateFailed === true)" id="locationUnavailable">
-                Update Failed<br><br>Please Try Again or Return to Settings</div>
-            <div *ngIf="(useDeviceIsSet === true && locationUnavailable === true)" id="deviceLocationUnavailable">
-                Device Location Unavailable<br><br>Return to Settings and Enter a Location</div>
+            <div *ngIf="updateFailed" id="locationUnavailable">
+                Update Failed<br><br>Please Try Again or Return to Settings
+            </div>
+            <div *ngIf="useDeviceIsSet && locationUnavailable" id="deviceLocationUnavailable">
+                Device Location Unavailable<br><br>Return to Settings and Enter a Location
+            </div>
         </div>
-
     </div>
-
 </div>

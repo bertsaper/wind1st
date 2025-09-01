@@ -1,122 +1,78 @@
 /* eslint-disable @typescript-eslint/member-ordering */
 /* eslint-disable @typescript-eslint/semi */
-
-import { Component, OnInit, ElementRef, ViewChild, Renderer2 } from '@angular/core'
-
-import { environment } from 'src/environments/environment'
-
-import { NavigationEnd, Router } from '@angular/router'
-
-import { HttpClient } from '@angular/common/http'
-
+import { Component, OnInit, OnDestroy, ElementRef, ViewChild, Renderer2 } from '@angular/core';
+import { environment } from 'src/environments/environment';
+import { NavigationEnd, Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 import { WeatherSvgService } from 'src/app/weather/services/weather-svg.service';
+import { Subscription } from 'rxjs'; // Added for animation subscription
 
 @Component({
   selector: 'app-weather-container',
   templateUrl: './weather-container.component.html',
   styleUrls: ['./weather-container.component.scss'],
 })
-
-export class ExploreContainerComponent implements OnInit {
-
-    constructor(
+export class ExploreContainerComponent implements OnInit, OnDestroy { // Added OnDestroy
+  @ViewChild('svgWindPointer') container: ElementRef;
+  constructor(
     private http: HttpClient,
     public router: Router,
     private renderer: Renderer2,
-    private WeatherSvgService: WeatherSvgService,
-  ) { }
+    private weatherSvgService: WeatherSvgService, // Renamed for consistency
+  ) {}
 
-  /*
-  * Screen size is needed to see if device is Alt
-  */
-
-  getScreenWidth: any
-
-  element: any
-
-  windSpeed: any
-
-  windSpeedMax: any
-
-  windSpeedMin: any
-
-  windScalerFirstLast: any
-
-  windScalerSecondThird: any
-
-  weatherNow: object
-
-  weatherNowString: string
-
-  windDirectionOutputAlt: string
-
-  weatherLocationStorage = `weatherLocation`
-
-  currentWeatherStorage = `currentWeather`
-
-  weatherNowStringOutParsed: object
-
-  weatherTimeStamp: object
-
-  lati: any
-
-  long: any
-
-  /*
-  * for getLocation()
-  */
-
-  public lat
-
-  public lng
-
-  useDeviceIsSet: boolean
-
-  locationUnavailable = false
-
-  updateFailed = false
-
-  showPleaseWait = true
-
-  /*
-  * Needed for Imperial / Metric Selection
-  */
-
-  imperialMetricChoice: string
-
-  selectedWindSpeed: string
-
-  selectedTemperature: string
-
-  fromHome = `/`
-
-  locationSettings = `/settings`
-
-  displayLocation = `/weather`
-
-  weatherDisplay = `windInfo`
-
-  altDisplay = `displayAlt`
-
-  ariaDisplay = `displayAria`
-
-  loadingDiv = `loadingDiv`
-
-  updateButtonToggle = false
-
-  @ViewChild(`svgWindPointer`) container: ElementRef;
+  getScreenWidth: any;
+  element: any;
+  windSpeed: any;
+  windSpeedMax: any;
+  windSpeedMin: any;
+  windScalerFirstLast: any;
+  windScalerSecondThird: any;
+  weatherNow: object;
+  weatherNowString: string;
+  windDirectionOutputAlt: string;
+  weatherLocationStorage = 'weatherLocation';
+  currentWeatherStorage = 'currentWeather';
+  weatherNowStringOutParsed: object;
+  weatherTimeStamp: object;
+  lati: any;
+  long: any;
+  public lat;
+  public lng;
+  useDeviceIsSet: boolean;
+  locationUnavailable = false;
+  updateFailed = false;
+  showPleaseWait = true;
+  imperialMetricChoice: string;
+  selectedWindSpeed: string;
+  selectedTemperature: string;
+  fromHome = '/';
+  locationSettings = '/settings';
+  displayLocation = '/weather';
+  weatherDisplay = 'windInfo';
+  altDisplay = 'displayAlt';
+  ariaDisplay = 'displayAria';
+  loadingDiv = 'loadingDiv';
+  updateButtonToggle = false;
+  private animationSubscription: Subscription | null = null; // Added for animation completion
 
   ngOnInit() {
-    this.getLocation()
-
+    this.getLocation();
     if (localStorage.getItem(this.weatherLocationStorage) === null) {
-      this.updateFailed = false
-      this.updateButtonToggle = false
+      this.updateFailed = false;
+      this.updateButtonToggle = false;
     }
+    this.getScreenWidth = window.innerWidth;
+    this.onDisplay();
 
-    this.getScreenWidth = window.innerWidth
+    // Subscribe to animation completion
+    this.animationSubscription = this.weatherSvgService.animationComplete$.subscribe(() => {
+      this.updateButtonToggle = true; // Show the UPDATE button
+    });
+  }
 
-    this.onDisplay()
+  ngOnDestroy() {
+    this.animationSubscription?.unsubscribe(); // Clean up subscription
   }
 
   onDisplay() {
@@ -124,109 +80,108 @@ export class ExploreContainerComponent implements OnInit {
       if (event instanceof NavigationEnd) {
         if (event.url === this.displayLocation) {
           if (this.getScreenWidth >= 380) {
-            this.removeWeatherDisplay()
-            this.removeWeatherDisplayAria()
+            this.removeWeatherDisplay();
+            this.removeWeatherDisplayAria();
           }
 
           if (this.getScreenWidth < 380) {
-            this.removeWeatherDisplayAlt()
+            this.removeWeatherDisplayAlt();
           }
-          this.updateButtonToggle = false
+          this.updateButtonToggle = false;
 
-          setTimeout(() => { this.getWeather() }, 2250)
+          setTimeout(() => { this.getWeather(); }, 2250);
         }
 
         if (event.url === this.fromHome) {
-          this.router.navigate([this.locationSettings])
+          this.router.navigate([this.locationSettings]);
         }
 
         if (event.url === this.locationSettings) {
-          this.updateButtonToggle = false
+          this.updateButtonToggle = false;
         }
-
       }
-    })
+    });
   }
 
   removeWeatherDisplay() {
-    this.element = document.getElementById(this.weatherDisplay)
+    this.element = document.getElementById(this.weatherDisplay);
     if (this.element) {
-      this.element.remove()
+      this.element.remove();
     }
   }
 
   removeWeatherDisplayAria() {
-    this.element = document.getElementById(this.ariaDisplay)
+    this.element = document.getElementById(this.ariaDisplay);
     if (this.element) {
-      this.element.remove()
+      this.element.remove();
     }
   }
 
   removeWeatherDisplayAlt() {
-    this.element = document.getElementById(this.altDisplay)
+    this.element = document.getElementById(this.altDisplay);
     if (this.element) {
-      this.element.remove()
+      this.element.remove();
     }
   }
 
   async getWeather(): Promise<void> {
-    this.updateButtonToggle = false
-    this.updateFailed = false
+    this.updateButtonToggle = false;
+    this.updateFailed = false;
 
     try {
-      const measurementChoice = this.getMeasurementChoice()
-      const weatherLocationStorage = localStorage.getItem(this.weatherLocationStorage)
-      const weatherLocationStorageParsed = JSON.parse(weatherLocationStorage)
-      const openWeatherAddress = environment.openWeatherAddress
+      const measurementChoice = this.getMeasurementChoice();
+      const weatherLocationStorage = localStorage.getItem(this.weatherLocationStorage);
+      const weatherLocationStorageParsed = JSON.parse(weatherLocationStorage);
+      const openWeatherAddress = environment.openWeatherAddress;
 
-      const latString = `lat=`
-      const lonString = `&lon=`
+      const latString = 'lat=';
+      const lonString = '&lon=';
 
-      if (weatherLocationStorageParsed.location.lat !== `useDevice`) {
-        this.lati = weatherLocationStorageParsed.location.lat
-        this.long = weatherLocationStorageParsed.location.lng
-        this.useDeviceIsSet = false
+      if (weatherLocationStorageParsed.location.lat !== 'useDevice') {
+        this.lati = weatherLocationStorageParsed.location.lat;
+        this.long = weatherLocationStorageParsed.location.lng;
+        this.useDeviceIsSet = false;
       }
 
-      if (weatherLocationStorageParsed.location.lat === `useDevice`) {
-        this.useDeviceIsSet = true
+      if (weatherLocationStorageParsed.location.lat === 'useDevice') {
+        this.useDeviceIsSet = true;
 
-        if (this.lng !== `undefined`) {
-          this.long = this.lng
+        if (this.lng !== 'undefined') {
+          this.long = this.lng;
         }
 
-        if (this.lat !== `undefined`) {
-          this.lati = this.lat
+        if (this.lat !== 'undefined') {
+          this.lati = this.lat;
         }
       }
 
-      const openWeatherKey: string = environment.openWeatherKey
-      const unitSelecton: string = `&units=` + measurementChoice
+      const openWeatherKey: string = environment.openWeatherKey;
+      const unitSelecton: string = '&units=' + measurementChoice;
       const resString: string = openWeatherAddress + latString + this.lati + lonString + this.long +
-        unitSelecton + openWeatherKey
+        unitSelecton + openWeatherKey;
 
       this.http.get(resString).subscribe({
-        next: (res) => { this.weatherNow = res },
+        next: (res) => { this.weatherNow = res; },
         error: (err) => {
-          this.updateFailed = true
-          this.updateButtonToggle = true
+          this.updateFailed = true;
+          this.updateButtonToggle = true; // Show button on error
         },
         complete: () => {
-          this.weatherNowString = JSON.stringify(this.weatherNow)
-          localStorage.setItem(this.currentWeatherStorage, this.weatherNowString)
-          this.weatherTimeStamp = { timestamp: new Date().getTime() }
-          localStorage.setItem(`time`, JSON.stringify(this.weatherTimeStamp))
-          this.chartMethod()
+          this.weatherNowString = JSON.stringify(this.weatherNow);
+          localStorage.setItem(this.currentWeatherStorage, this.weatherNowString);
+          this.weatherTimeStamp = { timestamp: new Date().getTime() };
+          localStorage.setItem('time', JSON.stringify(this.weatherTimeStamp));
+          this.chartMethod();
         }
-      })
+      });
     } catch (error) {
-      this.router.navigate([this.locationSettings])
+      this.router.navigate([this.locationSettings]);
     }
   }
 
   chartMethod() {
-    
-    this.showPleaseWait = false
+    this.showPleaseWait = false;
+    this.updateButtonToggle = false; // Hide button during animation
 
     const imperialMetricChoice = this.getMeasurementChoice();
     const downloadDate = this.getDate();
@@ -249,11 +204,11 @@ export class ExploreContainerComponent implements OnInit {
       ? Math.round(weatherNowStringOutParsed.wind.speed)
       : Math.round(weatherNowStringOutParsed.wind.speed * 3.6);
 
-    this.windDirectionOutputAlt = this.WeatherSvgService.getWindDirection(
+    this.windDirectionOutputAlt = this.weatherSvgService.getWindDirection(
       weatherNowStringOutParsed.wind.deg
     );
 
-    this.WeatherSvgService.buildWeatherSvg(
+    this.weatherSvgService.buildWeatherSvg(
       this.container.nativeElement,
       weatherNowStringOutParsed,
       imperialMetricChoice,
@@ -268,63 +223,59 @@ export class ExploreContainerComponent implements OnInit {
       this.ariaDisplay,
       this.locationSettings
     );
-    
-
   }
 
   getMeasurementChoice() {
-    const imperialMetricChoice = localStorage.getItem(`imperialMetricChoice`)
-    const imperialMetricChoiceStorageParsed = JSON.parse(imperialMetricChoice)
-    const measurementChoice: any = imperialMetricChoiceStorageParsed.imperialMetric.choice
-    return measurementChoice
+    const imperialMetricChoice = localStorage.getItem('imperialMetricChoice');
+    const imperialMetricChoiceStorageParsed = JSON.parse(imperialMetricChoice);
+    const measurementChoice: any = imperialMetricChoiceStorageParsed.imperialMetric.choice;
+    return measurementChoice;
   }
 
   getDate() {
-    const updateTime = localStorage.getItem(`time`)
-    const updateTimetStorageParsed = JSON.parse(updateTime)
-    const downloadTime: any = updateTimetStorageParsed.timestamp
-    const dateOutput = new Date(downloadTime).toLocaleDateString([], { day: `numeric`, month: `short` })
-    return dateOutput
+    const updateTime = localStorage.getItem('time');
+    const updateTimetStorageParsed = JSON.parse(updateTime);
+    const downloadTime: any = updateTimetStorageParsed.timestamp;
+    const dateOutput = new Date(downloadTime).toLocaleDateString([], { day: 'numeric', month: 'short' });
+    return dateOutput;
   }
 
   getTime() {
-    const updateTime = localStorage.getItem(`time`)
-    const updateTimetStorageParsed = JSON.parse(updateTime)
-    const downloadTime: any = updateTimetStorageParsed.timestamp
-    const timeOutput = new Date(downloadTime).toLocaleTimeString([], { hour: `numeric`, minute: `2-digit` })
-    return timeOutput.toLowerCase()
+    const updateTime = localStorage.getItem('time');
+    const updateTimetStorageParsed = JSON.parse(updateTime);
+    const downloadTime: any = updateTimetStorageParsed.timestamp;
+    const timeOutput = new Date(downloadTime).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+    return timeOutput.toLowerCase();
   }
 
   getDateTime() {
-    const updateTime = localStorage.getItem(`time`)
-    const updateTimetStorageParsed = JSON.parse(updateTime)
-    const downloadTime: any = updateTimetStorageParsed.timestamp
-    const dateOutput = new Date(downloadTime).toLocaleDateString([], { day: `numeric`, month: `short` })
-    const timeOutput = new Date(downloadTime).toLocaleTimeString([], { hour: `numeric`, minute: `2-digit` })
-    return dateOutput + ` ` + timeOutput.toLowerCase()
+    const updateTime = localStorage.getItem('time');
+    const updateTimetStorageParsed = JSON.parse(updateTime);
+    const downloadTime: any = updateTimetStorageParsed.timestamp;
+    const dateOutput = new Date(downloadTime).toLocaleDateString([], { day: 'numeric', month: 'short' });
+    const timeOutput = new Date(downloadTime).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+    return dateOutput + ' ' + timeOutput.toLowerCase();
   }
 
   updateWeather() {
-
-    this.updateFailed = false
-    this.updateButtonToggle = false
-    this.getLocation()
+    this.updateFailed = false;
+    this.updateButtonToggle = false; // Hide button before new animation
+    this.showPleaseWait = true; // Show "Please Wait"
+    this.getLocation();
 
     if (this.getScreenWidth >= 380) {
-      this.removeWeatherDisplay()
-      this.removeWeatherDisplayAria()
+      this.removeWeatherDisplay();
+      this.removeWeatherDisplayAria();
     }
 
-    if (this.getScreenWidth < 380) {
-      this.removeWeatherDisplayAlt()
+    if (this.getScreenWidth < 350) {
+      this.removeWeatherDisplayAlt();
     }
 
     if (this.useDeviceIsSet && !this.locationUnavailable) {
-      setTimeout(() => { this.getWeather() }, 2250)
-    }
-
-    if (!this.useDeviceIsSet) {
-      this.getWeather()
+      setTimeout(() => { this.getWeather(); }, 2250);
+    } else {
+      this.getWeather();
     }
   }
 
@@ -332,16 +283,16 @@ export class ExploreContainerComponent implements OnInit {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position: GeolocationPosition) => {
         if (position) {
-          this.lat = position.coords.latitude
-          this.lng = position.coords.longitude
+          this.lat = position.coords.latitude;
+          this.lng = position.coords.longitude;
         }
       },
         (error: GeolocationPositionError) => {
           if (!this.locationUnavailable) {
-            alert(`Device location is not available.\n\rPlease enable or enter a location.`)
-            this.locationUnavailable = true
+            alert('Device location is not available.\n\rPlease enable or enter a location.');
+            this.locationUnavailable = true;
           }
-        })
+        });
     }
   }
 }

@@ -1,45 +1,82 @@
+/* Ensure the container fills the viewport and centers content vertically and horizontally */
 #container {
-    text-align: center;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Vertically center content */
+  align-items: center; /* Horizontally center content */
+  min-height: 100vh; /* Full viewport height */
+  width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
-#container strong {
-    font-size: 20px;
-    line-height: 26px;
+.ion-canvas {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center children horizontally */
 }
 
-#container p {
-    font-size: 16px;
-    line-height: 22px;
-    color: #8c8c8c;
-    margin: 0;
+/* Style the SVG container to match WeatherSvgService dimensions */
+#svgWindPointer {
+  width: 400px; /* Matches SVG width */
+  height: 440px; /* Matches SVG height */
 }
 
-#container a {
-    text-decoration: none;
+/* Button holder to reserve space for button or Please Wait div */
+#buttonHolder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  min-height: 48px; /* Reserves space for button or Please Wait */
 }
 
+/* Common styles for button and Please Wait divs to maintain consistent size */
+.form-expanded,
+.form-collapsed {
+  width: 120px; /* Adjust based on button size */
+  height: 40px; /* Matches typical mat-raised-button height */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Show element */
+.form-expanded {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+/* Hide element but reserve space */
+.form-collapsed {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Ensure button has consistent styling */
+button[mat-raised-button] {
+  width: 100%;
+  height: 100%;
+  line-height: 40px;
+  font-size: 16px;
+}
+
+/* Style for Please Wait text */
+.form-collapsed div,
+.form-expanded div {
+  width: 100%;
+  text-align: center;
+  line-height: 40px;
+  font-size: 16px;
+}
+
+/* Error message styling to avoid affecting layout */
 #locationUnavailable,
 #deviceLocationUnavailable {
-    font-weight: 900;
-    transform: translateY(-175px);
-    background-color: #121212;
-    padding: 5px;
-}
-
-@media screen and (min-width:381px) and (max-width:395px) {
-    #buttonHolder {
-        margin-left: 12px;
-    }
-
-}
-
-@media screen and (max-width:400px) {
-    #svgWindHolder {
-        min-height: 20px;
-    }
+  text-align: center;
+  margin-top: 10px;
+  font-size: 14px;
+  color: red;
 }

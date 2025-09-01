@@ -151,3 +151,16 @@ div.form-collapsed {
         margin-right: 20vw;
     }
 }
+
+.mdc-form-field>label {
+    color: white;
+}
+
+.mat-mdc-radio-button.mat-accent {
+    --mdc-radio-unselected-icon-color: rgba(225, 225, 225, 0.54);
+    --mdc-radio-unselected-hover-icon-color: #fff;
+}
+
+text {
+  letter-spacing: 0.95px;
+}

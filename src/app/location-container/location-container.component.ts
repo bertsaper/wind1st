@@ -21,9 +21,11 @@ const googleMapsKey = environment.googleMapsApiKey
   styleUrls: ['./location-container.component.scss'],
 })
 
-export default class LocationContainerComponent implements OnInit {
+export class LocationContainerComponent implements OnInit {
 
   searchPlacesForm: NgForm;
+
+
 
   public address: string;
 
@@ -31,7 +33,7 @@ export default class LocationContainerComponent implements OnInit {
 
   public input
 
-  selectedItem = `deviceLocation`
+  selectedItem: any = `deviceLocation`
 
   enteredLocation: boolean
 
@@ -39,7 +41,7 @@ export default class LocationContainerComponent implements OnInit {
 
   settingsHolder = `settingsHolder`
 
-  apiLoaded: Observable<boolean>
+  apiLoaded: Observable<boolean> = of(false);
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
@@ -47,8 +49,11 @@ export default class LocationContainerComponent implements OnInit {
     private fb: FormBuilder
   ) { }
 
-  ngOnInit() {
-    this.loadAutoComplete()
+
+  ngOnInit(): void {
+    this.apiLoaded = of(false); // Initial state
+    this.loadAutoComplete();
+
 
     localStorage.setItem(`weatherLocation`, `{"location":{"lat":"useDevice", "lng":"useDevice"}}`)
 
@@ -57,30 +62,130 @@ export default class LocationContainerComponent implements OnInit {
     */
 
     window.addEventListener('resize', (() => {
-      const el = document.getElementById(this.settingsHolder)
-      el.scrollIntoView({ behavior: `smooth` })
+      if (this.settingsHolder) {
+        const el = document.getElementById(this.settingsHolder)
+        el.scrollIntoView({ behavior: `smooth` })
+      }
     }))
   }
 
+
   private loadAutoComplete() {
+    // Check if Google Maps API is already loaded
+    if (typeof google !== 'undefined' && google.maps && google.maps.places) {
+      console.log('Google Maps API already loaded, initializing autocomplete');
+      this.initAutocomplete();
+      this.apiLoaded = of(true);
+      return;
+    }
 
-    const url = `https://maps.googleapis.com/maps/api/js?key=` + googleMapsKey + `&libraries=places&v=weekly`;
-
-    this.loadScript(url).then(() => this.initAutocomplete())
+    // Load the Google Maps script
+    const url = `https://maps.googleapis.com/maps/api/js?key=${environment.googleMapsApiKey}&libraries=places`;
+    this.loadScript(url)
+      .then(() => {
+        console.log('Google Maps script loaded successfully');
+        // Wait briefly to ensure the API is fully initialized
+        setTimeout(() => {
+          if (typeof google !== 'undefined' && google.maps && google.maps.places) {
+            this.initAutocomplete();
+            this.apiLoaded = of(true);
+          } else {
+            console.error('Google Maps API not available after loading script.');
+            this.apiLoaded = of(false);
+          }
+        }, 100); // Small delay to ensure API is ready
+      })
+      .catch((error) => {
+        console.error('Error loading Google Maps script:', error);
+        this.apiLoaded = of(false);
+      });
   }
 
-  private loadScript(url) {
+  // private loadAutoComplete() {
+  //   // Check if Google Maps API is already loaded
+  //   if (typeof google !== 'undefined' && google.maps && google.maps.places) {
+  //     console.log('Google Maps API already loaded, initializing autocomplete');
+  //     this.initAutocomplete();
+  //     this.apiLoaded = of(true);
+  //     return;
+  //   }
+
+  //   // Load the Google Maps script
+  //   const url = `https://maps.googleapis.com/maps/api/js?key=${environment.googleMapsApiKey}&libraries=places`;
+  //   this.loadScript(url)
+  //     .then(() => {
+  //       console.log('Google Maps script loaded successfully');
+  //       this.initAutocomplete();
+  //       this.apiLoaded = of(true);
+  //     })
+  //     .catch((error) => {
+  //       console.error('Error loading Google Maps script:', error);
+  //       this.apiLoaded = of(false);
+  //     });
+  // }
+
+  initAutocomplete() {
+    // Check if Google Maps API is loaded
+    if (typeof google === 'undefined' || !google.maps || !google.maps.places) {
+      console.error('Google Maps API not available. Ensure the script loaded correctly.');
+      return;
+    }
+
+    // Get the input element
+    this.input = document.getElementById(this.txtSearchPlaces) as HTMLInputElement;
+    if (!this.input) {
+      console.error('Input element with ID "txtSearchPlaces" not found.');
+      return;
+    }
+
+    // Initialize Google Places Autocomplete
+    const autocomplete = new google.maps.places.Autocomplete(this.input);
+
+    // Set fields to retrieve (only geometry for lat/lng)
+    autocomplete.setFields(['geometry']);
+
+    // Add listener for place selection
+    autocomplete.addListener('place_changed', () => {
+      const place = autocomplete.getPlace();
+
+      // Check if place and geometry are valid
+      if (!place || !place.geometry || !place.geometry.location) {
+        console.warn(`No details available for input: ${this.input.value}`);
+        alert(`No details available for input: ${this.input.value}`);
+        return;
+      }
+
+      // Get latitude and longitude, convert to string and trim
+      const placeLat = place.geometry.location.lat().toString().trim();
+      const placeLng = place.geometry.location.lng().toString().trim();
+
+      // Store location in localStorage
+      localStorage.setItem(
+        'weatherLocation',
+        JSON.stringify({ location: { lat: placeLat, lng: placeLng } })
+      );
+
+      // Optionally clear the form after selection
+      // setTimeout(() => { this.clearTheForm(); }, 5000);
+    });
+  }
+
+
+  private loadScript(url: string): Promise<void> {
     return new Promise((resolve, reject) => {
-      const script = this.renderer2.createElement('script')
-      script.type = `text/javascript`
-      script.src = url
-      script.text = ``
-      script.async = true
-      script.defer = true
-      script.onload = resolve
-      script.onerror = reject
-      this.renderer2.appendChild(this.document.head, script)
-    })
+      const script = this.renderer2.createElement('script');
+      script.type = 'text/javascript';
+      script.async = true;
+      script.defer = true;
+      script.src = url + '&loading=async';
+
+      // Add onload and onerror to handle resolution
+      script.onload = () => resolve();
+      script.onerror = (error) => reject(error);
+
+      this.renderer2.appendChild(this.document.head, script);
+      console.log('Google Maps script appended:', script);
+    });
   }
 
   public rbDeviceLocationSelection = [
@@ -88,55 +193,39 @@ export default class LocationContainerComponent implements OnInit {
     { name: `Enter Location`, value: `enteredLocation` }
   ]
 
-  initAutocomplete() {
-    this.input = document.getElementById(this.txtSearchPlaces) as HTMLInputElement
-    const autocomplete = new google.maps.places.Autocomplete(this.input)
 
-    /*
-    * Sometimes Google sends lat or lng with trailing whitespace.
-    * Changing the number to a string then trimming might prevent crashes.
-    */
 
-    autocomplete.addListener(`place_changed`, () => {
-      const place = autocomplete.getPlace()
-      const placeLat = place.geometry.location.lat().toString()
-      const placeLng = place.geometry.location.lng().toString()
 
-      localStorage.setItem(`weatherLocation`,
-        `{"location":{"lat":"` + placeLat.trim() + `", "lng":"` + placeLng.trim() + `"}}`)
-      if (!place) {
 
-        /*
-        * User entered the name of a Place that was not suggested and
-        * pressed the Enter key, or the Place Details request failed.
-        */
 
-        alert(`No details available for input:` + this.input.value)
-        return
-      } else {
-        // setTimeout(() => { this.clearTheForm() }, 5000)
-        return
-      }
-    });
-    autocomplete.setFields([
-      `geometry`
-    ])
-  }
+
+
 
   clearTheForm() {
-    this.input.value = ``
+    // Correct handling based on actual usage
+    this.enteredLocation = false; // Accurately represent the control flow
+    this.address = ''; // Reset address field
+
+    // Only attempt to set values on objects
+    if (this.selectedItem && typeof this.selectedItem === 'object') {
+      this.selectedItem.value = '';
+    }
   }
 
-  locationPreference(value) {
 
-    if (value === `enteredLocation`) {
+
+  locationPreference(value: any) {
+
+    if (typeof value === 'string' && value === `enteredLocation`) {
       this.enteredLocation = true
     }
 
-    if (value === `deviceLocation`) {
+    if (typeof value === 'string' && value === `deviceLocation`) {
       this.clearTheForm()
       this.enteredLocation = false
       localStorage.setItem(`weatherLocation`, `{"location":{"lat":"useDevice", "lng":"useDevice"}}`)
     }
   }
+
+
 }
