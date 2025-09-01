@@ -268,7 +268,7 @@ export class ExploreContainerComponent implements OnInit, OnDestroy { // Added O
       this.removeWeatherDisplayAria();
     }
 
-    if (this.getScreenWidth < 380) {
+    if (this.getScreenWidth < 350) {
       this.removeWeatherDisplayAlt();
     }
 

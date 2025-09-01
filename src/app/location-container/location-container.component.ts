@@ -62,111 +62,113 @@ export class LocationContainerComponent implements OnInit {
     */
 
     window.addEventListener('resize', (() => {
-      const el = document.getElementById(this.settingsHolder)
-     // el.scrollIntoView({ behavior: `smooth` })
+      if (this.settingsHolder) {
+        const el = document.getElementById(this.settingsHolder)
+        el.scrollIntoView({ behavior: `smooth` })
+      }
     }))
   }
 
-  
-private loadAutoComplete() {
-  // Check if Google Maps API is already loaded
-  if (typeof google !== 'undefined' && google.maps && google.maps.places) {
-    console.log('Google Maps API already loaded, initializing autocomplete');
-    this.initAutocomplete();
-    this.apiLoaded = of(true);
-    return;
-  }
 
-  // Load the Google Maps script
-  const url = `https://maps.googleapis.com/maps/api/js?key=${environment.googleMapsApiKey}&libraries=places`;
-  this.loadScript(url)
-    .then(() => {
-      console.log('Google Maps script loaded successfully');
-      // Wait briefly to ensure the API is fully initialized
-      setTimeout(() => {
-        if (typeof google !== 'undefined' && google.maps && google.maps.places) {
-          this.initAutocomplete();
-          this.apiLoaded = of(true);
-        } else {
-          console.error('Google Maps API not available after loading script.');
-          this.apiLoaded = of(false);
-        }
-      }, 100); // Small delay to ensure API is ready
-    })
-    .catch((error) => {
-      console.error('Error loading Google Maps script:', error);
-      this.apiLoaded = of(false);
-    });
-}
-
-// private loadAutoComplete() {
-//   // Check if Google Maps API is already loaded
-//   if (typeof google !== 'undefined' && google.maps && google.maps.places) {
-//     console.log('Google Maps API already loaded, initializing autocomplete');
-//     this.initAutocomplete();
-//     this.apiLoaded = of(true);
-//     return;
-//   }
-
-//   // Load the Google Maps script
-//   const url = `https://maps.googleapis.com/maps/api/js?key=${environment.googleMapsApiKey}&libraries=places`;
-//   this.loadScript(url)
-//     .then(() => {
-//       console.log('Google Maps script loaded successfully');
-//       this.initAutocomplete();
-//       this.apiLoaded = of(true);
-//     })
-//     .catch((error) => {
-//       console.error('Error loading Google Maps script:', error);
-//       this.apiLoaded = of(false);
-//     });
-// }
-
-initAutocomplete() {
-  // Check if Google Maps API is loaded
-  if (typeof google === 'undefined' || !google.maps || !google.maps.places) {
-    console.error('Google Maps API not available. Ensure the script loaded correctly.');
-    return;
-  }
-
-  // Get the input element
-  this.input = document.getElementById(this.txtSearchPlaces) as HTMLInputElement;
-  if (!this.input) {
-    console.error('Input element with ID "txtSearchPlaces" not found.');
-    return;
-  }
-
-  // Initialize Google Places Autocomplete
-  const autocomplete = new google.maps.places.Autocomplete(this.input);
-
-  // Set fields to retrieve (only geometry for lat/lng)
-  autocomplete.setFields(['geometry']);
-
-  // Add listener for place selection
-  autocomplete.addListener('place_changed', () => {
-    const place = autocomplete.getPlace();
-
-    // Check if place and geometry are valid
-    if (!place || !place.geometry || !place.geometry.location) {
-      console.warn(`No details available for input: ${this.input.value}`);
-      alert(`No details available for input: ${this.input.value}`);
+  private loadAutoComplete() {
+    // Check if Google Maps API is already loaded
+    if (typeof google !== 'undefined' && google.maps && google.maps.places) {
+      console.log('Google Maps API already loaded, initializing autocomplete');
+      this.initAutocomplete();
+      this.apiLoaded = of(true);
       return;
     }
 
-    // Get latitude and longitude, convert to string and trim
-    const placeLat = place.geometry.location.lat().toString().trim();
-    const placeLng = place.geometry.location.lng().toString().trim();
+    // Load the Google Maps script
+    const url = `https://maps.googleapis.com/maps/api/js?key=${environment.googleMapsApiKey}&libraries=places`;
+    this.loadScript(url)
+      .then(() => {
+        console.log('Google Maps script loaded successfully');
+        // Wait briefly to ensure the API is fully initialized
+        setTimeout(() => {
+          if (typeof google !== 'undefined' && google.maps && google.maps.places) {
+            this.initAutocomplete();
+            this.apiLoaded = of(true);
+          } else {
+            console.error('Google Maps API not available after loading script.');
+            this.apiLoaded = of(false);
+          }
+        }, 100); // Small delay to ensure API is ready
+      })
+      .catch((error) => {
+        console.error('Error loading Google Maps script:', error);
+        this.apiLoaded = of(false);
+      });
+  }
 
-    // Store location in localStorage
-    localStorage.setItem(
-      'weatherLocation',
-      JSON.stringify({ location: { lat: placeLat, lng: placeLng } })
-    );
+  // private loadAutoComplete() {
+  //   // Check if Google Maps API is already loaded
+  //   if (typeof google !== 'undefined' && google.maps && google.maps.places) {
+  //     console.log('Google Maps API already loaded, initializing autocomplete');
+  //     this.initAutocomplete();
+  //     this.apiLoaded = of(true);
+  //     return;
+  //   }
 
-    // Optionally clear the form after selection
-    // setTimeout(() => { this.clearTheForm(); }, 5000);
-  });
-}
+  //   // Load the Google Maps script
+  //   const url = `https://maps.googleapis.com/maps/api/js?key=${environment.googleMapsApiKey}&libraries=places`;
+  //   this.loadScript(url)
+  //     .then(() => {
+  //       console.log('Google Maps script loaded successfully');
+  //       this.initAutocomplete();
+  //       this.apiLoaded = of(true);
+  //     })
+  //     .catch((error) => {
+  //       console.error('Error loading Google Maps script:', error);
+  //       this.apiLoaded = of(false);
+  //     });
+  // }
+
+  initAutocomplete() {
+    // Check if Google Maps API is loaded
+    if (typeof google === 'undefined' || !google.maps || !google.maps.places) {
+      console.error('Google Maps API not available. Ensure the script loaded correctly.');
+      return;
+    }
+
+    // Get the input element
+    this.input = document.getElementById(this.txtSearchPlaces) as HTMLInputElement;
+    if (!this.input) {
+      console.error('Input element with ID "txtSearchPlaces" not found.');
+      return;
+    }
+
+    // Initialize Google Places Autocomplete
+    const autocomplete = new google.maps.places.Autocomplete(this.input);
+
+    // Set fields to retrieve (only geometry for lat/lng)
+    autocomplete.setFields(['geometry']);
+
+    // Add listener for place selection
+    autocomplete.addListener('place_changed', () => {
+      const place = autocomplete.getPlace();
+
+      // Check if place and geometry are valid
+      if (!place || !place.geometry || !place.geometry.location) {
+        console.warn(`No details available for input: ${this.input.value}`);
+        alert(`No details available for input: ${this.input.value}`);
+        return;
+      }
+
+      // Get latitude and longitude, convert to string and trim
+      const placeLat = place.geometry.location.lat().toString().trim();
+      const placeLng = place.geometry.location.lng().toString().trim();
+
+      // Store location in localStorage
+      localStorage.setItem(
+        'weatherLocation',
+        JSON.stringify({ location: { lat: placeLat, lng: placeLng } })
+      );
+
+      // Optionally clear the form after selection
+      // setTimeout(() => { this.clearTheForm(); }, 5000);
+    });
+  }
 
 
   private loadScript(url: string): Promise<void> {
