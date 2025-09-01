@@ -84,13 +84,6 @@ export class WeatherSvgService {
       const bands = this.createSpeedBands(unitSystem);
       const directionElements = this.createDirectionLabels();
 
-      // console.log('Wind data:', {
-      //   windDeg,
-      //   windSpeed,
-      //   direction: this.getWindDirection(windDeg),
-      //   directionElements: Object.keys(directionElements),
-      // });
-
       this.highlightDirection(windDeg, directionElements);
       const weatherTexts = this.createWeatherInfoTexts(
         temp,
@@ -289,6 +282,12 @@ export class WeatherSvgService {
     this.renderer.setAttribute(path, 'fill', 'none');
     this.renderer.setAttribute(path, 'stroke', '#ffffff');
     this.renderer.setAttribute(path, 'stroke-width', '3');
+
+    if (windSpeed == null || typeof windSpeed === 'undefined' || windSpeed < 1) {
+      this.renderer.setAttribute(path, 'd', '');
+      this.animationCompleteSubject.next(); // Notify immediately as no animation
+      return path;
+    }
 
     const maxSpeed = unitSystem === UnitSystem.Imperial ? 25 : 40;
     const arrowLength = Math.min(windSpeed / maxSpeed * 110, 110);
