@@ -79,12 +79,12 @@ export class ExploreContainerComponent implements OnInit, OnDestroy { // Added O
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         if (event.url === this.displayLocation) {
-          if (this.getScreenWidth >= 380) {
+          if (this.getScreenWidth >= 350) {
             this.removeWeatherDisplay();
             this.removeWeatherDisplayAria();
           }
 
-          if (this.getScreenWidth < 380) {
+          if (this.getScreenWidth < 350) {
             this.removeWeatherDisplayAlt();
           }
           this.updateButtonToggle = false;

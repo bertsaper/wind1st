@@ -2,37 +2,51 @@
 <html lang="en">
 
 <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y4XXE09P34"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-
-        gtag('config', 'G-Y4XXE09P34');
-    </script>
-    <meta charset="utf-8" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Wind1st</title>
-    <meta name="description"
-        content="For bicycle commuters, wind direction and velocity are important pieces of information. Finding these on most weather apps takes a lot of digging. This app is designed to make wind direction and velocity foremost.">
-    <base href="/" />
+    <style>
+        /* Styling for the loading screen */
+        #loading-screen {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background-color: white;
+            /* Background color for loading screen */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
 
-    <meta name="color-scheme" content="light dark" />
-    <meta name="viewport"
-        content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <meta name="format-detection" content="telephone=no" />
-    <meta name="msapplication-tap-highlight" content="no" />
-
-    <link rel="icon" type="image/png" href="assets/icon/favicon.png" />
-
+        #loading-logo {
+            width: 150px;
+            /* Adjust the size of your logo */
+            height: auto;
+        }
+    </style>
     <!-- add to homescreen for ios -->
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
 </head>
 
-<body>
-    <app-root></app-root>
+<body style="background-color: #000">
+    <div id="loading-screen">
+        <img id="loading-logo" src="./assets/wind1st.gif" alt="Loading..."> <!-- Path to your logo image -->
+    </div>
+
+    <app-root></app-root> <!-- Angular app root -->
+    <script>
+        // Hide the loading screen once the app has initialized
+        window.addEventListener('load', () => {
+            const loadingScreen = document.getElementById('loading-screen');
+            if (loadingScreen) {
+                loadingScreen.style.display = 'none';
+            }
+        });
+    </script>
+
 </body>
 
 </html>
