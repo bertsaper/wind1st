@@ -39,6 +39,14 @@
     position: unset;
 }
 
+
+#container {
+    min-height: unset !important;
+    height: 98vh;
+    max-height: 700px;
+}
+
+
 .md body {
     --ion-background-color: #121212;
     --ion-background-color-rgb: 18, 18, 18;
