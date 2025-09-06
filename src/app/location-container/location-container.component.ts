@@ -64,7 +64,10 @@ export class LocationContainerComponent implements OnInit {
     window.addEventListener('resize', (() => {
       if (this.settingsHolder) {
         const el = document.getElementById(this.settingsHolder)
-        el.scrollIntoView({ behavior: `smooth` })
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth' });
+        }
+
       }
     }))
   }
